@@ -1,0 +1,92 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-size: 10px;
+}
+
+#header{
+    background-color: rgb(42, 42, 42);
+    
+    .wrap{
+        max-width: 1328px;
+        margin: 0px auto;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+    #logo{
+        font-size: 3.2em;
+        align-self: center;
+        color: white;
+        flex-grow: 2;
+    }
+
+    #menu{
+        flex-basis: 20%;
+        flex-grow: 1;
+       
+        ul{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+            
+            li{
+                min-width: 20%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 60px;
+
+                a{
+                    font-size: 1.8em;
+                    color: rgb(176, 176, 176);
+                    transition: all 300ms;
+             
+                    padding-top: 15%;
+                    padding-bottom: 15%;
+                    text-decoration: none;
+
+                    &:hover{
+                        color: white;
+                        transform: scale(1.08);
+                        
+                    }
+
+
+                    
+                }
+
+          
+
+
+
+            }
+
+            .menuSelected{
+                border-bottom: 4px solid rgb(82, 68, 122);
+                a{
+                    transform: scale(1.08);
+                    color: white;
+                }
+            }
+
+
+
+        }
+
+
+        
+    }
+  }
+    
+}
+
+
+
+
+
+

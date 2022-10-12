@@ -1,0 +1,72 @@
+#author-edit{
+    .layout-author{
+
+        h1{
+            font-size: 2.8em;
+            font-weight: 500;
+            margin: 5%;
+        }
+
+        ul{
+            list-style: none;
+        
+            li{
+                #input-layout{
+                    display: flex;
+                    flex-direction: column;
+                    position: relative;
+                    margin-bottom: 20px;
+
+                    label{
+                        margin: 0px auto;
+                        width: 70%;        
+                        font-size: 1.8em;
+                        text-align: start;
+                        padding-bottom: 1%;
+                        color: rgb(116, 116, 116);
+                    }
+
+                    input{     
+                        margin: 0px auto;
+                        width: 70%;
+                        height: 50px;
+                        font-size: 1.7em;        
+                        border-radius: 3px;
+                        padding-left: 5px;
+                        border: 1px solid rgb(40, 40, 124);
+
+                        &::placeholder{
+                            color: #ccc
+                        }
+                    }
+
+                    button{
+                        position: absolute;
+                        top: 75%;
+                        transform: translateY(-75%);
+                        right: 17%;
+                        text-align: center;
+                        width: 20px;
+                        height: 20px;
+                        background: transparent;
+                        border: none;
+    
+                        svg{
+                            width: 100%;   
+                            color: gray;
+
+                            &:hover{
+                                cursor: pointer;
+                                color: rgb(139, 0, 0);    
+                            }
+                        }
+
+                        &:hover{
+                            cursor: pointer;   
+                        }    
+                    }
+                }
+            }
+        }
+    }
+}

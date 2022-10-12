@@ -1,0 +1,20 @@
+<section id="book-edit">
+    <div class="wrap">
+        <div id="form-layout">
+            <h1 id="title">Modificar libro</h1>
+            <form id="form" (ngSubmit)="onSubmit()">
+             
+                <label>Ingrese el nuevo nombre del libro</label>
+                <input type="text" placeholder="Nombre de libro" name="name" [(ngModel)]="inputName">    
+                <label>Ingrese el nuevo ISBN del libro</label>
+                <input type="text" placeholder="ISBN del libro" name="isbn" [(ngModel)]="inputIsbn">
+                <app-author-edit></app-author-edit>
+                <div id="button-layout">
+                    <button class="button" id="button-cancelar">Cancelar</button>
+                    <button class="button"  id="button-modificar" type="submit">Finalizar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>

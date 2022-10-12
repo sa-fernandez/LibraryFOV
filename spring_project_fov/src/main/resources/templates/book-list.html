@@ -1,0 +1,102 @@
+<html xmlns:th="https://thymeleaf.org">
+   <head>
+       <title>Listado de libros</title>
+       <meta charset="utf-8">
+       <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+       <link rel="stylesheet" th:href="@{/css/table.css}">
+       <link rel="stylesheet" th:href="@{/css/style.css}">
+       <link rel="stylesheet" th:href="@{/css/figures.css}">
+   </head>
+
+   <body>
+
+        <header id="header">
+            <section class="wrap" id="general-table">
+
+                <h1>FOV</h1>
+
+                <div class="bg">
+                    <div class="book1">
+                      <div class="ribbon1">
+                      </div>
+                      <div class="bookCut">
+                      </div>
+                    </div>
+                     <div class="book2">
+                       <div class="ribbonCut1"></div>
+                       <div class="ribbonCut2"></div>
+                       <div class="ribbonCut3"></div>
+                     </div>
+                    
+                     <div class="book3">
+                       <div class="ribbon3">
+                      </div>
+                      <div class="bookCut3">
+                      </div>
+                    </div>
+                    <div class="book4">
+                      <div class="ribbonCut4"></div>
+                       <div class="ribbonCut5"></div>
+                       <div class="ribbonCut6"></div>
+                    </div>
+                    <div class="book5"></div>
+                    <div class="book6">
+                      <div class="ribbon6">
+                      </div>
+                      <div class="bookCut6">
+                      </div>
+                    </div>
+                    <div class="book7">
+                      <div class="ribbonCut7"></div>
+                       <div class="ribbonCut8"></div>
+                       <div class="ribbonCut9"></div>
+                    </div>
+                  </div>
+
+                <nav id="menu">
+                    <ul>
+                        <li><a href="/book/list">Listar libros</a></li>
+                        <li><a href="/book/create">Crear libros</a></li>
+                    </ul>
+                </nav>
+            </section>
+        </header>
+
+       <section class="wrap" id="general-tabla">
+            <h1>Catálogo de libros</h1>
+            <div class="tbl-header">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ISBN</th>
+                            <th>Nombre</th>
+                            <th>Autores</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table>
+                    <tbody>
+                        <tr th:each="book:${books}">
+                            <td><a th:href="@{/book/list/{id}(id=${book.id})}" th:text="${book.isbn}"></a></td>
+                            <td th:text="${book.name}"></td>
+                            <td th:text="${book.authors}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+       </section>
+
+
+       <footer id="footer">
+            <section class="wrap">
+                <div id="contenido">
+                    <p>Andrés Felipe Vásquez Rendón</p>
+                    <p>Santiago Fernández Becerra</p>
+                    <p>Fabian Andres Olarte Vargas</p>
+                </div>
+            </section>
+        </footer>
+   </body>
+</html>

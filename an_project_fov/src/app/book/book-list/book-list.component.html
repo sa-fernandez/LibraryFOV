@@ -1,0 +1,28 @@
+<section id="list-books">
+    <div class="wrap">
+        <ul id="books">
+            <li class="book" *ngFor="let book of books; let i = index">  
+                <div class="container">
+                    <div class="book-style">
+                        <div class="front">
+                            <div class="cover">
+                                <a [routerLink]="['/book/view', book.id]">
+                                    <img src="https://i0.wp.com/www.irinadelgado.com/wp-content/uploads/2020/04/herramienta-ejemplos-2.png?resize=376%2C600&ssl=1">
+                                </a>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+
+                <div class="info-book">
+                    <a [routerLink]="['/book/view', book.id]">
+                        <p>{{book.name}}</p>
+                        <p>ISBN: {{book.isbn}}</p>
+                    </a>
+                </div>     
+            </li>
+        </ul>
+    </div>
+</section>
+

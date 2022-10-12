@@ -1,0 +1,8 @@
+###
+DELETE http://localhost:8080/book/delete-author/1
+
+###
+PUT http://localhost:8080/book/unlink
+Content-Type: application/json
+
+{"idAuthor": 1, "idBook": 2}
