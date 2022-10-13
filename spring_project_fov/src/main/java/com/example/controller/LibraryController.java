@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.DTOLink;
+import com.example.dto.DTOLoan;
 import com.example.model.Author;
 import com.example.model.Book;
+import com.example.model.Loan;
 import com.example.repository.AuthorRepository;
 import com.example.repository.BookRepository;
+import com.example.repository.LoanRepository;
 
 @RestController()
 @RequestMapping("/book")
@@ -28,6 +34,9 @@ public class LibraryController {
 
     @Autowired
     AuthorRepository authorRepository;
+
+    @Autowired
+    LoanRepository loanRepository;
 
     Logger log = LoggerFactory.getLogger(getClass());
 
@@ -117,56 +126,15 @@ public class LibraryController {
         bookRepository.save(book);
     }
 
-    /*@GetMapping("/list")
-    public String listBooks(Model model){
-        Iterable<Book> books = bookRepository.findAll();
-        model.addAttribute("books", books);
-        return "book-list";
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/loan")
+    public Loan crearPrestamo(@RequestBody DTOLoan dtoLoan){
+        Book book = bookRepository.findById(dtoLoan.getIdBook()).orElseThrow();
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        Author author = new Author(dtoLoan.getPersonName());
+        authorRepository.save(author);
+        return loanRepository.save(new Loan(formatter.format(ldt), book, author));
     }
-
-    @GetMapping("/list/{id}")
-    public String buscarLibro(Model model, @PathVariable("id") Long id){
-        return findBook(model, id);
-    }
-
-    
-
-    @GetMapping("/delete/{id}")
-    public String deleteBook(Model model, @PathVariable("id") Long id){
-        Book book = bookRepository.findById(id).orElseThrow();
-        if(book != null){
-            bookRepository.delete(book);
-            Iterable<Book> books = bookRepository.findAll();
-            model.addAttribute("books", books);
-            return "book-list";
-        }else{
-            return "";
-        }
-    }
-
-    @GetMapping("/edit/{id}")
-    public String editBook(Model model, @PathVariable("id") Long id){
-        Book book = bookRepository.findById(id).orElseThrow();
-        if(book != null){
-            model.addAttribute("book", book);
-            return "book-edit";
-        }else{
-            return "";
-        }
-    }
-
-    @GetMapping("/create")
-    public String createBook(Model model){
-        model.addAttribute("book", new Book());
-        return "book-create";
-    }
-
-    @PostMapping("")
-    public String save(@ModelAttribute Book book, Model model) {
-        bookRepository.save(book);
-        Iterable<Book> books = bookRepository.findAll();
-        model.addAttribute("books", books);
-        return "redirect:/book/list";
-    }*/
 
 }

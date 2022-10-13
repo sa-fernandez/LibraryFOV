@@ -32,14 +32,6 @@ export class BookEditComponent implements OnInit {
       this.inputName = book.name
       this.inputIsbn = book.isbn
     });
-    /*let listAuthors : Author[] = [];
-    this.bookService.findAuthorsById(this.book!.id).subscribe(authors => listAuthors = authors);
-    let authors = "";
-    listAuthors.forEach(element => {
-      authors += element.name + ',';
-    });
-    authors = authors.substring(0, authors.length - 1);
-    this.inputAuthors = authors;*/
   }
   
   onSubmit(){
@@ -51,22 +43,10 @@ export class BookEditComponent implements OnInit {
         this.router.navigate(['book/list'])
       });
     }
-    /*if(this.book && this.inputName && this.inputIsbn && this.inputAuthors){
-      this.editBook.id = this.book.id;
-      this.editBook.name = this.inputName;
-      this.editBook.isbn = this.inputIsbn;
-      let listAuthors = this.inputAuthors.split(',');
-      let numAuthors : number[] = [];
-      listAuthors.forEach(element => {
-        let id = this.bookService.inAuthor(element);
-        if(id === 0){
-          id = this.bookService.addAuthor(element);
-        }
-        numAuthors.push(id);
-      });
-      this.bookService.editBook(this.editBook);
-      this.bookService.editBookXAuthors(this.book.id, numAuthors);
-    }*/
+  }
+
+  onCancel(){
+    this.router.navigate(['book/view', this.book?.id]);
   }
 
 }

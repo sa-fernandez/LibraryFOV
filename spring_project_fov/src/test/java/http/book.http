@@ -6,3 +6,9 @@ PUT http://localhost:8080/book/unlink
 Content-Type: application/json
 
 {"idAuthor": 1, "idBook": 2}
+
+###
+POST http://localhost:8080/book/loan
+Content-Type: application/json
+
+{"idBook": 2, "personName": "Alberto"}
