@@ -11,4 +11,7 @@ Content-Type: application/json
 POST http://localhost:8080/book/loan
 Content-Type: application/json
 
-{"idBook": 2, "personName": "Alberto"}
+{"idCopy": 2, "idPerson": 1, "finalDate": "11-12-2022"}
+
+###
+GET http://localhost:8080/book/not-borrowed/3

@@ -10,7 +10,13 @@ import { BookEditComponent } from './book/book-edit/book-edit.component';
 import { HomeComponent } from './home/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthorEditComponent } from './author/author-edit/author-edit.component'
+import {MatNativeDateModule} from '@angular/material/core';
+import { AuthorEditComponent } from './author/author-edit/author-edit.component';
+import { LoanCreateComponent } from './loan/loan-create/loan-create.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -20,13 +26,19 @@ import { AuthorEditComponent } from './author/author-edit/author-edit.component'
     BookViewComponent,
     BookEditComponent,
     HomeComponent,
-    AuthorEditComponent
+    AuthorEditComponent,
+    LoanCreateComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

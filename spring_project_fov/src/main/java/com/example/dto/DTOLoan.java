@@ -2,32 +2,42 @@ package com.example.dto;
 
 public class DTOLoan {
     
-    private Long idBook;
-    private String personName;
+    private Long idCopy;
+    private Long idPerson;
+    private String finalDate;
 
     public DTOLoan(){
 
     }
 
-    public DTOLoan(Long idBook, String personName){
-        this.idBook = idBook;
-        this.personName = personName;
+    public DTOLoan(Long idCopy, Long idPerson, String finalDate) {
+        this.idCopy = idCopy;
+        this.idPerson = idPerson;
+        this.finalDate = finalDate;
     }
 
-    public Long getIdBook(){
-        return this.idBook;
+    public Long getIdCopy() {
+        return idCopy;
     }
 
-    public void setIdBook(Long idBook){
-        this.idBook = idBook;
+    public void setIdCopy(Long idCopy) {
+        this.idCopy = idCopy;
     }
 
-    public String getPersonName(){
-        return this.personName;
+    public Long getIdPerson() {
+        return idPerson;
     }
 
-    public void setPersonName(String personName){
-        this.personName = personName;
+    public void setIdPerson(Long idPerson) {
+        this.idPerson = idPerson;
+    }
+
+    public String getFinalDate() {
+        return finalDate;
+    }
+
+    public void setFinalDate(String finalDate) {
+        this.finalDate = finalDate;
     }
 
 }

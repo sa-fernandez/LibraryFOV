@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Author } from 'src/app/model/author';
 import { BookService } from '../../shared/book.service';
+import { Realbook } from 'src/app/model/realbook';
 
 @Component({
   selector: 'app-book-view',
@@ -22,6 +23,7 @@ export class BookViewComponent implements OnInit {
 
   authors : Author[] | undefined;
   allAuthors : Author[] | undefined;
+  copies : Realbook[] | undefined;
 
   constructor(
     private bookService : BookService, 
@@ -34,7 +36,8 @@ export class BookViewComponent implements OnInit {
       switchMap(params => this.bookService.viewBook(+params.get('id')!))
     ).subscribe(book => {
       this.book = book
-      this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors);
+      this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors)
+      this.bookService.listNotBorrowed(book.id).subscribe(copies => this.copies = copies)
     });
 
     this.bookService.listAuthors().subscribe(authors => this.allAuthors = authors);

@@ -21,9 +21,11 @@ import com.example.dto.DTOLoan;
 import com.example.model.Author;
 import com.example.model.Book;
 import com.example.model.Loan;
+import com.example.model.RealBook;
 import com.example.repository.AuthorRepository;
 import com.example.repository.BookRepository;
 import com.example.repository.LoanRepository;
+import com.example.repository.RealBookRepository;
 
 @RestController()
 @RequestMapping("/book")
@@ -37,6 +39,9 @@ public class LibraryController {
 
     @Autowired
     LoanRepository loanRepository;
+
+    @Autowired
+    RealBookRepository realBookRepository;
 
     Logger log = LoggerFactory.getLogger(getClass());
 
@@ -129,12 +134,43 @@ public class LibraryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/loan")
     public Loan crearPrestamo(@RequestBody DTOLoan dtoLoan){
-        Book book = bookRepository.findById(dtoLoan.getIdBook()).orElseThrow();
+        RealBook copy = realBookRepository.findById(dtoLoan.getIdCopy()).orElseThrow();
         LocalDateTime ldt = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        Author author = new Author(dtoLoan.getPersonName());
-        authorRepository.save(author);
-        return loanRepository.save(new Loan(formatter.format(ldt), book, author));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        Author author = authorRepository.findById(dtoLoan.getIdPerson()).orElseThrow();
+        return loanRepository.save(new Loan(formatter.format(ldt), dtoLoan.getFinalDate(), copy, author));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/list-copies/{id}")
+    public Iterable<RealBook> listarCopias(@PathVariable("id") Long id){
+        Book book = bookRepository.findById(id).orElseThrow();
+        return book.getCopies();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/view-copy/{id}")
+    public RealBook buscarCopia(@PathVariable("id") Long id){
+        return realBookRepository.findById(id).orElseThrow();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/book-copy/{id}")
+    public Book buscarLibroCopia(@PathVariable("id") Long id){
+        RealBook realBook = realBookRepository.findById(id).orElseThrow();
+        return realBook.getBook();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/list-loans")
+    public Iterable<Loan> listarPrestamos(){
+        return loanRepository.findAll();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/not-borrowed/{id}")
+    public Iterable<RealBook> listarCopiasNoPrestadas(@PathVariable("id") Long id){
+        return realBookRepository.findAllNotBorrowed(id);
     }
 
 }

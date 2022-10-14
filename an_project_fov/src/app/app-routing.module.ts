@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthorEditComponent } from './author/author-edit/author-edit.component';
+import { LoanCreateComponent } from './loan/loan-create/loan-create.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'book/view/:id', component: BookViewComponent },
   { path: 'book/create', component: BookCreateComponent },
   { path: 'book/edit/:id', component: BookEditComponent },
-  { path: 'book/edit-authors', component: AuthorEditComponent }
+  { path: 'book/edit-authors', component: AuthorEditComponent },
+  { path: 'book/create-loan/:id', component: LoanCreateComponent }
 ];
 
 @NgModule({

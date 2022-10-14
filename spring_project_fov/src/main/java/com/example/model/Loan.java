@@ -1,5 +1,6 @@
 package com.example.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,10 +13,11 @@ public class Loan {
     @GeneratedValue
     private Long id;
     
-    private String timestamp;
+    private String initDate;
+    private String finalDate;
     
-    @OneToOne
-    private Book book;
+    @OneToOne(cascade = CascadeType.ALL)
+    private RealBook book;
 
     @OneToOne
     private Author person;
@@ -24,34 +26,51 @@ public class Loan {
 
     }
 
-    public Loan(String timestamp, Book book, Author person){
-        this.timestamp = timestamp;
+    public Loan(String initDate, String finalDate, RealBook book, Author person) {
+        this.initDate = initDate;
+        this.finalDate = finalDate;
         this.book = book;
         this.person = person;
     }
 
-    public String getTimestamp(){
-        return this.timestamp;
+    public Long getId(){
+        return this.id;
     }
 
-    public void setTimestamp(String timestamp){
-        this.timestamp = timestamp;
+    public void setId(Long id){
+        this.id = id;
     }
 
-    public Book getBook(){
-        return this.book;
+    public String getInitDate() {
+        return initDate;
     }
 
-    public void setBook(Book book){
+    public void setInitDate(String initDate) {
+        this.initDate = initDate;
+    }
+
+    public String getFinalDate() {
+        return finalDate;
+    }
+
+    public void setFinalDate(String finalDate) {
+        this.finalDate = finalDate;
+    }
+
+    public RealBook getBook() {
+        return book;
+    }
+
+    public void setBook(RealBook book) {
         this.book = book;
     }
 
-    public Author getPerson(){
-        return this.person;
+    public Author getPerson() {
+        return person;
     }
 
-    public void setPerson(Author person){
+    public void setPerson(Author person) {
         this.person = person;
     }
-
+    
 }

@@ -32,7 +32,11 @@
                
             </div>
 
-
+            <div>
+                <ul *ngIf="copies">
+                    <li *ngFor="let copy of copies"><a [routerLink]="['/book/create-loan', copy.id]">{{copy.status}} - {{copy.timestamp}}</a></li>
+                </ul>
+            </div>
 
         </div>
 

@@ -3,10 +3,12 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,6 +26,10 @@ public class Book {
     @JsonIgnore
     private List<Author> authors = new ArrayList<>();
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<RealBook> copies = new ArrayList<>();
+
     public Book(){
 
     }
@@ -37,6 +43,13 @@ public class Book {
         this.isbn = isbn;
         this.name = name;
         this.authors = authors;
+    }
+
+    public Book(String isbn, String name, List<Author> authors, List<RealBook> copies) {
+        this.isbn = isbn;
+        this.name = name;
+        this.authors = authors;
+        this.copies = copies;
     }
 
     public Long getId(){
@@ -69,6 +82,14 @@ public class Book {
 
     public void setAuthors(List<Author> authors){
         this.authors = authors;
+    }
+
+    public List<RealBook> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(List<RealBook> copies) {
+        this.copies = copies;
     }
     
 }

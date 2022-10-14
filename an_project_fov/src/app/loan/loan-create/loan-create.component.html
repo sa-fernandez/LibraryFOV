@@ -1,0 +1,17 @@
+<div>
+    <form (ngSubmit)="onSubmit()">
+        <select name="authors-names" id="authors-names" *ngIf="allPeople" [(ngModel)]="selectedPerson" (change)="dropboxClick()">
+            <option value=""></option>
+            <option [ngValue]="person" *ngFor="let person of allPeople">{{person.name}}</option>
+        </select>
+        <input type="text" placeholder="Nombre del solicitante" name="name" [(ngModel)]="inputName" [disabled]="isDisabled">
+        <mat-form-field appearance="fill">
+            <mat-label>Input & change events</mat-label>
+            <input matInput [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button type="submit">Crear prestamo</button>
+    </form>
+</div>

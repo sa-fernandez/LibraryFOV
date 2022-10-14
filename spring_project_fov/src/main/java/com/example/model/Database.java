@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component;
 
 import com.example.repository.AuthorRepository;
 import com.example.repository.BookRepository;
+import com.example.repository.RealBookRepository;
 
 @Component
 public class Database implements CommandLineRunner {
 
     private static final int NUM_BOOKS = 1000;
     private static final int NUM_AUTHORS = 5;
+    private static final int NUM_REAL = 15;
 
     @Autowired
     BookRepository bookRepository;
@@ -25,9 +27,14 @@ public class Database implements CommandLineRunner {
     @Autowired
     AuthorRepository authorRepository;
 
+    @Autowired
+    RealBookRepository realBookRepository;
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+        String[] status = {"EN BUEN ESTADO", "ESTADO REGULAR", "MAL ESTADO"};
+
         Random random = new Random(1234);
 
         RandomStringGenerator randomGen = new RandomStringGenerator.Builder().withinRange('a', 'z')
@@ -43,7 +50,16 @@ public class Database implements CommandLineRunner {
                 authorRepository.save(author);
                 authors.add(author);
             }
-            bookRepository.save(new Book(String.valueOf(isbn), name, authors));
+            Book book = new Book(String.valueOf(isbn), name, authors);
+            int cantCopies = random.nextInt(NUM_REAL - 1) + 1;
+            ArrayList<RealBook> copies = new ArrayList<>();
+            for (int k = 0; k < cantCopies; k++) {
+                RealBook copy = new RealBook(status[random.nextInt(3)], randomGen.generate(5), book);
+                realBookRepository.save(copy);
+                copies.add(copy);
+            }
+            book.setCopies(copies);
+            bookRepository.save(book);
         }
 
     }
