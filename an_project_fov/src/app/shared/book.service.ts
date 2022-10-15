@@ -93,4 +93,24 @@ export class BookService {
     return this.http.get<Realbook[]>(`http://localhost:8080/book/not-borrowed/${id}`);
   }
 
+  listLoansPerson(id : number) : Observable<Loan[]>{
+    return this.http.get<Loan[]>(`http://localhost:8080/book/list-person-loans/${id}`);
+  }
+
+  viewRealBook(id : number) : Observable<Realbook>{
+    return this.http.get<Realbook>(`http://localhost:8080/book/view-realbook/${id}`);
+  }
+
+  viewLoan(id : number) : Observable<Loan>{
+    return this.http.get<Loan>(`http://localhost:8080/book/view-loan/${id}`);
+  }
+
+  deleteLoan(id : number){
+    return this.http.delete(`http://localhost:8080/book/delete-loan/${id}`);
+  }
+
+  editLoan(loan : Loan){
+    return this.http.patch(`http://localhost:8080/book/edit-loan`, loan, this.httpOptions); 
+  }
+
 }

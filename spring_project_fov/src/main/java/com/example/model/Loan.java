@@ -16,7 +16,7 @@ public class Loan {
     private String initDate;
     private String finalDate;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private RealBook book;
 
     @OneToOne

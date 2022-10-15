@@ -17,6 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ReturnBookComponent } from './loan/return-book/return-book.component';
+import { LoanListComponent } from './loan/loan-list/loan-list.component';
+import { LoanViewComponent } from './loan/loan-view/loan-view.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { MatInputModule } from '@angular/material/input';
     BookEditComponent,
     HomeComponent,
     AuthorEditComponent,
-    LoanCreateComponent
+    LoanCreateComponent,
+    ReturnBookComponent,
+    LoanListComponent,
+    LoanViewComponent
   ],
   imports: [
     BrowserModule,

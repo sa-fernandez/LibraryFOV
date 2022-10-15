@@ -1,0 +1,6 @@
+<div>
+    <ul *ngIf = "loansReceived">
+        <p>Libros prestados</p>
+        <li *ngFor="let book of booksBorrowed; let i = index"> <a [routerLink]="['/book/view-loan', loansReceived[i].id]"> isbn libro: {{book.isbn}} Nombre:{{book.name}}</a></li>
+    </ul>
+</div>
