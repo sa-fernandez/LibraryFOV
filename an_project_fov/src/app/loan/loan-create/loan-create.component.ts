@@ -14,6 +14,9 @@ import { BookService } from 'src/app/shared/book.service';
 })
 export class LoanCreateComponent implements OnInit {
 
+  minDate : Date = new Date();
+  maxDate : Date = new Date();
+
   isDisabled : boolean = false;
 
   selectedPerson : Author | undefined;
@@ -34,6 +37,7 @@ export class LoanCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.maxDate.setMonth(this.maxDate.getMonth() + 1);
     this.route.paramMap.pipe(
       switchMap(params => this.bookService.viewCopy(+params.get('id')!))
     ).subscribe(realBook => {
@@ -55,15 +59,13 @@ export class LoanCreateComponent implements OnInit {
   }
 
   linkPerson(){
-    this.bookService.linkAuthorBook(this.person.id, this.book!.id).subscribe(() => {
-      if(this.event){
-        this.bookService.createLoan(this.realBook!.id, this.person.id, this.event).subscribe(() => {
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['book/view', this.book!.id])
-          });
-        })
-      }
-    })
+    if(this.event){
+      this.bookService.createLoan(this.realBook!.id, this.person.id, this.event).subscribe(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['book/view', this.book!.id])
+        });
+      })
+    }
   }
 
   dropboxClick(){

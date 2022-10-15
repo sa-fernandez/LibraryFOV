@@ -1,10 +1,9 @@
 <div>
     <form (ngSubmit)="onSubmit()">
-        <select name="authors-names" id="authors-names" *ngIf="allPeople" [(ngModel)]="selectedPerson" (change)="dropboxClick()">
+        <select name="authors-names" id="authors-names" *ngIf="allPeople" [(ngModel)]="selectedPerson">
             <option value=""></option>
             <option [ngValue]="person" *ngFor="let person of allPeople">{{person.name}}</option>
         </select>
-        <input type="text" placeholder="Nombre de la persona" name="name" [(ngModel)]="inputName" [disabled]="isDisabled">
         <button type="submit">Buscar prestamos</button>
     </form>
     <app-loan-list [loansReceived]="loans"></app-loan-list>

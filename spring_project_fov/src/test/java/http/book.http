@@ -20,4 +20,4 @@ GET http://localhost:8080/book/not-borrowed/3
 PATCH http://localhost:8080/book/edit-loan
 Content-Type: application/json
 
-{"id": 11091, "finalDate": "13-10-2022", "initDate":"14-10-2022", "book_id":2, "person_id":1}
+{"id": 11091, "finalDate": "13-10-2022", "initDate": "14-10-2022", "book_id": 2, "person_id": 1}

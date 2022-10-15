@@ -14,7 +14,7 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     @Transactional
     @Modifying
     @Query(
-        value = "update author name = :name where id = :id",
+        value = "update author set name = :name where id = :id",
         nativeQuery = true
     )
     void updateAuthor(@Param("name") String name, @Param("id") Long id);

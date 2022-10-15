@@ -1,7 +1,5 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Author } from 'src/app/model/author';
-import { switchMap } from 'rxjs';
 import { BookService } from 'src/app/shared/book.service';
 import { Loan } from 'src/app/model/loan';
 import { Book } from 'src/app/model/book';

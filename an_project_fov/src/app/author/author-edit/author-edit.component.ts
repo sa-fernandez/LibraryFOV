@@ -30,8 +30,10 @@ export class AuthorEditComponent implements OnInit {
     });
   }
 
-  updateAuthor(){
-    //this.bookService.editAuthor().subscribe()
+  updateAuthor(index : number){
+    this.bookService.editAuthor(this.authors![index]).subscribe(() => {
+      this.router.navigate(['book/edit', this.book!.id])
+    });
   }
 
   unlinkAuthor(index : number){
