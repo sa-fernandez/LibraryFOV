@@ -1,5 +1,5 @@
 ###
-DELETE http://localhost:8080/book/delete-author/1
+DELETE http://localhost:8080/book/delete/33
 
 ###
 PUT http://localhost:8080/book/unlink
@@ -11,7 +11,10 @@ Content-Type: application/json
 POST http://localhost:8080/book/loan
 Content-Type: application/json
 
-{"idCopy": 2, "idPerson": 1, "finalDate": "11-12-2022"}
+{"idCopy": 10, "idPerson": 1, "finalDate": "11/12/2022"}
+
+###
+DELETE http://localhost:8080/book/delete-loan/11091
 
 ###
 GET http://localhost:8080/book/not-borrowed/3

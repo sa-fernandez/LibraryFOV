@@ -68,10 +68,7 @@ public class LibraryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/delete/{id}")
     public void borrarLibro(@PathVariable("id") Long id){
-        Book book = bookRepository.findById(id).orElseThrow();
-        if(book != null){
-            bookRepository.delete(book);
-        }
+        bookRepository.deleteById(id);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -117,10 +114,7 @@ public class LibraryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/delete-author/{id}")
     public void borrarAutor(@PathVariable("id") Long id){
-        Author author = authorRepository.findById(id).orElseThrow();
-        if(author != null){
-            authorRepository.delete(author);
-        }
+        authorRepository.deleteById(id);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -137,7 +131,7 @@ public class LibraryController {
     public Loan crearPrestamo(@RequestBody DTOLoan dtoLoan){
         RealBook copy = realBookRepository.findById(dtoLoan.getIdCopy()).orElseThrow();
         LocalDateTime ldt = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Author author = authorRepository.findById(dtoLoan.getIdPerson()).orElseThrow();
         return loanRepository.save(new Loan(formatter.format(ldt), dtoLoan.getFinalDate(), copy, author));
     }
@@ -196,10 +190,7 @@ public class LibraryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/delete-loan/{id}")
     public void borrarPrestamo(@PathVariable("id") Long id){
-        Loan loan = loanRepository.findById(id).orElseThrow();
-        if(loan != null){
-            loanRepository.delete(loan);
-        }
+        loanRepository.deleteById(id);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

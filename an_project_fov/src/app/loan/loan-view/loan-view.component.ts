@@ -46,22 +46,22 @@ export class LoanViewComponent implements OnInit {
       this.bookService.viewRealBook(loan.id).subscribe(realbook => {
         this.realbook = realbook
         this.bookService.copyBook(this.realbook.id).subscribe(book => {
-        this.book = book
-        this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors)
-      })
+          this.book = book
+          this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors)
+        })
       })
     });
 
   }
 
   addEvent(event: MatDatepickerInputEvent<Date>) {
-    this.event = event.value?.toDateString()
+    this.event = event.value?.toLocaleDateString();
   }
 
   returnLoan(){
     this.bookService.deleteLoan(this.loan?.id!).subscribe(() => {
       this.router.navigate(['book/list'])
-    })
+    });
   }
 
   editDate(){
@@ -72,8 +72,7 @@ export class LoanViewComponent implements OnInit {
     }
     this.bookService.editLoan(this.loan).subscribe(() => {
       this.router.navigate(['book/view-loan', this.loan?.id])
-    }
-    )
+    });
   }
 
 }

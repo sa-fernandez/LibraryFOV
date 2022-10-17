@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,9 +19,13 @@ public class RealBook {
     private String status;
     private String timestamp;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonIgnore
     private Book book;
+
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Loan loan;
 
     public RealBook(){
 
@@ -35,6 +40,13 @@ public class RealBook {
         this.status = status;
         this.timestamp = timestamp;
         this.book = book;
+    }
+
+    public RealBook(String status, String timestamp, Book book, Loan loan) {
+        this.status = status;
+        this.timestamp = timestamp;
+        this.book = book;
+        this.loan = loan;
     }
 
     public Long getId(){
@@ -67,6 +79,14 @@ public class RealBook {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public Loan getLoan() {
+        return loan;
+    }
+
+    public void setLoan(Loan loan) {
+        this.loan = loan;
     }
     
 }
