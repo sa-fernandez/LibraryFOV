@@ -102,7 +102,7 @@ export class LoanCreateComponent implements OnInit {
   }
 
   addEvent(event: MatDatepickerInputEvent<Date>) {
-    this.event = event.value?.toDateString()
+    this.event = event.value?.toLocaleDateString()
   }
 
 }

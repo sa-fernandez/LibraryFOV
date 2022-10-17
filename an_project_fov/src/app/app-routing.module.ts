@@ -9,6 +9,7 @@ import { AuthorEditComponent } from './author/author-edit/author-edit.component'
 import { LoanCreateComponent } from './loan/loan-create/loan-create.component';
 import { ReturnBookComponent } from './loan/return-book/return-book.component';
 import { LoanViewComponent } from './loan/loan-view/loan-view.component';
+import { CreateCopyComponent } from './realbook/create-copy/create-copy.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'book/edit-authors', component: AuthorEditComponent },
   { path: 'book/create-loan/:id', component: LoanCreateComponent },
   { path: 'book/return-book', component: ReturnBookComponent },
-  { path: 'book/view-loan/:id', component: LoanViewComponent }
+  { path: 'book/view-loan/:id', component: LoanViewComponent },
+  { path: 'book/create-copy/:id', component: CreateCopyComponent }
 ];
 
 @NgModule({

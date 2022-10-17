@@ -24,3 +24,15 @@ PATCH http://localhost:8080/book/edit-loan
 Content-Type: application/json
 
 {"id": 11091, "finalDate": "13-10-2022", "initDate": "14-10-2022", "book_id": 2, "person_id": 1}
+
+###
+POST http://localhost:8080/book/create-copy
+Content-Type: application/json
+
+{"idCopy": 777, "status": "BUEN ESTADO", "timestamp": "si"}
+
+###
+PUT http://localhost:8080/book/link-copy
+Content-Type: application/json
+
+{"idBook": 7, "idCopy": 11091}

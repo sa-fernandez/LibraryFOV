@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.DTOCopy;
 import com.example.dto.DTOLink;
 import com.example.dto.DTOLoan;
 import com.example.model.Author;
@@ -190,13 +191,36 @@ public class LibraryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/delete-loan/{id}")
     public void borrarPrestamo(@PathVariable("id") Long id){
-        loanRepository.deleteById(id);
+        loanRepository.deleteLoan(id);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PatchMapping("/edit-loan")
     public void aplazarFecha(@RequestBody Loan loan){
         loanRepository.updateLoan(loan.getFinalDate(), loan.getId());
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/create-copy")
+    public RealBook crearCopia(@RequestBody RealBook realBook){
+        return realBookRepository.save(realBook);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping("/link-copy")
+    public void linkCopyBook(@RequestBody DTOCopy dtoCopy){
+        RealBook realBook = realBookRepository.findById(dtoCopy.getIdCopy()).orElseThrow();
+        Book book = bookRepository.findById(dtoCopy.getIdBook()).orElseThrow();
+        book.getCopies().add(realBook);
+        realBook.setBook(book);
+        bookRepository.save(book);
+        realBookRepository.save(realBook);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @DeleteMapping("/delete-copy/{id}")
+    public void borrarCopia(@PathVariable("id") Long id){
+        realBookRepository.deleteById(id);
     }
 
 }

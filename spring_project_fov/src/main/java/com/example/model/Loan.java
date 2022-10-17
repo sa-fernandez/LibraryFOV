@@ -3,7 +3,6 @@ package com.example.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,7 +19,6 @@ public class Loan {
     
     @OneToOne
     @JsonIgnore
-    @JoinColumn(name = "real_book")
     private RealBook book;
 
     @OneToOne

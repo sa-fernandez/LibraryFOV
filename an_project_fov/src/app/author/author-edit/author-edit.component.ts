@@ -18,7 +18,6 @@ export class AuthorEditComponent implements OnInit {
   inputName : string = "";
   isDisabled : boolean = false;
 
-  
   author : Author = new Author(0, "");
   allAuthors : Author[] | undefined;
 
@@ -51,12 +50,10 @@ export class AuthorEditComponent implements OnInit {
     });
   }
 
-
   dropboxClick(){
     if(this.selectedAuthor){
       this.isDisabled = true;
       this.inputName = '';
-
     }else{
       this.isDisabled = false;
     }
@@ -97,8 +94,6 @@ export class AuthorEditComponent implements OnInit {
     this.bookService.linkAuthorBook(this.author.id, this.book!.id).subscribe(() => {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['book/edit', this.book!.id])
-
-
       });
     })
   }

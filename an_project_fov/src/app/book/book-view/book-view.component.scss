@@ -99,6 +99,10 @@
                             background-color: #990000;   
                         }
 
+                        &:nth-child(3){
+                            background-color: #499d70;   
+                        }
+
                         &:hover{
                             transform: scale(1.05);
                             box-shadow: 2px 4px 5px rgb(171, 171, 171);

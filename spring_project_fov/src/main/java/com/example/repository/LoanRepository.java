@@ -25,5 +25,13 @@ public interface LoanRepository extends CrudRepository<Loan, Long> {
         nativeQuery = true
     )
     void updateLoan(@Param("finaldate") String finaldate, @Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query(
+        value = "delete from loan where id = :id",
+        nativeQuery = true
+    )
+    void deleteLoan(@Param("id") Long id);
     
 }

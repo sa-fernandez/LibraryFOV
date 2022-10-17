@@ -49,54 +49,12 @@ export class BookViewComponent implements OnInit {
     });
   }
 
-
-/******************************
-  dropboxClick(){
-    if(this.selectedAuthor){
-      this.isDisabled = true;
-      this.inputName = '';
-    }else{
-      this.isDisabled = false;
-    }
-  }
-
-  saveAuthor(){
-    this.bookService.createAuthor(this.author).subscribe(author => {
-      this.author = author
-      this.linkAuthor()
-    });
-  }
-
-  linkAuthor(){
-    this.bookService.linkAuthorBook(this.author.id, this.book!.id).subscribe(() => {
+  deleteCopy(index : number){
+    this.bookService.deleteCopy(this.copies![index].id).subscribe(() => {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['book/view', this.book!.id])
       });
-    })
-  }
-
-  verifyAuthor(){
-    let flag = false;
-    this.authors?.forEach(element => {
-      if(element.id === this.author.id){
-        flag = true;
-      }
     });
-    return flag;
   }
 
-  onSubmit(){
-    if(this.inputName){
-      this.author.name = this.inputName;
-      this.saveAuthor();
-    }else if(this.selectedAuthor){
-      this.author = this.selectedAuthor;
-      if(!this.verifyAuthor()){
-        this.linkAuthor();
-      }
-    }else{
-      //ALERTA
-    }
-  }
-  */
 }

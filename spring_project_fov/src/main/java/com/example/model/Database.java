@@ -33,7 +33,7 @@ public class Database implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        String[] status = {"EN BUEN ESTADO", "ESTADO REGULAR", "MAL ESTADO"};
+        String[] status = {"BUENO", "REGULAR", "MALO"};
 
         Random random = new Random(1234);
 

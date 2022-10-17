@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReturnBookComponent } from './loan/return-book/return-book.component';
 import { LoanListComponent } from './loan/loan-list/loan-list.component';
 import { LoanViewComponent } from './loan/loan-view/loan-view.component';
+import { CreateCopyComponent } from './realbook/create-copy/create-copy.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LoanViewComponent } from './loan/loan-view/loan-view.component';
     LoanCreateComponent,
     ReturnBookComponent,
     LoanListComponent,
-    LoanViewComponent
+    LoanViewComponent,
+    CreateCopyComponent
   ],
   imports: [
     BrowserModule,

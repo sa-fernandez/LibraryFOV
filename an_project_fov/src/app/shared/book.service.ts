@@ -7,6 +7,7 @@ import { Book } from 'src/app/model/book';
 import { Dtolink } from 'src/app/model/dtolink';
 import { Realbook } from '../model/realbook';
 import { Loan } from '../model/loan';
+import { Dtocopy } from '../model/dtocopy';
 
 @Injectable({
   providedIn: 'root'
@@ -111,6 +112,18 @@ export class BookService {
 
   editLoan(loan : Loan){
     return this.http.patch(`http://localhost:8080/book/edit-loan`, loan, this.httpOptions); 
+  }
+
+  createRealBook(realbook : Realbook) : Observable<Realbook>{
+    return this.http.post<Realbook>(`http://localhost:8080/book/create-copy`, realbook, this.httpOptions);
+  }
+
+  linkCopy(idBook : number, idCopy : number){
+    return this.http.put(`http://localhost:8080/book/link-copy`, new Dtocopy(idBook, idCopy), this.httpOptions);
+  }
+
+  deleteCopy(id : number){
+    return this.http.delete(`http://localhost:8080/book/delete-copy/${id}`);
   }
 
 }
