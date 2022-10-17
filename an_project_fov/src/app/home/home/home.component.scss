@@ -1,0 +1,70 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-size: 10px;
+}
+
+#home{
+    width: 100%;
+    height: calc(100vh - 80px);
+    background-image: url("../../../assets/backgrounds/Background-home.jpg");
+    background-size: cover;
+    
+    .filter-background{
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: #000000, $alpha: 0.8);
+        
+
+        .wrap{
+            width: 100%;    
+            margin: 0px auto;      
+
+            #container{
+                width: 45%;
+                position: absolute;
+                top: 45%;
+                padding: 2%;
+                margin-left: 3%;
+                transition: all 300ms;
+                animation: trasnlate-title 1s;
+                
+                h1{
+                    font-size: 5.5em;
+                    font-weight: 500;
+                    color: white;
+                    text-align: justify;
+                }
+    
+                h4{
+                    font-size: 2.2em;
+                    font-weight: 100;
+                    padding-top: 20px;
+                    color: white;
+                    text-align: justify;
+                
+                    a{
+                        font-size: 1em;
+                        font-weight: 400;
+                        color: white;
+                        text-decoration: none;
+
+                        &:hover{
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                @keyframes trasnlate-title {
+                    0%{
+                        left: -150%;
+                    }
+
+                    100%{
+                        left: 0%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -14,6 +14,13 @@ export class AuthorEditComponent implements OnInit {
 
   book : Book | undefined;
   authors : Author[] | undefined;
+  selectedAuthor : Author | undefined;
+  inputName : string = "";
+  isDisabled : boolean = false;
+
+  
+  author : Author = new Author(0, "");
+  allAuthors : Author[] | undefined;
 
   constructor(
     private bookService : BookService, 
@@ -28,6 +35,8 @@ export class AuthorEditComponent implements OnInit {
       this.book = book
       this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors);
     });
+    
+    this.bookService.listAuthors().subscribe(authors => this.allAuthors = authors);
   }
 
   updateAuthor(index : number){
@@ -42,4 +51,69 @@ export class AuthorEditComponent implements OnInit {
     });
   }
 
+
+  dropboxClick(){
+    if(this.selectedAuthor){
+      this.isDisabled = true;
+      this.inputName = '';
+
+    }else{
+      this.isDisabled = false;
+    }
+  }
+
+  onSubmit(){
+    if(this.inputName){
+      this.author.name = this.inputName;
+      this.saveAuthor();
+    }else if(this.selectedAuthor){
+      this.author = this.selectedAuthor;
+      if(!this.verifyAuthor()){
+        this.linkAuthor();
+      }
+    }else{
+      //ALERTA
+    }
+  }
+
+  saveAuthor(){
+    this.bookService.createAuthor(this.author).subscribe(author => {
+      this.author = author
+      this.linkAuthor()
+    });
+  }
+
+  verifyAuthor(){
+    let flag = false;
+    this.authors?.forEach(element => {
+      if(element.id === this.author.id){
+        flag = true;
+      }
+    });
+    return flag;
+  }
+
+  linkAuthor(){
+    this.bookService.linkAuthorBook(this.author.id, this.book!.id).subscribe(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['book/edit', this.book!.id])
+
+
+      });
+    })
+  }
+
+  changeVisibility(){
+    let addContainer = document.getElementById("add-author-icon") as HTMLElement;
+    let formContainer = document.getElementById("add-author-form") as HTMLElement;
+
+
+    if(addContainer.classList.contains('author-visibility')){
+      addContainer.classList.toggle('author-visibility')
+    }
+
+    if(formContainer.classList.contains('form-visibility')){
+      formContainer.classList.toggle('form-visibility')
+    }
+  }
 }

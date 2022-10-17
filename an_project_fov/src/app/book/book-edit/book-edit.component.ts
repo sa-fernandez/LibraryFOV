@@ -40,7 +40,7 @@ export class BookEditComponent implements OnInit {
       this.editBook.name = this.inputName;
       this.editBook.isbn = this.inputIsbn;
       this.bookService.editBook(this.editBook).subscribe(() => {
-        this.router.navigate(['book/list'])
+        this.router.navigate(['book/view', this.book?.id]);
       });
     }
   }

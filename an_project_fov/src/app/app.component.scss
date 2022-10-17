@@ -5,84 +5,60 @@
 }
 
 #header{
-    background-color: rgb(42, 42, 42);
+    background-color: rgb(26, 26, 26);
     
     .wrap{
         max-width: 1328px;
         margin: 0px auto;
     
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-
-    #logo{
-        font-size: 3.2em;
-        align-self: center;
-        color: white;
-        flex-grow: 2;
-    }
-
-    #menu{
-        flex-basis: 20%;
-        flex-grow: 1;
-       
-        ul{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-
+        #menu{
             
-            li{
-                min-width: 20%;
+            ul{
                 display: flex;
+                flex-direction: row;
+                justify-content: space-around;
                 align-items: center;
-                justify-content: center;
-                height: 60px;
+                margin: 0px auto;
+                width: 60%;
+        
+                li{
+                    min-width: 20%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 75px;
 
-                a{
-                    font-size: 1.8em;
-                    color: rgb(176, 176, 176);
-                    transition: all 300ms;
-             
-                    padding-top: 15%;
-                    padding-bottom: 15%;
-                    text-decoration: none;
+                    a{
+                        font-size: 1.7em;
+                        color: rgb(176, 176, 176);
+                        transition: all 300ms;
+                        padding-top: 20%;
+                        padding-bottom: 20%;
+                        text-decoration: none;
+                        font-weight: 300;
 
-                    &:hover{
-                        color: white;
-                        transform: scale(1.08);
-                        
+                        &:hover{
+                            color: white;
+                            transform: scale(1.05);  
+                        }   
                     }
 
-
-                    
+                    img{
+                        width: 30%;
+                        filter: invert(100%);
+                    }
                 }
 
-          
-
-
-
-            }
-
-            .menuSelected{
-                border-bottom: 4px solid rgb(82, 68, 122);
-                a{
-                    transform: scale(1.08);
-                    color: white;
+                .menuSelected{
+                    border-bottom: 5px solid #005572;
+                    a{
+                        transform: scale(1.08);
+                        color: white;
+                    }
                 }
-            }
-
-
-
+            }    
         }
-
-
-        
     }
-  }
-    
 }
 
 

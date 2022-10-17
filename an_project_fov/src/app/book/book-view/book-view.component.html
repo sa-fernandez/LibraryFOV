@@ -7,45 +7,57 @@
 
             <div class="book-info">
                 <h1 id="name">{{book?.name}}</h1>
+                <p id="isbn">ISBN: {{book?.isbn}}</p>
+
+                <p id="authors-title">Autores</p>
                 <ul id="autors" *ngIf="authors">
                     <li *ngFor="let author of authors; let i = index">
                         <p>{{author.name}}</p>
                     </li>
                 </ul>
                 
-                <p id="isbn">ISBN: {{book?.isbn}}</p>
                 <div class="buttoms">
-                    <button class="buttom">Solicitar Prestamo</button>
                     <button class="buttom" [routerLink]="['/book/edit', book?.id]">Editar Libro</button>
                     <button class="buttom" (click)="deleteBook()">Borrar Libro</button>
                 </div>
 
-                
-                <form (ngSubmit)="onSubmit()">
-                    <select name="authors-names" id="authors-names" *ngIf="allAuthors" [(ngModel)]="selectedAuthor" (change)="dropboxClick()">
-                        <option value=""></option>
-                        <option [ngValue]="author" *ngFor="let author of allAuthors">{{author.name}}</option>
-                    </select>
-                    <input type="text" placeholder="Nombre del autor" name="name" [(ngModel)]="inputName" [disabled]="isDisabled">
-                    <button type="submit">Agregar Autor</button>
-                </form>
-               
             </div>
-
-            <div>
-                <ul *ngIf="copies">
-                    <li *ngFor="let copy of copies"><a [routerLink]="['/book/create-loan', copy.id]">{{copy.status}} - {{copy.timestamp}}</a></li>
-                </ul>
+            
+            <div id="copies-container">
+                <div id="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Copia</th>
+                                <th>Estado</th>
+                                <th>Disponibilidad</th>
+                            </tr>
+                        </thead>
+ 
+                            <tbody> 
+                                <ng-container *ngIf="copies">
+                                    <tr *ngFor="let copy of copies">
+                                        <th>{{copy.timestamp}}</th>
+                                        <th>{{copy.status}}</th>
+                                        <th><a [routerLink]="['/book/create-loan', copy.id]">Solicitar</a></th>
+                                    </tr>
+                                </ng-container>       
+                            </tbody> 
+                    </table>
+                </div>
             </div>
-
         </div>
-
-
-
-
-
-
     </div>
 </section>
+
+<!--
+<form (ngSubmit)="onSubmit()">
+    <select name="authors-names" id="authors-names" *ngIf="allAuthors" [(ngModel)]="selectedAuthor" (change)="dropboxClick()">
+        <option value=""></option>
+        <option [ngValue]="author" *ngFor="let author of allAuthors">{{author.name}}</option>
+    </select>
+    <input type="text" placeholder="Nombre del autor" name="name" [(ngModel)]="inputName" [disabled]="isDisabled">
+    <button type="submit">Agregar Autor</button>
+</form>-->
 
 

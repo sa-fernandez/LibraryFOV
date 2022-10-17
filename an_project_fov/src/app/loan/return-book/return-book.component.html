@@ -1,10 +1,19 @@
-<div>
-    <form (ngSubmit)="onSubmit()">
-        <select name="authors-names" id="authors-names" *ngIf="allPeople" [(ngModel)]="selectedPerson">
-            <option value=""></option>
-            <option [ngValue]="person" *ngFor="let person of allPeople">{{person.name}}</option>
-        </select>
-        <button type="submit">Buscar prestamos</button>
-    </form>
-    <app-loan-list [loansReceived]="loans"></app-loan-list>
-</div>
+<section id="loan-return">
+    <div class="wrap">
+        <div id="form-layout">
+            <h1>Devolución de libros</h1>
+            <form (ngSubmit)="onSubmit()">
+                <select name="authors-names" id="authors-names" *ngIf="allPeople" [(ngModel)]="selectedPerson">
+                    <option value=""></option>
+                    <option [ngValue]="person" *ngFor="let person of allPeople">{{person.name}}</option>
+                </select>
+                <app-loan-list [loansReceived]="loans"></app-loan-list>
+                <div id="button-layout">
+                    <button type="submit">Buscar prestamos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+

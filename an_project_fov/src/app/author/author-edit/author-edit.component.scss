@@ -33,7 +33,7 @@
                         font-size: 1.7em;        
                         border-radius: 3px;
                         padding-left: 5px;
-                        border: 1px solid rgb(40, 40, 124);
+                        border: 1px solid rgb(1, 1, 59);
 
                         &::placeholder{
                             color: #ccc
@@ -68,5 +68,115 @@
                 }
             }
         }
+
+        #add-author-form{
+            width: 70%;
+            margin: 0px auto;
+            
+            label{    
+                display: flex;
+                font-size: 1.8em;
+                margin-bottom: 1.5%;
+                color: rgb(116, 116, 116);
+            }
+
+            #input-layout{      
+                display: flex;
+                flex-direction: row;
+                position: relative;
+                margin-bottom: 20px;
+
+                select{
+                    width: 30%;
+                    height: 51px;
+                    margin-right: 15px;      
+                    font-size: 1.2em;        
+                    border-radius: 5px;
+                    padding-left: 5px;
+                    border: 1px solid rgb(1, 1, 59);    
+                }
+
+                input{     
+                    margin: 0px auto;
+                    width: 65%;
+                    height: 50px;
+                    font-size: 1.7em;        
+                    border-radius: 3px;
+                    padding-left: 5px;
+                    border: 1px solid rgb(1, 1, 59);
+
+                    &::placeholder{
+                        color: #ccc;
+                    }
+                }
+
+                button{
+                    position: absolute;
+                    top: 55%;
+                    transform: translateY(-55%);
+                    right: 3%;
+                    text-align: center;
+                    width: 20px;
+                    height: 20px;
+                    background: transparent;
+                    border: none;
+
+                    svg{
+                        width: 100%;   
+                        color: gray;
+
+                        &:hover{
+                            cursor: pointer;
+                            color: green;   
+                        }
+                    }
+
+                    &:hover{
+                        cursor: pointer;   
+                    }    
+                }
+            }  
+               
+        }
+        
+
+        #add-author-icon{
+            width: 70%;
+            margin: 0px auto;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            color: rgb(119, 119, 119);
+            visibility: hidden;
+       
+            h3{
+                margin: 0px;
+                padding-right: 2%;
+                font-size: 1.5em;
+                font-weight: 400;        
+            }
+
+            svg{
+                width: 20px;
+                height: 20px;
+
+                &:hover{
+                    color: green;
+                    cursor: pointer;
+                }
+            }
+
+            &:hover{
+                color: black;          
+            }
+        }
     }
 }
+
+.form-visibility{
+    display: none; 
+}
+
+.author-visibility{
+    visibility: visible !important;
+} 

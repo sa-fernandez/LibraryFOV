@@ -1,7 +1,16 @@
-<div>
-    <form (ngSubmit)="onSubmit()">
-        <input type="text" placeholder="Nombre de libro" name="name" [(ngModel)]="book.name">
-        <input type="text" placeholder="ISBN del libro" name="isbn" [(ngModel)]="book.isbn">
-        <button type="submit">Crear Libro</button>
-    </form>
-</div>
+<section id="create-book">
+    <div class="wrap">
+        <div id="form-layout">
+            <h1>Crear Nuevo Libro</h1>
+            <form (ngSubmit)="onSubmit()">
+                <label>Ingresa el nombre del libro</label>
+                <input type="text" placeholder="Nombre de libro" name="name" [(ngModel)]="book.name">
+                <label>Ingresa el ISBN del libro</label>
+                <input type="text" placeholder="ISBN del libro" name="isbn" [(ngModel)]="book.isbn">
+                <div id="button-layout">
+                    <button type="submit">Crear Libro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

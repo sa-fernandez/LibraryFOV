@@ -43,6 +43,14 @@ export class BookViewComponent implements OnInit {
     this.bookService.listAuthors().subscribe(authors => this.allAuthors = authors);
   }
 
+  deleteBook(){
+    this.bookService.deleteBook(this.book!.id).subscribe(() => {
+      this.router.navigate(['book/list'])
+    });
+  }
+
+
+/******************************
   dropboxClick(){
     if(this.selectedAuthor){
       this.isDisabled = true;
@@ -50,12 +58,6 @@ export class BookViewComponent implements OnInit {
     }else{
       this.isDisabled = false;
     }
-  }
-
-  deleteBook(){
-    this.bookService.deleteBook(this.book!.id).subscribe(() => {
-      this.router.navigate(['book/list'])
-    });
   }
 
   saveAuthor(){
@@ -96,5 +98,5 @@ export class BookViewComponent implements OnInit {
       //ALERTA
     }
   }
-
+  */
 }

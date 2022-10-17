@@ -1,4 +1,3 @@
-
 @mixin flex-center {
     display: flex;
     justify-content: center;
@@ -14,9 +13,11 @@
 
 
 #list-books{
+    background-color: rgb(246, 246, 246);
     .wrap{
         max-width: 1328px;
-        margin: 20px auto;
+        margin: 0px auto;
+        padding-top: 2%;
 
         #books{
             width: 100%;
@@ -25,15 +26,14 @@
             justify-content: space-between;
             column-gap: 0.5em;
             row-gap: 20px;
-          
-            
+                
             .book{ 
                 display: flex;   
                 flex-direction: column;
                 flex-basis: 280px;
                 flex-grow: 1;
                 border: 1px solid rgb(245, 245, 245);
-                background-color: rgb(250, 250, 250);
+                background-color: rgb(246, 246, 246);
                 transition: all 300ms;
                 border-radius: 3px;
                 margin: 10px;
@@ -82,6 +82,7 @@
                     align-items: center;
                     text-align: center;
                     height: 60px;
+                    padding-top: 5%;
                 
                     a{
                         text-decoration: none;
@@ -93,11 +94,12 @@
                             color: black;
                             
                             &:nth-child(1){
-                                font-size: 2.2em;
-                                font-weight: bold;
+                                font-size: 2.4em;
+                                font-weight: 500;
                             }
                             &:nth-child(2){
-                                font-size: 1.3em;
+                                font-weight: 300;
+                                font-size: 1.5em;
                             }
                         }
 
