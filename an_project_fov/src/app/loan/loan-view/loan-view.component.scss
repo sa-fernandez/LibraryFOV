@@ -4,7 +4,6 @@
     font-size: 10px;
 }
 
-
 #book-view{
     .wrap{
         max-width: 1328px;
@@ -18,8 +17,7 @@
             padding: 20px;
             background-color: rgb(247, 247, 247);
 
-            .book-style{
-            
+            .book-style{  
                 text-align: center;
                 flex-basis: 30%;
                 flex-grow: 1;
@@ -37,41 +35,36 @@
                 flex-basis: 70%;
                 flex-grow: 1;
                 align-self: center;
-               
                 padding-left: 20px;
 
                 #name{
-                    font-size: 4.5em;
-                }
-
-                #autors{
-                    padding-top: 3%;
-                    li{
-                        list-style: none;
-                        p{
-                            font-size: 2.5em;
-                        }
-                    }
+                    font-size: 5em;
+                    font-weight: 600;
+                    text-align: justify;
                 }
 
                 #isbn{
-                    padding-top: 5%;
-                    font-size: 2.1em;
+                    padding-top: 1%;
+                    font-size: 2em;
+                    font-weight: 200;
                 }
 
                 #status{
                     padding-top: 3%;
-                    font-size: 1.4em;
+                    padding-bottom: 3%;
+                    font-size: 2em;
+                    font-weight: 400;
                 }
 
                 #initdate{
-                    padding-top: 3%;
-                    font-size: 2em;
+                    font-size: 1.8em;
+                    font-weight: 400;
+                    margin-bottom: 3px;
                 }
 
                 #finaldate{
-                    padding-top: 1%;
-                    font-size: 2em;
+                    font-size: 1.8em;
+                    font-weight: 400;
                 }
 
                 .buttoms{    
@@ -104,19 +97,20 @@
                         &:hover{
                             transform: scale(1.05);
                             box-shadow: 2px 4px 5px rgb(171, 171, 171);
-                        }
-                        
+                        }     
                     }
 
+                    mat-form-field{     
+                        background-color: transparent;
+                        align-items: center;
+                        padding: 5px;                
+                        margin: 0px auto;
+                        background-color: white;
+                        border: 1px solid #ccc;
+                        border-radius: 3px;              
+                    }
                 }
-
-
             }
         }
-
-
-
-
-
     }
 }

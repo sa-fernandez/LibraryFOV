@@ -11,7 +11,6 @@
         max-width: 1328px;
         margin: 0px auto;
 
-
         #form-layout{
             text-align: center;
             margin: 0px auto;
@@ -71,7 +70,7 @@
                         margin: 0px;
 
                         option{
-                            font-size: 1.2em;
+                            font-size: 1.3em;
                         }
                     }
 
@@ -84,14 +83,15 @@
                     width: 98%;
                     background-color: transparent;
                     align-items: center;
-                    padding: 5px;
-            
-                    
+                    padding: 5px;          
                     margin: 0px auto;
                     background-color: white;
                     border: 1px solid rgb(1, 1, 59);
-                    border-radius: 3px;
-                    
+                    border-radius: 3px;  
+                     
+                    input{
+                        font-size: 1.8em;
+                    }
                 }
 
                 button{ 
@@ -109,14 +109,8 @@
                     &:hover{
                         transform: scale(1.08);
                     }
-                } 
-
-      
-                
-            
+                }     
             }
-
-        }
-        
+        }     
     }
 }

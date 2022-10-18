@@ -1,0 +1,113 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-size: 10px;
+}
+
+#loan-list{
+
+    border-radius: 5px;
+    width: 80%;
+    margin: 0px auto;
+
+    h3{
+        font-size: 1.8em;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    #table-wrap{
+        background-color: transparent;
+        border: 1px solid rgb(15, 0, 58);
+        border-radius: 5px;
+        width: 100%;
+        max-height: 50%;
+        overflow: auto;
+        overflow-x: hidden ;     
+        padding: 0px;
+        
+        
+        &::-webkit-scrollbar{      
+            width: 5px;    
+        }
+
+        &::-webkit-scrollbar-thumb{
+            background-color: rgb(6, 1, 44);    
+        }
+
+        table{
+            margin: 0px auto;
+            background-color: rgb(245, 245, 245);             
+            border-radius: 8px;
+            border-collapse: collapse;
+            width: 100%;
+           
+                        
+            thead{
+                background-color: rgb(6, 1, 44);
+                position: sticky;
+                top: 0%;
+                
+            
+                tr{       
+                    th{
+                        color: white;
+                        font-size: 1.4em;
+                        font-weight: 400;
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+       
+                    }
+                }
+            }
+
+            tbody{                                                
+                tr{
+                    color: rgb(110, 110, 110);
+                    transition: all 200ms;
+                    th{
+                        font-size: 1.2em;
+                        font-weight: 300;
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+
+                        a{
+                            padding: 8px;
+                            padding-left: 15px;
+                            padding-right: 15px;
+                            background-color: #425F57;
+                            border-radius: 3px;
+                            color: white;
+                            text-decoration: none;
+                            font-weight: 500;
+                            transition: all 400ms;
+
+                            &:hover{
+                                background-color: #499d70;
+                            }
+                        }   
+                        
+                        button{
+                            margin: auto;
+                            padding-top: 10%;
+                            border: none;
+                            background-color: transparent;
+
+                            &:hover{
+                                color: red;
+                            }
+                        }
+                    }
+        
+                    &:hover{
+                        color: black;
+                    }
+
+                    &:nth-child(even){
+                        background-color: rgb(240, 240, 240);
+                    }
+                }          
+            }
+        }
+    } 
+}

@@ -7,35 +7,23 @@
 
             <div class="book-info">
                 <h1 id="name">{{book?.name}}</h1>
-                <ul id="autors" *ngIf="authors">
-                    <li *ngFor="let author of authors; let i = index">
-                        <p>{{author.name}}</p>
-                    </li>
-                </ul>
-                
-                <p id="isbn">ISBN: {{book?.isbn}}</p>
-                <p id="status"> {{realbook?.status}}</p>
+                <p id="isbn">ISBN: {{book?.isbn}}</p>       
+                <p id="status">Estado: {{realbook?.status}}</p>
                 <p id="initdate"> Fecha de prestamo: {{loan.initDate}}</p>
                 <p id="finaldate"> Fecha de entrega: {{loan.finalDate}}</p>
                 <div class="buttoms">
                     <button class="buttom" (click)="returnLoan()"> Devolver libro</button>
                     <button class="buttom" (click)="editDate()">Aplazar entrega</button>
                     <mat-form-field appearance="fill">
-                        <mat-label>Input & change events</mat-label>
+                        <mat-label>Nueva fecha de préstamo</mat-label>
                         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)">
                         <mat-hint>MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                </div>
-
-               
+                </div>        
             </div>
-
-
         </div>
-
-
     </div>
 </section>
 

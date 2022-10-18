@@ -1,0 +1,99 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-size: 10px;
+}
+
+#create-copy{
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+
+    .wrap{
+        max-width: 1328px;
+        margin: 0px auto;
+
+        #form-layout{
+            text-align: center;
+            margin: 0px auto;
+            width: 70%;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            padding-bottom: 40px;
+            background-color: rgb(247, 247, 247);
+
+            h1{
+                font-size: 3em;
+                font-weight: 500;
+                padding-top: 3%;
+            }
+
+            form{
+                display: flex;
+                flex-direction: column;
+                padding-top: 3%;
+                justify-content: center;
+                width: 45%;
+                margin: 0px auto;
+
+                label{
+                    text-align: start;
+                    font-size: 1.7em;
+                    color: rgb(116, 116, 116);
+                    margin-bottom: 3px;
+                }
+
+                select{
+                    margin: 0px auto;
+                    width: 100%;
+                    height: 50px;
+                    font-size: 1.7em;
+                    margin-bottom: 30px;
+                    border-radius: 3px;
+                    padding-left: 5px;
+                    border: 1px solid rgb(1, 1, 59);
+                    color: black;
+
+                    &::placeholder{        
+                        color: #ccc;
+                    }
+
+                    option{
+                        font-size: 0.85em;
+                    }
+                }
+
+                mat-form-field{
+                    width: 98%;
+                    background-color: transparent;
+                    align-items: center;
+                    padding: 5px;          
+                    margin: 0px auto;
+                    background-color: white;
+                    border: 1px solid rgb(1, 1, 59);
+                    border-radius: 3px;   
+                    
+                    input{
+                        font-size: 1.5em;
+                    }
+                }
+
+                button{ 
+                    width: 30%;
+                    height: 50px;      
+                    margin-top: 20px;
+                    border: none;
+                    border-radius: 5px;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 1.5em;
+                    transition: all 300ms;
+                    background-color: #293462;  
+    
+                    &:hover{
+                        transform: scale(1.08);
+                    }
+                }     
+            }
+        }
+    }
+}

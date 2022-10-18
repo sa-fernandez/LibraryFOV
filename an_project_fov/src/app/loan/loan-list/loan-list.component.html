@@ -1,6 +1,23 @@
-<div>
-    <ul *ngIf = "loansReceived">
-        <p>Libros prestados</p>
-        <li *ngFor="let book of booksBorrowed; let i = index"> <a [routerLink]="['/book/view-loan', loansReceived[i].id]"> isbn libro: {{book.isbn}} Nombre:{{book.name}}</a></li>
-    </ul>
+<div id="loan-list" *ngIf="loansReceived">
+    <h3>Libros prestados</h3>
+    <div id="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Libro</th>
+                    <th>ISBN</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr  *ngFor="let book of booksBorrowed; let i = index">
+                    <th>{{book.name}}</th>
+                    <th>{{book.isbn}}</th>
+                    <th><a [routerLink]="['/book/view-loan', loansReceived[i].id]">Modificar</a></th>
+                </tr>
+            </tbody> 
+        </table>
+    </div>
 </div>
+
+
