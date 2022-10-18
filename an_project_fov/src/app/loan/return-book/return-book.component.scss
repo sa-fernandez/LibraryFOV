@@ -45,6 +45,10 @@
                 padding-left: 5px;
                 border: 1px solid rgb(1, 1, 59);
                 color: black;
+
+                option{
+                    font-size: 1.2em;
+                }
             }
 
             button{ 
@@ -55,7 +59,7 @@
                 border-radius: 5px;
                 color: white;
                 font-weight: bold;
-                font-size: 1.2em;
+                font-size: 1.3em;
                 transition: all 300ms;
                 background-color: #293462;  
 

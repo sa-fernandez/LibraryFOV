@@ -17,9 +17,9 @@
                 </ul>
                 
                 <div class="buttoms">
+                    <button class="buttom" [routerLink]="['/book/create-copy', book?.id]">Agregar Copia</button>
                     <button class="buttom" [routerLink]="['/book/edit', book?.id]">Editar Libro</button>
                     <button class="buttom" (click)="deleteBook()">Borrar Libro</button>
-                    <button class="buttom" [routerLink]="['/book/create-copy', book?.id]">Agregar Copia</button>
                 </div>
 
             </div>
