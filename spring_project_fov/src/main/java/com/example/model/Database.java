@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.example.repository.AuthorRepository;
@@ -15,6 +16,7 @@ import com.example.repository.BookRepository;
 import com.example.repository.RealBookRepository;
 
 @Component
+@Profile({"default"})
 public class Database implements CommandLineRunner {
 
     private static final int NUM_BOOKS = 1000;
