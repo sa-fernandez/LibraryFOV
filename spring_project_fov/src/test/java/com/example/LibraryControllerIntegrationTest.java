@@ -9,10 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.example.dto.DTOLink;
 import com.example.model.Author;
 import com.example.model.Book;
 import com.example.model.RealBook;
@@ -71,15 +75,56 @@ public class LibraryControllerIntegrationTest {
 
     @Test
     void testBuscarLibro() throws Exception {
-        Book book = rest.getForObject("http://localhost:" + port + "/view/1", Book.class);
-        assertEquals(bookRepository.findById(1L).orElseThrow().getIsbn(), book.getIsbn());
-        assertEquals(bookRepository.findById(1L).orElseThrow().getName(), book.getName());
+        Book book = rest.getForObject("http://localhost:" + port + "/book/view/4", Book.class);
+        assertEquals(bookRepository.findById(4L).orElseThrow().getIsbn(), book.getIsbn());
+        assertEquals(bookRepository.findById(4L).orElseThrow().getName(), book.getName());
     }
 
     @Test
     void testCrearLibro() throws Exception {
-        Book book = rest.postForObject("http://localhost:" + port + "/create-book", new Book("1234", "TestBook"), Book.class);
-        assertEquals(new Book("1234", "TestBook"), book);
+        Book bookProof = new Book("1234", "TestBook");
+        Book book = rest.postForObject("http://localhost:" + port + "/book/create-book", bookProof, Book.class);
+        assertEquals(bookProof.getIsbn(), book.getIsbn());
+        assertEquals(bookProof.getName(), book.getName());
     }
-    
+
+    @Test
+    void testEditarLibro() throws Exception {
+        Book book = bookRepository.findById(4L).orElseThrow();
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/edit-book", HttpMethod.PUT, null, Void.class, book);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+
+    @Test
+    void testBorrarLibro() throws Exception {
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete/4", HttpMethod.DELETE, null, Void.class, Void.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testCrearAutor() throws Exception {
+        Author authorProof = new Author("Benito Ocasio");
+        Author author = rest.postForObject("http://localhost:" + port + "/book/create-author", authorProof, Author.class);
+        assertEquals(authorProof.getName(), author.getName());
+    }
+
+    @Test
+    void testLinkAuthorBook() throws Exception {
+        Author author = authorRepository.findById(2L).orElseThrow();
+        Book book = bookRepository.findById(4L).orElseThrow();
+        DTOLink dtoLink = new DTOLink(author.getId(), book.getId());
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/link", HttpMethod.PUT, null, Void.class, dtoLink);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testUnlinkAuthorBook() throws Exception {
+        Author author = authorRepository.findById(1L).orElseThrow();
+        Book book = bookRepository.findById(4L).orElseThrow();
+        DTOLink dtoLink = new DTOLink(author.getId(), book.getId());
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/unlink", HttpMethod.PUT, null, Void.class, dtoLink);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
 }
