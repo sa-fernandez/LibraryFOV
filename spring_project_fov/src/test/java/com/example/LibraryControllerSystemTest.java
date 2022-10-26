@@ -1,10 +1,18 @@
 package com.example;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -87,6 +95,16 @@ public class LibraryControllerSystemTest {
     @AfterEach
     void end() {
         driver.quit();
+    }
+
+    @Test
+    void listarLibros() {
+        driver.get(baseUrl + "/book/list");
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
+        List<WebElement> libros = driver.findElementsByClassName("book-list");
+        assertEquals("Guía práctica para Spring\n8273", libros.get(0).getText());
+        assertEquals("Guía práctica para Angular\n3421", libros.get(1).getText());
+        assertEquals("Guía práctica para Testing\n9790", libros.get(2).getText());
     }
     
 }
