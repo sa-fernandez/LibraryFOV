@@ -1,9 +1,12 @@
 package com.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.booleanThat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.example.dto.DTOCopy;
 import com.example.dto.DTOLink;
 import com.example.dto.DTOLoan;
 import com.example.model.Author;
@@ -68,6 +73,7 @@ public class LibraryControllerIntegrationTest {
         RealBook realBook1 = new RealBook("BUENO", "10/10/2022");
         RealBook realBook2 = new RealBook("REGULAR", "11/10/2022");
         RealBook realBook3 = new RealBook("MALO", "12/10/2022");
+        RealBook realBook4 = new RealBook("MALO", "1/10/2022");
         Loan loan1 = new Loan(formatter.format(ldt), "6/12/2022", realBook1, author3);
         Loan loan2 = new Loan(formatter.format(ldt), "16/12/2022", realBook2, author1);
         Loan loan3 = new Loan(formatter.format(ldt), "14/12/2022", realBook3, author2);
@@ -77,6 +83,7 @@ public class LibraryControllerIntegrationTest {
         book1.getCopies().add(realBook1);
         book2.getCopies().add(realBook2);
         book3.getCopies().add(realBook3);
+        book3.getCopies().add(realBook4);
         authorRepository.save(author1);
         authorRepository.save(author2);
         authorRepository.save(author3);
@@ -86,6 +93,18 @@ public class LibraryControllerIntegrationTest {
         loanRepository.save(loan1);
         loanRepository.save(loan2);
         loanRepository.save(loan3);
+    }
+
+    @Test
+    void testListarLibros() throws Exception {
+        List<Book> booksProof = bookRepository.findAll();
+        ResponseEntity<List<Book>> response = rest.exchange("/book/list",
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<Book>>() {
+            });
+        List<Book> books = response.getBody();
+        assertEquals(booksProof.size(), books.size());
     }
 
     @Test
@@ -119,6 +138,18 @@ public class LibraryControllerIntegrationTest {
     }
 
     @Test
+    void testListarAutores() throws Exception {
+        List<Author> authorsProof = authorRepository.findAll();
+        ResponseEntity<List<Author>> response = rest.exchange("/book/list-authors",
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<Author>>() {
+            });
+        List<Author> authors = response.getBody();
+        assertEquals(authorsProof.size(), authors.size());
+    }
+
+    @Test
     void testCrearAutor() throws Exception {
         Author authorProof = new Author("Benito Ocasio");
         Author author = rest.postForObject("http://localhost:" + port + "/book/create-author", authorProof, Author.class);
@@ -133,11 +164,11 @@ public class LibraryControllerIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
-    void testBorrarAutor() throws Exception {
-        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-author/1", HttpMethod.DELETE, null, Void.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+    // @Test
+    // void testBorrarAutor() throws Exception {
+    //     ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-author/1", HttpMethod.DELETE, null, Void.class);
+    //     assertEquals(HttpStatus.OK, response.getStatusCode());
+    // }
 
     @Test
     void testLinkAuthorBook() throws Exception {
@@ -160,9 +191,21 @@ public class LibraryControllerIntegrationTest {
     }
 
     @Test
+    void testListarPrestamos() throws Exception {
+        List<Loan> loansProof = loanRepository.findAll();
+        ResponseEntity<List<Loan>> response = rest.exchange("/book/list-loans",
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<Loan>>() {
+            });
+        List<Loan> loans = response.getBody();
+        assertEquals(loansProof.size(), loans.size());
+    }
+
+    @Test
     void testBuscarPrestamo() throws Exception {
-        Loan loanProof = loanRepository.findById(10L).orElseThrow();
-        Loan loan = rest.getForObject("http://localhost:" + port + "/book/view-loan/10", Loan.class);
+        Loan loanProof = loanRepository.findById(12L).orElseThrow();
+        Loan loan = rest.getForObject("http://localhost:" + port + "/book/view-loan/12", Loan.class);
         assertEquals(loanProof.getInitDate(), loan.getInitDate());
         assertEquals(loanProof.getFinalDate(), loan.getFinalDate());
     }
@@ -180,13 +223,13 @@ public class LibraryControllerIntegrationTest {
 
     @Test
     void testBorrarPrestamo() throws Exception {
-        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-loan/10", HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-loan/12", HttpMethod.DELETE, null, Void.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testEditarPrestamo() throws Exception {
-        Loan loan = loanRepository.findById(11L).orElseThrow();
+        Loan loan = loanRepository.findById(12L).orElseThrow();
         HttpEntity<Loan> httpEntity = new HttpEntity<Loan>(loan);
         ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/edit-loan", HttpMethod.PATCH, httpEntity, Void.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -210,8 +253,50 @@ public class LibraryControllerIntegrationTest {
 
     @Test
     void testBorrarCopia() throws Exception {
-        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-copy/5", HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-copy/10", HttpMethod.DELETE, null, Void.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testLinkCopyBook() throws Exception {
+        RealBook realBook = realBookRepository.findById(7L).orElseThrow();
+        Book book = bookRepository.findById(4L).orElseThrow();
+        DTOCopy dtoCopy = new DTOCopy(book.getId(), realBook.getId());
+        HttpEntity<DTOCopy> httpEntity = new HttpEntity<DTOCopy>(dtoCopy);
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/link-copy", HttpMethod.PUT, httpEntity, Void.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testListarCopiasNoPrestadas() throws Exception {
+        List<RealBook> copiesProof = realBookRepository.findAllNotBorrowed(4L);
+        ResponseEntity<List<RealBook>> response = rest.exchange("/book/not-borrowed/4",
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<RealBook>>() {
+            });
+        List<RealBook> copies = response.getBody();
+        assertEquals(copiesProof.size(), copies.size());
+    }
+
+    @Test
+    void testListarPrestamosPersona() throws Exception {
+        List<Loan> loansProof = loanRepository.findAllBorrowedPerson(1L);
+        ResponseEntity<List<Loan>> response = rest.exchange("/book/list-person-loans/1",
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<Loan>>() {
+            });
+        List<Loan> loans = response.getBody();
+        assertEquals(loansProof.size(), loans.size());
+    }
+
+    @Test
+    void testBuscarCopiaPrestamo() throws Exception {
+        Loan loan = loanRepository.findById(12L).orElseThrow();
+        RealBook realBook = rest.getForObject("http://localhost:" + port + "/book/view-realbook/12", RealBook.class);
+        assertEquals(loan.getBook().getStatus(), realBook.getStatus());
+        assertEquals(loan.getBook().getTimestamp(), realBook.getTimestamp());
     }
 
 }
