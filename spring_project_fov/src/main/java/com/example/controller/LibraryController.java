@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ public class LibraryController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
-    public Iterable<Book> listarLibros(){
+    public List<Book> listarLibros(){
         return bookRepository.findAll();
     }
 
@@ -61,7 +62,7 @@ public class LibraryController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/authors/{id}")
-    public Iterable<Author> buscarAutores(@PathVariable("id") Long id){
+    public List<Author> buscarAutores(@PathVariable("id") Long id){
         Book book = this.buscarLibro(id);
         return book.getAuthors();
     }
@@ -96,7 +97,7 @@ public class LibraryController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list-authors")
-    public Iterable<Author> listarAutores(){
+    public List<Author> listarAutores(){
         return authorRepository.findAll();
     }
 
@@ -139,7 +140,7 @@ public class LibraryController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list-copies/{id}")
-    public Iterable<RealBook> listarCopias(@PathVariable("id") Long id){
+    public List<RealBook> listarCopias(@PathVariable("id") Long id){
         Book book = bookRepository.findById(id).orElseThrow();
         return book.getCopies();
     }
@@ -159,19 +160,19 @@ public class LibraryController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list-loans")
-    public Iterable<Loan> listarPrestamos(){
+    public List<Loan> listarPrestamos(){
         return loanRepository.findAll();
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/not-borrowed/{id}")
-    public Iterable<RealBook> listarCopiasNoPrestadas(@PathVariable("id") Long id){
+    public List<RealBook> listarCopiasNoPrestadas(@PathVariable("id") Long id){
         return realBookRepository.findAllNotBorrowed(id);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list-person-loans/{id}")
-    public Iterable<Loan> listarPrestamosPersona(@PathVariable("id") Long id){
+    public List<Loan> listarPrestamosPersona(@PathVariable("id") Long id){
         return loanRepository.findAllBorrowedPerson(id);
     }
     

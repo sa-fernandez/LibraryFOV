@@ -102,9 +102,21 @@ public class LibraryControllerSystemTest {
         driver.get(baseUrl + "/book/list");
         wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
         List<WebElement> libros = driver.findElementsByClassName("book-list");
-        assertEquals("Guía práctica para Spring\n8273", libros.get(0).getText());
-        assertEquals("Guía práctica para Angular\n3421", libros.get(1).getText());
-        assertEquals("Guía práctica para Testing\n9790", libros.get(2).getText());
+        assertEquals("Guía práctica para Spring\nISBN: 8273", libros.get(0).getText());
+        assertEquals("Guía práctica para Angular\nISBN: 3421", libros.get(1).getText());
+        assertEquals("Guía práctica para Testing\nISBN: 9790", libros.get(2).getText());
+    }
+
+    @Test
+    void compararListas() {
+        driver.get(baseUrl + "/book/list");
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
+        List<Book> librosEsperados = bookRepository.findAll();
+        List<WebElement> libros = driver.findElementsByClassName("book-list");
+        assertEquals(librosEsperados.size(), libros.size());
+        for (int i = 0; i < librosEsperados.size(); i++) {
+            assertEquals(librosEsperados.get(i).getName() + "\nISBN: " + librosEsperados.get(i).getIsbn(), libros.get(i).getText());
+        }
     }
     
 }

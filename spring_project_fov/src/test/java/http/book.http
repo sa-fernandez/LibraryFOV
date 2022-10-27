@@ -14,7 +14,8 @@ Content-Type: application/json
 {"idCopy": 10, "idPerson": 1, "finalDate": "11/12/2022"}
 
 ###
-DELETE http://localhost:8080/book/delete-loan/11091
+DELETE http://localhost:8080/book/delete-loan/11091##
+DELETE http://localhost:8080/book/delete-author/1
 
 ###
 GET http://localhost:8080/book/not-borrowed/3
@@ -36,3 +37,9 @@ PUT http://localhost:8080/book/link-copy
 Content-Type: application/json
 
 {"idBook": 7, "idCopy": 11091}
+
+###
+GET http://localhost:8080/book/list-person-loans/1
+
+###
+DELETE http://localhost:8080/book/delete-author/1

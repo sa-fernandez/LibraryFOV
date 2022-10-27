@@ -1,22 +1,24 @@
 package com.example.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.example.model.Loan;
 
-public interface LoanRepository extends CrudRepository<Loan, Long> {
+public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     @Transactional
     @Query(
         value = "select * from loan where person_id = :id",
         nativeQuery = true
     )
-    Iterable<Loan> findAllBorrowedPerson(Long id);
+    List<Loan> findAllBorrowedPerson(Long id);
 
     @Transactional
     @Modifying
