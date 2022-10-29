@@ -5,7 +5,7 @@
             <form id="form" (ngSubmit)="onSubmit()">
 
                 <label>Ingresa el estado</label>
-                <select [(ngModel)]="inputStatus" name="inputStatus">
+                <select [(ngModel)]="inputStatus" name="inputStatus" id="input-status">
                     <option value="BUENO">BUEN ESTADO</option>
                     <option value="REGULAR">ESTADO REGULAR</option>
                     <option value="MALO">MAL ESTADO</option>
@@ -15,13 +15,13 @@
                 <label>Ingresa la fecha</label>
                 <mat-form-field appearance="fill">
                     <mat-label>Fecha de compra</mat-label>
-                    <input matInput [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)">
+                    <input matInput [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)" id="input-date">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 <div>
-                    <button type="submit">Crear Copia</button>
+                    <button type="submit" id="button-copy-create">Crear Copia</button>
                 </div>
 
             </form>

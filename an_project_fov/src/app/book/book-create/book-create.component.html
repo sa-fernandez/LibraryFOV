@@ -4,11 +4,11 @@
             <h1>Crear nuevo libro</h1>
             <form (ngSubmit)="onSubmit()">
                 <label>Ingresa el nombre del libro</label>
-                <input type="text" placeholder="Nombre de libro" name="name" [(ngModel)]="book.name">
+                <input type="text" placeholder="Nombre de libro" name="name" id="name" [(ngModel)]="book.name">
                 <label>Ingresa el ISBN del libro</label>
-                <input type="text" placeholder="ISBN del libro" name="isbn" [(ngModel)]="book.isbn">
+                <input type="text" placeholder="ISBN del libro" name="isbn" id="isbn" [(ngModel)]="book.isbn">
                 <div id="button-layout">
-                    <button type="submit">Crear Libro</button>
+                    <button type="submit" id="button-create-book">Crear Libro</button>
                 </div>
             </form>
         </div>

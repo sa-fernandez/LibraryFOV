@@ -1,6 +1,8 @@
 package com.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 
@@ -8,11 +10,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -97,6 +101,10 @@ public class LibraryControllerSystemTest {
         driver.quit();
     }
 
+    String formatBook(Book book){
+        return book.getName() + "\nISBN: " + book.getIsbn();
+    }
+
     @Test
     void listarLibros() {
         driver.get(baseUrl + "/book/list");
@@ -115,8 +123,64 @@ public class LibraryControllerSystemTest {
         List<WebElement> libros = driver.findElementsByClassName("book-list");
         assertEquals(librosEsperados.size(), libros.size());
         for (int i = 0; i < librosEsperados.size(); i++) {
-            assertEquals(librosEsperados.get(i).getName() + "\nISBN: " + librosEsperados.get(i).getIsbn(), libros.get(i).getText());
+            assertEquals(formatBook(librosEsperados.get(i)), libros.get(i).getText());
         }
+    }
+
+    @Test
+    void visualizarLibro(){
+        driver.get(baseUrl + "/book/view/4");
+        Book book = bookRepository.findById(4L).orElseThrow();
+        WebElement name = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("name")));
+        WebElement isbn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("isbn")));
+        try{
+            wait.until(ExpectedConditions.textToBePresentInElement(name, book.getName()));
+            wait.until(ExpectedConditions.textToBePresentInElement(isbn, book.getIsbn()));
+        } catch (TimeoutException e){
+            fail("Error", e);
+        }
+    }
+
+    @Test
+    void borrarLibro(){
+        driver.get(baseUrl + "/book/view/4");
+        Book book = bookRepository.findById(4L).orElseThrow();
+        WebElement button = driver.findElementById("button-delete-book");
+        button.click();
+        try{
+            // Verificar no existencia
+        } catch (TimeoutException e){
+            fail("Error", e);
+        }
+    }
+
+    @Test
+    void crearLibro(){
+        driver.get(baseUrl + "/book/create");
+        WebElement inputBookName = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("name")));
+        WebElement inputBookIsbn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("isbn")));
+        WebElement button = driver.findElementById("button-create-book");
+        Book book = new Book("4895", "Guia practica para testing con Selenium");
+        inputBookName.sendKeys(book.getName());
+        inputBookIsbn.sendKeys(book.getIsbn());
+        button.click();
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 4));
+        List<WebElement> libros = driver.findElementsByClassName("book-list");
+        assertEquals(formatBook(book), libros.get(libros.size() - 1).getText());
+    }
+
+    @Test
+    void crearCopia(){
+        driver.get(baseUrl + "/book/view/4");
+        WebElement button = driver.findElementById("button-create-copy");
+        button.click();
+        Select selectStatus = new Select(driver.findElementById("input-status"));
+        selectStatus.selectByIndex(0);
+        WebElement inputDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-date")));
+        inputDate.sendKeys("14/12/2022");
+        WebElement buttonCreate = driver.findElementById("button-copy-create");
+        buttonCreate.click();
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("copy-list"), 2));
     }
     
 }
