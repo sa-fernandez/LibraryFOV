@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,23 @@ import { ReturnBookComponent } from './loan/return-book/return-book.component';
 import { LoanListComponent } from './loan/loan-list/loan-list.component';
 import { LoanViewComponent } from './loan/loan-view/loan-view.component';
 import { CreateCopyComponent } from './realbook/create-copy/create-copy.component';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8180',
+        realm: 'DWRealm',
+        clientId: 'dw-app'
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      }
+    });
+}
 
 @NgModule({
   declarations: [
@@ -43,12 +60,20 @@ import { CreateCopyComponent } from './realbook/create-copy/create-copy.componen
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    KeycloakAngularModule,
     MatNativeDateModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

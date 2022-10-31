@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,44 +49,46 @@ public class LibraryController {
 
     Logger log = LoggerFactory.getLogger(getClass());
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/list")
     public List<Book> listarLibros(){
         return bookRepository.findAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/view/{id}")
     public Book buscarLibro(@PathVariable("id") Long id){
         return bookRepository.findById(id).orElseThrow();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/authors/{id}")
     public List<Author> buscarAutores(@PathVariable("id") Long id){
         Book book = this.buscarLibro(id);
         return book.getAuthors();
     }
 
+    @Secured({"ROLE_ADMIN"})
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/delete/{id}")
     public void borrarLibro(@PathVariable("id") Long id){
         bookRepository.deleteById(id);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/create-book")
     public Book crearLibro(@RequestBody Book book){
         return bookRepository.save(book);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/create-author")
     public Author crearAutor(@RequestBody Author author){
         return authorRepository.save(author);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/link")
     public void linkAuthorBook(@RequestBody DTOLink dtoLink){
         Author author = authorRepository.findById(dtoLink.getIdAuthor()).orElseThrow();
@@ -95,31 +98,31 @@ public class LibraryController {
         bookRepository.save(book);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/list-authors")
     public List<Author> listarAutores(){
         return authorRepository.findAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/edit-book")
     public void editarLibro(@RequestBody Book book){
         bookRepository.updateBook(book.getIsbn(), book.getName(), book.getId());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/edit-author")
     public void editarAutor(@RequestBody Author author){
         authorRepository.updateAuthor(author.getName(), author.getId());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @DeleteMapping("/delete-author/{id}")
     public void borrarAutor(@PathVariable("id") Long id){
         authorRepository.deleteById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/unlink")
     public void unlinkAuthorBook(@RequestBody DTOLink dtoLink){
         Author author = authorRepository.findById(dtoLink.getIdAuthor()).orElseThrow();
@@ -128,7 +131,7 @@ public class LibraryController {
         bookRepository.save(book);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_USER"})
     @PostMapping("/loan")
     public Loan crearPrestamo(@RequestBody DTOLoan dtoLoan){
         RealBook copy = realBookRepository.findById(dtoLoan.getIdCopy()).orElseThrow();
@@ -138,76 +141,76 @@ public class LibraryController {
         return loanRepository.save(new Loan(formatter.format(ldt), dtoLoan.getFinalDate(), copy, author));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/list-copies/{id}")
     public List<RealBook> listarCopias(@PathVariable("id") Long id){
         Book book = bookRepository.findById(id).orElseThrow();
         return book.getCopies();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/view-copy/{id}")
     public RealBook buscarCopia(@PathVariable("id") Long id){
         return realBookRepository.findById(id).orElseThrow();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/book-copy/{id}")
     public Book buscarLibroCopia(@PathVariable("id") Long id){
         RealBook realBook = realBookRepository.findById(id).orElseThrow();
         return realBook.getBook();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/list-loans")
     public List<Loan> listarPrestamos(){
         return loanRepository.findAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/not-borrowed/{id}")
     public List<RealBook> listarCopiasNoPrestadas(@PathVariable("id") Long id){
         return realBookRepository.findAllNotBorrowed(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_USER"})
     @GetMapping("/list-person-loans/{id}")
     public List<Loan> listarPrestamosPersona(@PathVariable("id") Long id){
         return loanRepository.findAllBorrowedPerson(id);
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/view-realbook/{id}")
     public RealBook buscarLibroReal(@PathVariable("id") Long id){
         Loan loan = loanRepository.findById(id).orElseThrow();
         return loan.getBook();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_USER"})
     @GetMapping("/view-loan/{id}")
     public Loan buscarPrestamo(@PathVariable("id") Long id){
         return loanRepository.findById(id).orElseThrow();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_USER"})
     @DeleteMapping("/delete-loan/{id}")
     public void borrarPrestamo(@PathVariable("id") Long id){
         loanRepository.deleteLoan(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_USER"})
     @PatchMapping("/edit-loan")
     public void aplazarFecha(@RequestBody Loan loan){
         loanRepository.updateLoan(loan.getFinalDate(), loan.getId());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/create-copy")
     public RealBook crearCopia(@RequestBody RealBook realBook){
         return realBookRepository.save(realBook);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/link-copy")
     public void linkCopyBook(@RequestBody DTOCopy dtoCopy){
         RealBook realBook = realBookRepository.findById(dtoCopy.getIdCopy()).orElseThrow();
@@ -218,7 +221,7 @@ public class LibraryController {
         realBookRepository.save(realBook);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/delete-copy/{id}")
     public void borrarCopia(@PathVariable("id") Long id){
         realBookRepository.deleteById(id);
