@@ -1,7 +1,7 @@
 package com.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
@@ -68,19 +68,22 @@ public class LibraryControllerSystemTest {
         book1.getAuthors().add(author1);
         book2.getAuthors().add(author2);
         book3.getAuthors().add(author3);
-        book1.getCopies().add(realBook1);
-        book2.getCopies().add(realBook2);
-        book3.getCopies().add(realBook3);
+        realBook1.setBook(book1);
+        realBook2.setBook(book2);
+        realBook3.setBook(book3);
         authorRepository.save(author1);
         authorRepository.save(author2);
         authorRepository.save(author3);
         bookRepository.save(book1);
         bookRepository.save(book2);
         bookRepository.save(book3);
-
+        realBookRepository.save(realBook1);
+        realBookRepository.save(realBook2);
+        realBookRepository.save(realBook3);
+        
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox"); // Bypass OS security model, MUST BE THE VERY FIRST OPTION
-        options.addArguments("--headless");
+        // options.addArguments("--headless");
         options.addArguments("--disable-gpu"); // applicable to windows os only
         options.addArguments("--disable-extensions"); // disabling extensions
         // options.setExperimentalOption("useAutomationExtension", false);
@@ -91,7 +94,7 @@ public class LibraryControllerSystemTest {
         options.merge(DesiredCapabilities.chrome());
         this.driver = new ChromeDriver(options);
 
-        this.wait = new WebDriverWait(driver, 5);
+        this.wait = new WebDriverWait(driver, 10);
 
         this.baseUrl = "http://localhost:4200";
     }
@@ -108,8 +111,7 @@ public class LibraryControllerSystemTest {
     @Test
     void listarLibros() {
         driver.get(baseUrl + "/book/list");
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
-        List<WebElement> libros = driver.findElementsByClassName("book-list");
+        List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
         assertEquals("Guía práctica para Spring\nISBN: 8273", libros.get(0).getText());
         assertEquals("Guía práctica para Angular\nISBN: 3421", libros.get(1).getText());
         assertEquals("Guía práctica para Testing\nISBN: 9790", libros.get(2).getText());
@@ -118,9 +120,8 @@ public class LibraryControllerSystemTest {
     @Test
     void compararListas() {
         driver.get(baseUrl + "/book/list");
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
+        List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
         List<Book> librosEsperados = bookRepository.findAll();
-        List<WebElement> libros = driver.findElementsByClassName("book-list");
         assertEquals(librosEsperados.size(), libros.size());
         for (int i = 0; i < librosEsperados.size(); i++) {
             assertEquals(formatBook(librosEsperados.get(i)), libros.get(i).getText());
@@ -145,10 +146,13 @@ public class LibraryControllerSystemTest {
     void borrarLibro(){
         driver.get(baseUrl + "/book/view/4");
         Book book = bookRepository.findById(4L).orElseThrow();
-        WebElement button = driver.findElementById("button-delete-book");
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-delete-book")));
         button.click();
         try{
-            // Verificar no existencia
+            List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 2));
+            for (WebElement libro : libros){
+                assertNotEquals(libro.getText(), formatBook(book));
+            }
         } catch (TimeoutException e){
             fail("Error", e);
         }
@@ -172,13 +176,13 @@ public class LibraryControllerSystemTest {
     @Test
     void crearCopia(){
         driver.get(baseUrl + "/book/view/4");
-        WebElement button = driver.findElementById("button-create-copy");
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-create-copy")));
         button.click();
-        Select selectStatus = new Select(driver.findElementById("input-status"));
+        Select selectStatus = new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-status"))));
         selectStatus.selectByIndex(0);
         WebElement inputDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-date")));
         inputDate.sendKeys("14/12/2022");
-        WebElement buttonCreate = driver.findElementById("button-copy-create");
+        WebElement buttonCreate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-copy-create")));
         buttonCreate.click();
         wait.until(ExpectedConditions.numberOfElementsToBe(By.className("copy-list"), 2));
     }

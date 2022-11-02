@@ -1,8 +1,7 @@
 package com.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.booleanThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -104,6 +103,7 @@ public class LibraryControllerIntegrationTest {
             new ParameterizedTypeReference<List<Book>>() {
             });
         List<Book> books = response.getBody();
+        assertNotNull(books);
         assertEquals(booksProof.size(), books.size());
     }
 
@@ -146,6 +146,7 @@ public class LibraryControllerIntegrationTest {
             new ParameterizedTypeReference<List<Author>>() {
             });
         List<Author> authors = response.getBody();
+        assertNotNull(authors);
         assertEquals(authorsProof.size(), authors.size());
     }
 
@@ -199,6 +200,7 @@ public class LibraryControllerIntegrationTest {
             new ParameterizedTypeReference<List<Loan>>() {
             });
         List<Loan> loans = response.getBody();
+        assertNotNull(loans);
         assertEquals(loansProof.size(), loans.size());
     }
 
@@ -276,6 +278,7 @@ public class LibraryControllerIntegrationTest {
             new ParameterizedTypeReference<List<RealBook>>() {
             });
         List<RealBook> copies = response.getBody();
+        assertNotNull(copies);
         assertEquals(copiesProof.size(), copies.size());
     }
 
@@ -288,6 +291,7 @@ public class LibraryControllerIntegrationTest {
             new ParameterizedTypeReference<List<Loan>>() {
             });
         List<Loan> loans = response.getBody();
+        assertNotNull(loans);
         assertEquals(loansProof.size(), loans.size());
     }
 
