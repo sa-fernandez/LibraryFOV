@@ -29,6 +29,11 @@ public class Loan {
 
     }
 
+    public Loan(String initDate, String finalDate) {
+        this.initDate = initDate;
+        this.finalDate = finalDate;
+    }
+
     public Loan(String initDate, String finalDate, RealBook book, Author person) {
         this.initDate = initDate;
         this.finalDate = finalDate;

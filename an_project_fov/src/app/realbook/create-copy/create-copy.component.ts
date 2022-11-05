@@ -18,6 +18,7 @@ export class CreateCopyComponent implements OnInit {
   book : Book | undefined;
 
   realbook : Realbook = new Realbook(0, "","");
+  now : Date = new Date();
 
   constructor(
     private bookService : BookService, 
@@ -34,7 +35,10 @@ export class CreateCopyComponent implements OnInit {
   }
 
   onSubmit(){
-    if(this.inputStatus && this.event){
+    if(!this.event){
+      this.event = this.now.toLocaleDateString();
+    }
+    if(this.inputStatus){
       this.realbook.status = this.inputStatus;
       this.realbook.timestamp = this.event;
       this.bookService.createRealBook(this.realbook).subscribe(realbook => {

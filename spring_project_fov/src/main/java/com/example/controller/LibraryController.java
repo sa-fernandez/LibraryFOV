@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -69,14 +68,12 @@ public class LibraryController {
     }
 
     @Secured({"ROLE_ADMIN"})
-    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/delete/{id}")
     public void borrarLibro(@PathVariable("id") Long id){
         bookRepository.deleteById(id);
     }
 
     @Secured({"ROLE_ADMIN"})
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/create-book")
     public Book crearLibro(@RequestBody Book book){
         return bookRepository.save(book);
