@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,9 +25,9 @@ public class Author {
     @JsonIgnore
     private List<Book> books = new ArrayList<>();
 
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Loan loan;
+    private List<Loan> loans = new ArrayList<>();
 
     public Author(){
 
@@ -42,10 +42,10 @@ public class Author {
         this.books = books;
     }
 
-    public Author(String name, List<Book> books, Loan loan) {
+    public Author(String name, List<Book> books, List<Loan> loans) {
         this.name = name;
         this.books = books;
-        this.loan = loan;
+        this.loans = loans;
     }
 
     public Long getId(){
@@ -72,12 +72,16 @@ public class Author {
         this.books = books;
     }
 
-    public Loan getLoan() {
-        return loan;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
-    public void setLoan(Loan loan) {
-        this.loan = loan;
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
     }
 
 }

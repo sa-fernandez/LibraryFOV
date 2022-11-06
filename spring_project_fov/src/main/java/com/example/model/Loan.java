@@ -3,6 +3,7 @@ package com.example.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +22,7 @@ public class Loan {
     @JsonIgnore
     private RealBook book;
 
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
     private Author person;
 
