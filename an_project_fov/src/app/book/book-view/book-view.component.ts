@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs';
 import { Author } from 'src/app/model/author';
 import { BookService } from '../../shared/book.service';
 import { Realbook } from 'src/app/model/realbook';
+import { SecurityService } from 'src/app/shared/security.service';
 
 @Component({
   selector: 'app-book-view',
@@ -13,7 +14,7 @@ import { Realbook } from 'src/app/model/realbook';
 })
 export class BookViewComponent implements OnInit {
 
-  isDisabled : boolean = false;
+  librarian : boolean = false;
 
   selectedAuthor : Author | undefined;
   inputName : string = "";
@@ -27,11 +28,13 @@ export class BookViewComponent implements OnInit {
 
   constructor(
     private bookService : BookService, 
+    private securityService : SecurityService,
     private route : ActivatedRoute, 
     private router : Router
   ) { }
 
   ngOnInit(): void {
+    this.librarian = this.securityService.isLibrarian();
     this.route.paramMap.pipe(
       switchMap(params => this.bookService.viewBook(+params.get('id')!))
     ).subscribe(book => {

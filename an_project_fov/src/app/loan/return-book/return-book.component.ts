@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Author } from 'src/app/model/author';
 import { Loan } from 'src/app/model/loan';
 import { BookService } from 'src/app/shared/book.service';
+import { SecurityService } from 'src/app/shared/security.service';
 
 @Component({
   selector: 'app-return-book',
@@ -22,12 +23,14 @@ export class ReturnBookComponent implements OnInit {
 
   constructor(
     private bookService : BookService, 
+    private securityService : SecurityService,
     private route : ActivatedRoute, 
     private router : Router
   ) { }
 
   ngOnInit(): void {
     this.bookService.listAuthors().subscribe(people => this.allPeople = people)
+    this.securityService.loadProfile().then(user => console.log(user.username))
   }
 
   onSubmit(){

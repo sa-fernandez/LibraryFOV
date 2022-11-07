@@ -6,6 +6,7 @@ import { Author } from 'src/app/model/author';
 import { Book } from 'src/app/model/book';
 import { Realbook } from 'src/app/model/realbook';
 import { BookService } from 'src/app/shared/book.service';
+import { SecurityService } from 'src/app/shared/security.service';
 
 @Component({
   selector: 'app-loan-create',
@@ -25,13 +26,14 @@ export class LoanCreateComponent implements OnInit {
 
   book : Book | undefined;
   realBook : Realbook | undefined;
-  person : Author = new Author(0, "");
+  person : Author | undefined;
 
   authors : Author[] | undefined;
   allPeople : Author[] | undefined;
 
   constructor(
     private bookService : BookService, 
+    private securityService : SecurityService,
     private route : ActivatedRoute, 
     private router : Router
   ) { }
@@ -49,10 +51,13 @@ export class LoanCreateComponent implements OnInit {
     });
 
     this.bookService.listAuthors().subscribe(people => this.allPeople = people)
+    this.bookService.viewAuthor(this.securityService.userName()).subscribe(elem => {
+      this.person = elem
+    })
   }
 
   savePerson(){
-    this.bookService.createAuthor(this.person).subscribe(author => {
+    this.bookService.createAuthor(this.person!).subscribe(author => {
       this.person = author
       this.linkPerson()
     });
@@ -60,7 +65,7 @@ export class LoanCreateComponent implements OnInit {
 
   linkPerson(){
     if(this.event){
-      this.bookService.createLoan(this.realBook!.id, this.person.id, this.event).subscribe(() => {
+      this.bookService.createLoan(this.realBook!.id, this.person!.id, this.event).subscribe(() => {
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['book/view', this.book!.id])
         });
@@ -68,19 +73,10 @@ export class LoanCreateComponent implements OnInit {
     }
   }
 
-  dropboxClick(){
-    if(this.selectedPerson){
-      this.isDisabled = true;
-      this.inputName = '';
-    }else{
-      this.isDisabled = false;
-    }
-  }
-
   verifyAuthor(){
     let flag = false;
     this.authors?.forEach(element => {
-      if(element.id === this.person.id){
+      if(element.id === this.person!.id){
         flag = true;
       }
     });
@@ -88,16 +84,13 @@ export class LoanCreateComponent implements OnInit {
   }
 
   onSubmit(){
-    if(this.inputName){
-      this.person.name = this.inputName;
+    if(!this.person){
+      this.person = new Author(0, this.securityService.userName());
       this.savePerson();
-    }else if(this.selectedPerson){
-      this.person = this.selectedPerson;
+    }else{
       if(!this.verifyAuthor()){
         this.linkPerson();
       }
-    }else{
-      //ALERTA
     }
   }
 

@@ -5,7 +5,6 @@ import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,14 +42,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/book/create").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/book/create-copy").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/book/create-author").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.POST, "/book/loan").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/book/return-book").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/book/view/*").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.POST, "/book/create-loan").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/book/list").hasAnyRole("ADMIN", "USER")
                 .anyRequest().permitAll();
         http.csrf().disable();
         http.cors();

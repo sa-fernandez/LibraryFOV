@@ -7,10 +7,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthorEditComponent } from './author/author-edit/author-edit.component';
 import { LoanCreateComponent } from './loan/loan-create/loan-create.component';
-import { ReturnBookComponent } from './loan/return-book/return-book.component';
 import { LoanViewComponent } from './loan/loan-view/loan-view.component';
 import { CreateCopyComponent } from './realbook/create-copy/create-copy.component';
 import { AuthGuard } from './guard/auth.guard';
+import { LoanListComponent } from './loan/loan-list/loan-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'book/edit/:id', component: BookEditComponent },
   { path: 'book/edit-authors', component: AuthorEditComponent },
   { path: 'book/create-loan/:id', component: LoanCreateComponent },
-  { path: 'book/return-book', component: ReturnBookComponent, canActivate: [AuthGuard] },
+  { path: 'book/loan-list', component: LoanListComponent, canActivate: [AuthGuard] },
   { path: 'book/view-loan/:id', component: LoanViewComponent },
   { path: 'book/create-copy/:id', component: CreateCopyComponent }
 ];

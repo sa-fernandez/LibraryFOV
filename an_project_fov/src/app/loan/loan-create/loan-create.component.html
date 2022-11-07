@@ -3,15 +3,7 @@
         <div id="form-layout">
             <h1>Solicitar préstamo</h1>
             <form (ngSubmit)="onSubmit()">
-                <label>Ingresa el nombre del solicitante</label>
-                <div id="input-name">   
-                    <select name="authors-names" id="authors-names" *ngIf="allPeople" [(ngModel)]="selectedPerson" (change)="dropboxClick()">
-                        <option value=""></option>
-                        <option [ngValue]="person" *ngFor="let person of allPeople">{{person.name}}</option>
-                    </select>
-                    <input type="text" placeholder="Nombre del solicitante" name="name" [(ngModel)]="inputName" [disabled]="isDisabled">
-                </div>
-
+                
                 <label>Ingresa la fecha</label>
                 <mat-form-field >
                     <mat-label>Fecha de devolución</mat-label>

@@ -17,9 +17,9 @@
                 </ul>
                 
                 <div class="buttons">
-                    <button class="button" [routerLink]="['/book/create-copy', book.id]" id="button-create-copy">Agregar Copia</button>
-                    <button class="button" [routerLink]="['/book/edit', book.id]" id="button-edit-book">Editar Libro</button>
-                    <button class="button" (click)="deleteBook()" id="button-delete-book">Borrar Libro</button>
+                    <button class="button" [routerLink]="['/book/create-copy', book.id]" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-create-copy">Agregar Copia</button>
+                    <button class="button" [routerLink]="['/book/edit', book.id]" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-edit-book">Editar Libro</button>
+                    <button class="button" (click)="deleteBook()" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-delete-book">Borrar Libro</button>
                 </div>
 
             </div>

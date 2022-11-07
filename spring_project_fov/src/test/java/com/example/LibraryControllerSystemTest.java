@@ -29,7 +29,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.example.model.Author;
 import com.example.model.Book;
-import com.example.model.Loan;
 import com.example.model.RealBook;
 import com.example.repository.AuthorRepository;
 import com.example.repository.BookRepository;

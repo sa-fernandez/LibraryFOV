@@ -58,6 +58,10 @@ export class BookService {
     return this.http.put(`http://localhost:8080/book/edit-book`, book, this.httpOptions);
   }
 
+  viewAuthor(name : string): Observable<Author>{
+    return this.http.get<Author>(`http://localhost:8080/book/view-author/${name}`);
+  }
+
   editAuthor(author : Author){
     return this.http.put(`http://localhost:8080/book/edit-author`, author, this.httpOptions);
   }

@@ -7,7 +7,6 @@
                     <option value=""></option>
                     <option [ngValue]="person" *ngFor="let person of allPeople">{{person.name}}</option>
                 </select>
-                <app-loan-list [loansReceived]="loans"></app-loan-list>
                 <div id="button-layout">
                     <button type="submit" id="button-search-loan">Buscar préstamos</button>
                 </div>

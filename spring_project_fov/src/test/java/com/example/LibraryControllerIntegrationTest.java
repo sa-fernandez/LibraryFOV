@@ -151,6 +151,12 @@ public class LibraryControllerIntegrationTest {
     }
 
     @Test
+    void testBuscarAutor() throws Exception {
+        Author author = rest.getForObject("http://localhost:" + port + "/book/view-author/Migue", Author.class);
+        assertEquals(authorRepository.findByName("Migue").getId(), author.getId());
+    }
+
+    @Test
     void testCrearAutor() throws Exception {
         Author authorProof = new Author("Benito Ocasio");
         Author author = rest.postForObject("http://localhost:" + port + "/book/create-author", authorProof, Author.class);

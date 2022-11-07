@@ -6,8 +6,9 @@
         <li routerLinkActive="menuSelected"><a [routerLink]="['/home']">Inicio</a></li>
         <li routerLinkActive="menuSelected"><a [routerLink]="['/book/list']">Libros</a></li>
         <li><img src="../assets/lcons/logo-web.svg"></li>
-        <li routerLinkActive="menuSelected"><a [routerLink]="['/book/create']" >Crear Libro</a></li>
-        <li routerLinkActive="menuSelected"><a [routerLink]="['/book/return-book']" >Devolver Libro</a></li>
+        <li routerLinkActive="menuSelected" [style.visibility]="librarian ? 'visible' : 'hidden'"><a [routerLink]="['/book/create']" >Crear Libro</a></li>
+        <li routerLinkActive="menuSelected" [style.visibility]="user ? 'visible' : 'hidden'"><a [routerLink]="['/book/loan-list']" >Devolver Libro</a></li>
+        <li ><a (click)="logOut()">LogOut</a></li>
       </ul>
     </nav>
   </div>

@@ -18,5 +18,11 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
         nativeQuery = true
     )
     void updateAuthor(@Param("name") String name, @Param("id") Long id);
+
+    @Query(
+        value = "select * from author a where a.name = :name",
+        nativeQuery = true
+    )
+    Author findByName(@Param("name") String name);
     
 }
