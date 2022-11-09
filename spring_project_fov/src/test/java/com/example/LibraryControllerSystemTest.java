@@ -105,9 +105,17 @@ public class LibraryControllerSystemTest {
         options.merge(DesiredCapabilities.chrome());
         this.driver = new ChromeDriver(options);
 
-        this.wait = new WebDriverWait(driver, 10);
+        this.wait = new WebDriverWait(driver, 30);
 
         this.baseUrl = "http://localhost:4200";
+
+        driver.get(baseUrl);
+        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
+        username.sendKeys("admin");
+        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("password")));
+        password.sendKeys("admin");
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("kc-login")));
+        button.click();
     }
 
     @AfterEach
@@ -158,7 +166,7 @@ public class LibraryControllerSystemTest {
         driver.get(baseUrl + "/book/create");
         WebElement inputBookName = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("name")));
         WebElement inputBookIsbn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("isbn")));
-        WebElement button = driver.findElementById("button-create-book");
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-create-book")));
         Book book = new Book("4895", "Guia practica para testing con Selenium");
         inputBookName.sendKeys(book.getName());
         inputBookIsbn.sendKeys(book.getIsbn());
@@ -224,17 +232,22 @@ public class LibraryControllerSystemTest {
     @Test
     void borrarCopia(){
         driver.get(baseUrl + "/book/view/4");
-        List<WebElement> copias = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("copy-list"), 2));
-        WebElement copy = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[contains(@class, 'copy-list')]//button)[1]")));
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-delete-copy-0")));
+        button.click();
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("copy-list"), 0));
     }
 
     @Test
-    void buscarPrestamo(){
-        driver.get(baseUrl + "/book/return-book");
-        Select selectPerson = new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("authors-names"))));
-        selectPerson.selectByIndex(0);
-        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-search-loan")));
+    void solicitarCopia(){
+        driver.get(baseUrl + "/book/view/4");
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-select-copy-0")));
         button.click();
+        WebElement inputDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-date")));
+        inputDate.sendKeys("14/12/2022");
+        WebElement buttonCreate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-loan-create")));
+        buttonCreate.click();
+        driver.get(baseUrl + "/book/loan-list");
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("loan-list"), 1));
     }
     
 }

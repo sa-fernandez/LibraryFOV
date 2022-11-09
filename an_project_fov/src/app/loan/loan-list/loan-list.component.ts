@@ -14,37 +14,34 @@ import { Author } from 'src/app/model/author';
 })
 export class LoanListComponent implements OnInit {
 
-  loans : Loan[] | undefined;
+  loans: Loan[] | undefined;
 
-  public booksBorrowed : Book[] = [];
+  public booksBorrowed: Book[] = [];
 
-  realBook : Realbook | undefined;
-  person : Author | undefined;
+  realBook: Realbook | undefined;
+  person: Author | undefined;
 
   constructor(
-    private bookService : BookService, 
-    private securityService : SecurityService,
-    private route : ActivatedRoute, 
-    private router : Router
+    private bookService: BookService,
+    private securityService: SecurityService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-
     this.bookService.viewAuthor(this.securityService.userName()).subscribe(elem => {
       this.person = elem
       this.bookService.listLoansPerson(this.person.id).subscribe(loans => {
         this.loans = loans
         this.loans?.forEach(elem =>
-          this.bookService.viewRealBook(elem.id).subscribe(real =>{
+          this.bookService.viewRealBook(elem.id).subscribe(real => {
             this.realBook = real
             this.bookService.copyBook(this.realBook.id).subscribe(book => {
               this.booksBorrowed.push(book)
             })
-        }));
-
+          }));
       });
     })
-      
   }
 
 }

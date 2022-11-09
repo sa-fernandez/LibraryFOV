@@ -11,10 +11,12 @@
                     </tr>
                 </thead>
                 <tbody> 
-                    <tr  *ngFor="let book of booksBorrowed; let i = index">
-                        <th>{{book.name}}</th>
-                        <th>{{book.isbn}}</th>
-                        <th><a [routerLink]="['/book/view-loan', loans![i].id]">Modificar</a></th>
+                    <tr *ngFor="let book of booksBorrowed; let i = index">
+                        <div class="loan-list">
+                            <th>{{book.name}}</th>
+                            <th>{{book.isbn}}</th>
+                            <th><a [routerLink]="['/book/view-loan', loans![i].id]">Modificar</a></th>
+                        </div>
                     </tr>
                 </tbody> 
             </table>

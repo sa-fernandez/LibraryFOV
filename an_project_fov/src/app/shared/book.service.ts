@@ -23,7 +23,7 @@ export class BookService {
   constructor(private http : HttpClient) { }
 
   list() : Observable<Book[]>{
-    return this.http.get<Book[]>(`http://localhost:8080/book/list`)
+    return this.http.get<Book[]>(`http://localhost:8080/book/list`);
   }
 
   viewBook(id : number): Observable<Book>{
@@ -47,7 +47,7 @@ export class BookService {
   }
 
   linkAuthorBook(idAuthor : number, idBook : number){
-    return this.http.put(`http://localhost:8080/book/link`, new Dtolink(idAuthor, idBook), this.httpOptions); 
+    return this.http.put(`http://localhost:8080/book/link`, new Dtolink(idAuthor, idBook), this.httpOptions);
   }
 
   listAuthors() : Observable<Author[]>{
@@ -71,7 +71,7 @@ export class BookService {
   }
 
   unlinkAuthorBook(idAuthor : number, idBook : number){
-    return this.http.put(`http://localhost:8080/book/unlink`, new Dtolink(idAuthor, idBook), this.httpOptions); 
+    return this.http.put(`http://localhost:8080/book/unlink`, new Dtolink(idAuthor, idBook), this.httpOptions);
   }
 
   createLoan(idCopy : number, idPerson : number, finalDate : string){
@@ -115,7 +115,7 @@ export class BookService {
   }
 
   editLoan(loan : Loan){
-    return this.http.patch(`http://localhost:8080/book/edit-loan`, loan, this.httpOptions); 
+    return this.http.patch(`http://localhost:8080/book/edit-loan`, loan, this.httpOptions);
   }
 
   createRealBook(realbook : Realbook) : Observable<Realbook>{
