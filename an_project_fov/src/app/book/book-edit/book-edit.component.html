@@ -1,21 +1,48 @@
 <section id="book-edit">
     <div class="wrap">
         <div id="form-layout">
-            <h1 id="title">Modificar libro</h1>
+            <h1>Modificando libro</h1>
+            <p>A continuación puedes cambiar cualquier información del libro, solo debes cambiar el campo correspondiende al parametro deseado.</p>
+            
             <form id="form" (ngSubmit)="onSubmit()">
-                <label>Ingrese el nuevo nombre del libro</label>
-                <input type="text" placeholder="Nombre de libro" name="name" [(ngModel)]="inputName" id="input-name">    
-                <label>Ingrese el nuevo ISBN del libro</label>
-                <input type="text" placeholder="ISBN del libro" name="isbn" [(ngModel)]="inputIsbn" id="input-isbn">
-                <app-author-edit></app-author-edit>
-                <div id="button-layout">
-                    <button class="button"  id="button-modificar" type="submit">Finalizar</button>
+
+                <div class="input-layout" id="book-name">
+                    <label>Nombre</label>
+                    <input type="text" name="name" [(ngModel)]="inputName" id="input-name"> 
                 </div>
+
+                <div class="input-layout"  id="book-isbn">
+                    <label>ISBN</label>
+                    <input type="text" name="isbn" [(ngModel)]="inputIsbn" id="input-isbn">
+                </div>
+
+                <div class="input-layout"  id="book-category">
+                    <label>Categoria</label>
+                    <input type="text"  name="isbn" id="input-category">
+                </div>
+
+                <div class="input-layout"  id="book-editorial">
+                    <label>Editorial</label>
+                    <input type="text" name="isbn" id="input-editorial">
+
+                </div>
+
+                <div class="input-layout"  id="book-description">
+                    <label>Descripción</label>
+                    <textarea type="text" name="isbn" id="input-description"> </textarea>
+                </div>
+
+                <div id="authors-component-layout">
+                    <h1>Autores</h1>
+                    <app-author-edit></app-author-edit>
+                </div>
+ 
+                <button class="button"  id="button-modificar" type="submit">Finalizar</button>
+                
             </form>
-            <form id="form" (ngSubmit)="onCancel()">
-                <div id="button-layout">
-                    <button class="button" id="button-cancelar">Cancelar</button>
-                </div>
+
+            <form id="form" (ngSubmit)="onCancel()">    
+                <button class="button" id="button-cancelar">Cancelar</button>   
             </form>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -31,6 +31,9 @@ export class LoanCreateComponent implements OnInit {
   authors : Author[] | undefined;
   allPeople : Author[] | undefined;
 
+  @Input()
+  copyId: number | undefined;
+
   constructor(
     private bookService : BookService, 
     private securityService : SecurityService,
@@ -40,16 +43,16 @@ export class LoanCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.maxDate.setMonth(this.maxDate.getMonth() + 1);
-    this.route.paramMap.pipe(
-      switchMap(params => this.bookService.viewCopy(+params.get('id')!))
-    ).subscribe(realBook => {
-      this.realBook = realBook
-      this.bookService.copyBook(realBook.id).subscribe(book => {
-        this.book = book
-        this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors)
-      })
-    });
 
+    this.bookService.viewCopy(this.copyId!).subscribe((realBook => {
+      this.realBook = realBook;
+        this.bookService.copyBook(realBook.id).subscribe(book => {
+          this.book = book;
+          this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors);
+        });
+      })
+    );
+    
     this.bookService.listAuthors().subscribe(people => this.allPeople = people)
     this.bookService.viewAuthor(this.securityService.userName()).subscribe(elem => {
       this.person = elem

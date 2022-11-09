@@ -21,6 +21,9 @@ export class LoanListComponent implements OnInit {
   realBook : Realbook | undefined;
   person : Author | undefined;
 
+  requestLaunch: number = 0;
+  loanID: number = -1;
+
   constructor(
     private bookService : BookService, 
     private securityService : SecurityService,
@@ -44,7 +47,20 @@ export class LoanListComponent implements OnInit {
 
       });
     })
-      
   }
 
+  launchWindow(i: number){
+    let mainSection = document.getElementById('loan-return') as HTMLElement;
+    mainSection.classList.toggle('emergent-activated')
+    this.requestLaunch = 1;
+    this.loanID = i;
+    console.log(this.loanID)
+  }
+
+  closeWindow(){
+    let mainSection = document.getElementById('loan-return') as HTMLElement;
+    mainSection.classList.toggle('emergent-activated')
+    this.requestLaunch = 0;
+    this.loanID = -1;
+  }
 }

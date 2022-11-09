@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -12,6 +12,9 @@ import { BookService } from 'src/app/shared/book.service';
   styleUrls: ['./create-copy.component.scss']
 })
 export class CreateCopyComponent implements OnInit {
+
+  @Input()
+  bookID: number | undefined;
 
   inputStatus : string = "";
   event : string | undefined = "";

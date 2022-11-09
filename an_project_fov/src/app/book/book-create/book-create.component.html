@@ -1,12 +1,13 @@
 <section id="create-book">
     <div class="wrap">
         <div id="form-layout">
-            <h1>Crear nuevo libro</h1>
+            <h1>Creando Nuevo Libro</h1>
+            <p>Antes de poder crear el libro debes llenar los siguientes campos con la información solicitada.</p>
             <form (ngSubmit)="onSubmit()">
                 <label>Ingresa el nombre del libro</label>
-                <input type="text" placeholder="Nombre de libro" name="name" id="name" [(ngModel)]="book.name">
+                <input type="text" name="name" id="name" [(ngModel)]="book.name">
                 <label>Ingresa el ISBN del libro</label>
-                <input type="text" placeholder="ISBN del libro" name="isbn" id="isbn" [(ngModel)]="book.isbn">
+                <input type="text" name="isbn" id="isbn" [(ngModel)]="book.isbn">
                 <div id="button-layout">
                     <button type="submit" id="button-create-book">Crear Libro</button>
                 </div>

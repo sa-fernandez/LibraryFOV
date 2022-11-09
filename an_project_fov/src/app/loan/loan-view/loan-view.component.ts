@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Author } from 'src/app/model/author';
 import { Book } from 'src/app/model/book';
@@ -13,7 +13,12 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   templateUrl: './loan-view.component.html',
   styleUrls: ['./loan-view.component.scss']
 })
+
 export class LoanViewComponent implements OnInit {
+
+
+  @Input()
+  loanID: number | undefined;
 
   minDate : Date = new Date();
   maxDate : Date = new Date();
@@ -39,9 +44,8 @@ export class LoanViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.maxDate.setMonth(this.maxDate.getMonth() + 1);
-    this.route.paramMap.pipe(
-      switchMap(params => this.bookService.viewLoan(+params.get('id')!))
-    ).subscribe(loan => {
+
+    this.bookService.viewLoan(this.loanID!).subscribe((loan) => {
       this.loan = loan
       this.bookService.viewRealBook(loan.id).subscribe(realbook => {
         this.realbook = realbook
@@ -51,7 +55,6 @@ export class LoanViewComponent implements OnInit {
         })
       })
     });
-
   }
 
   addEvent(event: MatDatepickerInputEvent<Date>) {

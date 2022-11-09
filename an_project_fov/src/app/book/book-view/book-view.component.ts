@@ -26,6 +26,11 @@ export class BookViewComponent implements OnInit {
   allAuthors : Author[] | undefined;
   copies : Realbook[] | undefined;
 
+  activated: number = 0;
+  requestLaunch = 0;
+  requestType = -1; //1-loanCreate, 2-copyCreate, 3-editBook
+  copyId: number = -1;
+
   constructor(
     private bookService : BookService, 
     private securityService : SecurityService,
@@ -60,4 +65,60 @@ export class BookViewComponent implements OnInit {
     });
   }
 
+  toggleCopiesActivated(){
+
+    let toggle = document.getElementById('toogle-copies') as HTMLElement;
+    let layout = document.getElementById('copies-layout') as HTMLElement;
+
+    if(this.activated){
+      layout.style.maxHeight = "0px";
+      toggle.style.rotate = "0deg";
+      this.activated = 0;
+    }
+
+    else{
+      layout.style.maxHeight = "250px";
+      toggle.style.rotate = "-180deg";
+      this.activated = 1;
+    }
+  }
+
+  launchWindow(option: number, i?: number){
+    let mainSection = document.getElementById('book-view') as HTMLElement;
+    mainSection.classList.toggle('emergent-activated')
+    this.requestLaunch = 1;
+
+    if(option === 1){
+      this.requestType = 1;
+
+      if(typeof i !== 'undefined'){
+        this.copyId = this.copies![i].id;
+      }
+    }
+
+    else if(option === 2){
+      this.requestType = 2;
+
+    }
+
+    else if(option === 3){
+      this.requestType = 3;
+      
+    }
+
+  }
+
+  closeWindow(){
+    let mainSection = document.getElementById('book-view') as HTMLElement;
+    mainSection.classList.toggle('emergent-activated')
+    this.requestLaunch = 0;
+    this.requestType = -1;
+  }
+
+  
+
+  toogleOptionActivated(){
+    let buttonsLayout = document.getElementById('buttons-layout') as HTMLElement;
+    buttonsLayout.classList.toggle('layout-activated');
+  }
 }
