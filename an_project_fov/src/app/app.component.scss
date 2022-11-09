@@ -1,62 +1,89 @@
-*{
-    padding: 0px;
-    margin: 0px;
-    font-size: 10px;
-}
+@import '../styles.scss';
 
 #header{
-    background-color: rgb(26, 26, 26);
-    
+    background-color: $black-color;
     .wrap{
-        max-width: 1328px;
-        margin: 0px auto;
-    
-        #menu{
-            
-            ul{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-                align-items: center;
-                margin: 0px auto;
-                width: 60%;
-        
-                li{
-                    min-width: 20%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 75px;
+        #container{
+            @include flex-center;
+            flex-flow: row nowrap;
 
-                    a{
-                        font-size: 1.7em;
-                        color: rgb(176, 176, 176);
-                        transition: all 300ms;
-                        padding-top: 20%;
-                        padding-bottom: 20%;
-                        text-decoration: none;
-                        font-weight: 300;
+            #logo-layout{
+                flex-basis: 10%;
+                flex-grow: 1;
+
+                #icon{
+                    width: 50px;
+                    filter: invert(100%);
+                }
+            }
+          
+            #menu-layout{
+                flex-basis: 80%;
+                flex-grow: 1;
+
+                ul{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    align-items: center;
+                    margin: 0px auto;
+                    width: 60%;
+            
+                    li{
+                        min-width: 20%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 75px;
+
+                        a{
+                            font-size: 1.7em;
+                            color: rgb(176, 176, 176);
+                            transition: all 300ms;
+                            padding-top: 20%;
+                            padding-bottom: 20%;
+                            text-decoration: none;
+                            font-weight: 300;
+
+                            &:hover{
+                                color: white;
+                                transform: scale(1.05);  
+                            }   
+                        }
+
+                        img{
+                            width: 30%;
+                            filter: invert(100%);
+                        }
+                    }
+
+                    .menuSelected{
+                        border-bottom: 3px solid $secundary-color;
+                        a{
+                            transform: scale(1.08);
+                            color: white;
+                        }
+                    }
+                }    
+            }
+
+            #logout-layout{
+                flex-basis: 10%;
+                flex-grow: 1;
+
+                a{
+                    span{
+                        font-size: 4em;
+                        color: white;
+                        transition: all 100ms;
 
                         &:hover{
-                            color: white;
-                            transform: scale(1.05);  
-                        }   
-                    }
-
-                    img{
-                        width: 30%;
-                        filter: invert(100%);
+                            cursor: pointer;
+                            transform: scale(1.05);
+                        }
                     }
                 }
-
-                .menuSelected{
-                    border-bottom: 5px solid #005572;
-                    a{
-                        transform: scale(1.08);
-                        color: white;
-                    }
-                }
-            }    
+            }
         }
     }
 }

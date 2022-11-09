@@ -1,81 +1,80 @@
-*{
-    margin: 0px;
-    padding: 0px;
-    font-size: 10px;
-}
+@import '../../../styles.scss';
 
 #create-book{
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-
+    margin-top: 120px;
     .wrap{
-        max-width: 1328px;
-        margin: 0px auto;
-
+        position: relative;
         #form-layout{
+            position: absolute;
             text-align: center;
             margin: 0px auto;
-            width: 70%;
-            border-radius: 3px;
-            border: 1px solid #ccc;
-            padding-bottom: 40px;
-            background-color: rgb(247, 247, 247);
-
+            width: 40%;
+            border: 1px solid rgb(31, 31, 31);
+            border-radius: 15px;
+            position: relative;
+            padding: 35px 0px;
+ 
             h1{
-                font-size: 3em;
-                font-weight: 500;
-                padding-top: 3%;
+                color: $font-color-primary;
+                font-size: 3.5em;
+                font-weight: 700;
+            }
+
+            p{
+                color: $font-color-secunday;
+                font-size: 1.7em;
+                font-weight: 200;
+                width: 80%;
+                margin: 0px auto;
             }
 
             form{
                 display: flex;
                 flex-direction: column;
-                padding-top: 3%;
-                width: 50%;
-                margin: 0px auto;
+                width: 70%;
+                margin: 8% auto;
+                padding-bottom: 50px;
 
-                label{
+                label{          
+                    font-size: 1.6em;
                     text-align: start;
-                    font-size: 1.7em;
-                    color: rgb(116, 116, 116);
-                    margin-bottom: 3px;
+                    padding-bottom: 1%;
+                    color: $font-color-secunday;
+                    font-weight: 100;
                 }
-
+                
                 input{
-                    margin: 0px auto;
                     width: 100%;
-                    height: 50px;
-                    font-size: 1.7em;
-                    margin-bottom: 30px;
-                    border-radius: 3px;
+                    height: 60px;
+                    font-size: 1.9em;
+                    border-radius: 10px;
                     padding-left: 5px;
-                    border: 1px solid rgb(1, 1, 59);
-                    color: black;
+                    border: 1px solid rgb(53, 53, 53);
+                    background-color: rgb(22, 22, 22);
+                    color: $font-color-primary;
+                    margin-bottom: 6%;
+                } 
 
-                    &::placeholder{        
-                        color: #ccc;
-                    }
-
-
-                }
 
                 button{ 
-                    width: 40%;
-                    height: 60px;      
-                    margin-top: 20px;
+                    position: absolute;
+                    bottom: 3%;
+                    right: 5%;
+                    width: 120px;
+                    height: 50px;      
                     border: none;
                     border-radius: 5px;
                     color: white;
-                    font-weight: bold;
+                    font-weight: 500;
                     font-size: 1.7em;
                     transition: all 300ms;
-                    background-color: #293462;  
+                    background-color: $secundary-color;  
     
                     &:hover{
                         transform: scale(1.08);
+                        cursor: pointer;
                     }
                 } 
-
             }
         }
     }

@@ -1,9 +1,16 @@
 <section id="home">
-    <div class="filter-background">
+    <div id="filter-background">
         <div class="wrap">
-            <div id="container">
-                <h1>Bienvenido a la Librería FOV {{uname}}</h1>
-                <h4>En esta librería encontrarás todos los libros que estas buscando. <br> <a [routerLink]="['/book/list']">Ir a la lista de libros</a></h4>
+            <div class="container">
+                <div id="title-layout">
+                    <h1>Bienvenido a la libreria FOV</h1>
+                    <h2>{{uname}}</h2>
+                    <h3>Explora nuestro catalogo de libros</h3>
+                </div>
+    
+                <div id="options-layout">
+                    <a [routerLink]="['/book/list']">Ir a la lista de libros</a> 
+                </div>
             </div>
         </div>
     </div>

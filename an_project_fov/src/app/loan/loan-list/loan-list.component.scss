@@ -1,116 +1,208 @@
-*{
-    padding: 0px;
-    margin: 0px;
-    font-size: 10px;
+@import '../../../styles.scss';
+
+.emergent-window{
+    width: 40%;
+    height: 45%;
+    min-width: 700px;
+    min-height: 500px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 10px;
+    background-color: rgb(34, 34, 34);
+    z-index: 10;
+    overflow: hidden;
+    display: flex;
+    flex-flow: row nowrap;
+
+    #image-window{ 
+        flex-basis: 40%;  
+        flex-grow: 1;
+        height: 100%;
+        background-image: url('https://wallpapercave.com/wp/wp10930609.jpg');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(45%)
+    }
+
+    #component-container{
+        padding: 0px 20px;
+        flex-basis: 60%;
+        flex-grow: 1;
+        height: 100%;
+
+        position: relative;
+
+        #toggle-close{
+            position: absolute;
+            top: 3%;
+            right: 3%;
+            color: $font-color-secunday;
+            padding: 5px;
+            border-radius: 100px;
+            transition: all 300ms;
+            font-size: 3em;
+
+            &:hover{
+                color: #fff;
+                transform: scale(1.1);
+                cursor: pointer;
+                background-color: $secundary-color;
+            }  
+        }
+    }
 }
 
+.emergent-activated{
+    pointer-events: none;
+    filter: brightness(10%);
+}
+
+
 #loan-return{
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-
+    margin-top: 50px;
     .wrap{
-        max-width: 1328px;
-        margin: 0px auto;
-
-        h3{
-            font-size: 1.8em;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-    
-        #table-wrap{
-            background-color: transparent;
-            border: 1px solid rgb(15, 0, 58);
-            border-radius: 5px;
+        .container{
             width: 100%;
-            max-height: 50%;
-            overflow: auto;
-            overflow-x: hidden ;     
-            padding: 0px;
-            
-            
-            &::-webkit-scrollbar{      
-                width: 5px;    
+            height: 680px;      
+            display: flex;
+            align-items: center;
+            flex-flow: row nowrap;
+            align-self: center;
+            justify-content: center;
+            border: 1px solid rgb(53, 53, 53);
+            border-radius: 30px; 
+
+            #image-decoration{
+                position: relative;
+                background-image: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeXxlbnwwfHwwfHw%3D&w=1000&q=80');
+                background-size: cover;
+                background-position: center;
+                border-radius: 30px 0px 0px 30px;
+                flex-basis: 30%;
+                flex-grow: 1;
+                height: 100%;
+                filter: brightness(30%);
             }
-    
-            &::-webkit-scrollbar-thumb{
-                background-color: rgb(6, 1, 44);    
-            }
-    
-            table{
-                margin: 0px auto;
-                background-color: rgb(245, 245, 245);             
-                border-radius: 8px;
-                border-collapse: collapse;
-                width: 100%;
-               
-                            
-                thead{
-                    background-color: rgb(6, 1, 44);
-                    position: sticky;
-                    top: 0%;
-                    
+
+            #info-layout{
+                height: 100%;
+                flex-basis: 70%;   
                 
-                    tr{       
-                        th{
-                            color: white;
-                            font-size: 1.4em;
-                            font-weight: 400;
-                            padding-top: 15px;
-                            padding-bottom: 15px;
-           
-                        }
+                #title-layout{
+                    margin: 5%;
+                   
+                    h1{
+                        text-align: start;
+                        color: $font-color-primary;
+                        font-weight: 700;
+                        font-size: 4em;
                     }
-                }
-    
-                tbody{                                                
-                    tr{
-                        color: rgb(110, 110, 110);
-                        transition: all 200ms;
-                        th{
-                            font-size: 1.2em;
-                            font-weight: 300;
-                            padding-top: 12px;
-                            padding-bottom: 12px;
-    
-                            a{
-                                padding: 8px;
-                                padding-left: 15px;
-                                padding-right: 15px;
-                                background-color: #425F57;
-                                border-radius: 3px;
-                                color: white;
-                                text-decoration: none;
+
+                    p{
+                        color: $font-color-secunday;
+                        font-size: 1.8em;
+                        font-weight: 200;
+                        text-align: justify;
+
+                        span{
+                            font-style: italic;
+                            font-size: 1.05em;
+                        }  
+                    }
+                } 
+
+                #table-layout{  
+                                       
+                    #table{
+                        width: 70%;
+                        margin: auto;
+                        border: 1px solid rgb(66, 66, 66);
+                        border-radius: 10px;
+                        overflow: hidden;
+                        overflow-y: scroll;
+                        max-height: 450px;
+
+                        &::-webkit-scrollbar{
+                            width: 5px;
+                        }
+
+                        &::-webkit-scrollbar-track{
+                            background-color: #222222;
+                            border-radius: 100px;
+                        }
+
+                        &::-webkit-scrollbar-thumb{
+                            background-color: rgb(49, 49, 49);
+                            border-radius: 100px;
+                            height: 50px;
+                        }
+                        
+                     
+                        #title-table{
+                            display: flex;
+                            flex-flow: row nowrap;
+                            text-align: center;
+                            color: $font-color-primary;
+                            padding: 15px 0px;
+                            background-color: rgb(49, 49, 49);
+
+                            .title-info{
+                                flex-basis: 33%;
+                                color: $font-color-primary;
+                            }
+
+                            h5{
+                                font-size: 1.8em;
                                 font-weight: 500;
-                                transition: all 400ms;
-    
-                                &:hover{
-                                    background-color: #499d70;
+                                margin: 0px;
+                            }
+                        }
+ 
+
+                        .info-table{
+                            @include flex-center;
+                            flex-flow: row nowrap;
+                            padding: 15px 0px;
+                            background-color: rgb(26, 26, 26);
+                        
+
+                            &:hover{
+                                background-color: rgb(35, 35, 35);
+                            }
+
+                            .info{
+                                flex-basis: 33%;
+                                text-align: center;
+
+                                button{
+                                    padding: 10px 15px;
+                                    background-color: #00251b;
+                                    border: 5px;
+                                    color: $font-color-primary;
+                                    font-size: 1.5em;
+                                    font-weight: 500; 
+                                    border-radius: 5px;   
+                                    
+                                    &:hover{
+                                        background-color: #014432;
+                                    }
                                 }
-                            }   
-                            
-                            button{
-                                margin: auto;
-                                padding-top: 10%;
-                                border: none;
-                                background-color: transparent;
     
-                                &:hover{
-                                    color: red;
+                                p{
+                                    color: $font-color-primary;
+                                    font-size: 1.8em;
+                                    font-weight: 300;
+                                    margin: 0px;
                                 }
                             }
                         }
-            
-                        &:hover{
-                            color: black;
-                        }
-    
-                        &:nth-child(even){
-                            background-color: rgb(240, 240, 240);
-                        }
-                    }          
+                    }
                 }
-            }
-        } 
+            }    
+        }
     }
 }

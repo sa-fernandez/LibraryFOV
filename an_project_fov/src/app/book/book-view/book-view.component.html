@@ -1,60 +1,124 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+
+<div id="loan-window" class="emergent-window" *ngIf="requestLaunch">
+    <ng-container *ngIf="requestType==1">
+        <ng-container *ngIf="copyId!==-1">
+            <div id="image-window"></div>
+            <div id="component-container">
+                <span (click)="closeWindow()" id="toggle-close" class="material-symbols-outlined">close</span>
+                <app-loan-create [copyId] = "copyId"></app-loan-create>
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="requestType==2">
+        <ng-container *ngIf="book?.id">
+            <div id="image-window"></div>
+            <div id="component-container">
+                <span (click)="closeWindow()" id="toggle-close" class="material-symbols-outlined">close</span>
+                <app-create-copy [bookID]="book?.id"></app-create-copy>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>
+
 <section id="book-view" *ngIf="book">
     <div class="wrap">
         <div class="container">
+            <div id="option-toogle-layout">
+                <button (click)="toogleOptionActivated()" id="option-toogle">
+                    <span class="material-symbols-outlined">more_vert</span>
+                </button>
+            </div>
+
+            <div id="buttons-layout" class="buttons">
+                <button class="button" (click)="launchWindow(2)" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-create-copy"><span class="material-symbols-outlined">add</span> Agregar Copia</button>
+                <button class="button" [routerLink]="['/book/edit', book.id]" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-edit-book"><span class="material-symbols-outlined">edit</span> Editar Libro</button>
+                <button class="button" (click)="deleteBook()" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-delete-book"><span class="material-symbols-outlined">remove</span> Borrar Libro</button>
+            </div>
+
             <div class="book-style">
                 <img src="https://i0.wp.com/www.irinadelgado.com/wp-content/uploads/2020/04/herramienta-ejemplos-2.png?resize=376%2C600&ssl=1">
             </div>
 
             <div class="book-info">
-                <h1 id="name">{{book.name}}</h1>
-                <p id="isbn">ISBN: {{book.isbn}}</p>
 
-                <p id="authors-title">Autores</p>
-                <ul id="autors" *ngIf="authors">
-                    <li *ngFor="let author of authors; let i = index">
-                        <p>{{author.name}}</p>
-                    </li>
-                </ul>
-                
-                <div class="buttons">
-                    <button class="button" [routerLink]="['/book/create-copy', book.id]" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-create-copy">Agregar Copia</button>
-                    <button class="button" [routerLink]="['/book/edit', book.id]" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-edit-book">Editar Libro</button>
-                    <button class="button" (click)="deleteBook()" [style.visibility]="librarian ? 'visible' : 'hidden'" id="button-delete-book">Borrar Libro</button>
+                <div id="info-layout">
+                    <span class="material-symbols-outlined">category</span>
+                    <p id="category">Comedia</p>
+                    <p id="isbn">ISBN: {{book.isbn}}</p>
                 </div>
 
-            </div>
-            
-            <div id="copies-container">
-                <div id="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha compra</th>
-                                <th>Estado</th>
-                                <th>Solicitar</th>
-                                <th>Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody> 
-                            <ng-container *ngIf="copies">
-                                <tr *ngFor="let copy of copies; let i = index">
-                                    <div class="copy-list">
-                                        <th>{{copy.timestamp}}</th>
-                                        <th>{{copy.status}}</th>
-                                        <th><a [routerLink]="['/book/create-loan', copy.id]" id="button-select-copy-{{i}}">Solicitar</a></th>
-                                        <th><button (click)="deleteCopy(i)" id="button-delete-copy-{{i}}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                            </svg>
-                                        </button></th>
-                                    </div>
-                                </tr>
-                            </ng-container>       
-                        </tbody> 
-                    </table>
+                <div id="title-layout">
+                    <h1 id="title">Cien años de soledad</h1>
                 </div>
-            </div>
+
+                <div id="description">
+                    <h5>Descripción</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of
+                        Lorem Ipsum.</p>
+                </div>
+
+                <div id="copies-toggle-layout">
+                    <p (click)="toggleCopiesActivated()">Ver disponibilidad <span id="toogle-copies" class="material-symbols-outlined">expand_more</span></p>
+                </div>
+
+                <div id="copies-layout">
+                    <ul id="copies" *ngFor="let copy of copies; index as i">
+                        <li id="copy">
+                            <div id="copy-info-disponibility">
+                                <span id="status" class="material-symbols-outlined">trip_origin </span>
+                            </div>
+
+                            <div id="copy-info-id">
+                                <h5>ID</h5>
+                                <p>{{copy.id}}</p>           
+                            </div>
+
+                            <div id="copy-info-status">
+                                <h5>Status</h5>
+                                <p>{{copy.status}}</p>                       
+                            </div>
+
+                            <div id="copy-info-timestamp">
+                                <h5>Timestamp</h5>
+                                <p>{{copy.timestamp}}</p>                                                                  
+                            </div>
+
+                            <div id="copy-info-request">
+                                <p (click)="launchWindow(1, i)">Solicitar Prestamo<span class="material-symbols-outlined">expand_content</span></p>
+                            </div>
+
+                            <div id="copy-info-delete">
+                                <span (click)="deleteCopy(i)" class="material-symbols-outlined">delete</span>   
+                            </div>
+                        </li>                
+                    </ul>                
+                </div>
+
+                <div id="secundary-info">
+                    <div id="editorial-layout">
+                        <h5>Editorial</h5>
+                        <p>Panamericana</p>
+                    </div>
+
+                    <div id="autores-layout">
+                        <h5>Autores</h5>
+                        <ul id="autors" *ngIf="authors">
+                            <li *ngFor="let author of authors; let i = index">
+                                <p>{{author.name}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>   
         </div>
     </div>
 </section>

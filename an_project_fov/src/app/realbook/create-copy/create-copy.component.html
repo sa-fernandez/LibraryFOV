@@ -1,31 +1,32 @@
 <section id="create-copy" *ngIf="book">
-    <div class="wrap">
-        <div id="form-layout">
-            <h1>Crear copia</h1>
-            <form id="form" (ngSubmit)="onSubmit()">
+    <div id="form-layout">
+        <h1>Creando Copia</h1>
+        <p>Por favor ingresa todos los datos de la nueva copia para poder continuar con el proceso.</p>
+        
+        <form id="form" (ngSubmit)="onSubmit()">
 
-                <label>Ingresa el estado</label>
-                <select [(ngModel)]="inputStatus" name="inputStatus" id="input-status">
-                    <option value="BUENO">BUEN ESTADO</option>
-                    <option value="REGULAR">ESTADO REGULAR</option>
-                    <option value="MALO">MAL ESTADO</option>
-                </select>
+            <label>Ingresa el estado</label>
+            <select [(ngModel)]="inputStatus" name="inputStatus" id="input-status">
+                <option value="BUENO">BUEN ESTADO</option>
+                <option value="REGULAR">ESTADO REGULAR</option>
+                <option value="MALO">MAL ESTADO</option>
+            </select>
 
 
-                <label>Ingresa la fecha</label>
-                <mat-form-field appearance="fill">
-                    <mat-label>Fecha de compra</mat-label>
-                    <input matInput [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)" id="input-date">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <div>
-                    <button type="submit" id="button-copy-create">Crear Copia</button>
-                </div>
+            <label>Ingresa la fecha</label>
+            <mat-form-field appearance="fill">
+                <mat-label>Fecha de compra</mat-label>
+                <input matInput [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)" id="input-date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
 
-            </form>
-        </div>
+            
+            <button type="submit" id="button-copy-create">Crear Copia</button>
+            
+
+        </form>
     </div>
 </section>
 

@@ -1,105 +1,147 @@
-*{
-    padding: 0px;
-    margin: 0px;
-    font-size: 10px;
-}
+@import "../../../styles.scss";
 
 #book-edit{
-    padding-top: 5vh;
-    padding-bottom: 5vh;
+
     .wrap{
         max-width: 1328px;
-        margin: 0px auto;
-
-        
+     
         #form-layout{
             margin: 0px auto;
-            width: 50%;
-            padding: 3%;
-            padding-top: 0%;
-            padding-bottom: 0%;
-            text-align: center;
-            background-color: rgb(255, 255, 255);
-            border: 1px solid rgb(230, 230, 230);
-            box-shadow: 26px 24px 24px -12px rgba(0,0,0,0.1);
-            border-radius: 5px;
-            padding-bottom: 2%;
-            
-        
-            #title{
-                font-size: 3em;
+            width: 60%;
+            border: 1px solid rgb(29, 29, 29);
+            border-radius: 15px;
+            padding-bottom: 100px;
+            position: relative;
+  
+            h1{
+                font-size: 4em;
                 font-weight: 500;
-                margin: 5%;
+                margin: 0px auto;
+                color: $font-color-primary;
+                text-align: center;
+                width: 90%;
+                margin-top: 5%;
+            }
+            
+            p{
+                font-size: 1.75em;
+                font-weight: 200;
+                color: $font-color-secunday;
+                text-align: center;
+                margin: 0px auto;
+                width: 65%;
+                margin-top: 2%;
             }
 
             #form{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
+                @include flex-center;
+                flex-flow: row wrap;
+                margin-top: 5%;
 
-                label{
-                    margin: 0px auto;
-                    width: 70%;        
-                    font-size: 1.8em;
-                    text-align: start;
-                    padding-bottom: 1%;
-                    color: rgb(116, 116, 116);
+                .input-layout{
+                    display: flex;
+                    flex-direction: column;
+                    flex-basis: 40%;
+                    margin: 10px 20px;
+    
+                    label{          
+                        font-size: 1.6em;
+                        text-align: start;
+                        padding-bottom: 1%;
+                        color: $font-color-secunday;
+                        font-weight: 100;
+                    }
+                    
+                    input{
+                        width: 100%;
+                        height: 60px;
+                        font-size: 1.9em;
+                        border-radius: 10px;
+                        padding-left: 5px;
+                        border: 1px solid rgb(53, 53, 53);
+                        background-color: rgb(22, 22, 22);
+                        color: $font-color-primary;
+                    }  
+                }
+
+                #book-description{
+                    flex-basis: 100%;
+
+                    label{
+                        width: 60%;
+                        margin: 0px auto;
+                    }
+                    
+                    textarea{
+                        border: 1px solid rgb(53, 53, 53);
+                        background-color: rgb(22, 22, 22);
+                        border-radius: 10px;
+                        resize: none;
+                        width: 60%;
+                        height: 200px;
+                        margin: 0px auto;
+                        color: $font-color-primary;
+                        font-size: 1.9em;
+                    }
                 }
                 
-                input{
-                    margin: 0px auto;
-                    width: 70%;
-                    height: 50px;
-                    font-size: 1.7em;
-                    margin-bottom: 15px;
-                    border-radius: 3px;
-                    padding-left: 5px;
-                    border: 1px solid rgb(1, 1, 59);
-                    color: black;
+                #authors-component-layout{
+                    flex-basis: 100%;
+                    margin-top: 3%;
+                    position: relative;
+        
+                    &::before{
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        margin: 0px auto;
+                        width: 90%;
+                        height: 1px;
+                        background-color: rgb(77, 77, 77);;
+                    }
 
-                    &::placeholder{
-                      
-                        color: #ccc;
+                    h1{
+                        text-align: start;
+                        margin: 20px 40px; 
+                        font-weight: 500;   
+                        color: $font-color-secunday;   
+                        font-size: 2em;
                     }
                 }
 
-                #button-layout{
-
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-around;
-                  
-               
-                    button{
                         
-                        width: 40%;
-                        height: 60px;
-                        margin-top: 20px;
-                        border: none;
-                        border-radius: 5px;
-                        color: white;
-                        font-weight: bold;
-                        font-size: 1.7em;
-                        transition: all 300ms;
+                button{
+                    position: absolute;   
+                    width: 120px;
+                    height: 50px;
+                    margin-top: 20px;
+                    border: none;
+                    border-radius: 5px;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 1.7em;
+                    transition: all 300ms;
     
-                        &:hover{
-                            transform: scale(1.08);
-                        }
-                    } 
-
-                    #button-cancelar{
-                        background-color: #990000;
+                    &:hover{
+                        cursor: pointer;
+                        transform: scale(1.08);
                     }
-
-                    #button-modificar{
-                        background-color: #293462;  
-                    }
-
-
-
+                } 
+    
+                #button-cancelar{
+                    bottom: 2%;
+                    right: 22%;
+                    background-color: #5f0000;
                 }
-
-       
+    
+                #button-modificar{
+                    bottom: 2%;
+                    right: 5%;
+                    background-color: $secundary-color;  
+                } 
             }
         }
     }
