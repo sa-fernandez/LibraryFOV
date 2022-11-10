@@ -7,9 +7,7 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class SecurityService {
 
-  user : any;
-
-  constructor(private http: HttpClient, private keycloakService: KeycloakService) { }
+  constructor(private http: HttpClient, public keycloakService: KeycloakService) { }
 
   logout() {
     this.keycloakService.clearToken();
@@ -36,6 +34,16 @@ export class SecurityService {
 
   userName(): string{
     return this.keycloakService.getUsername();
+  }
+
+  userN() : Promise<any>{
+    return new Promise<any>(async (resolve, reject) => {
+      if(await this.keycloakService.isLoggedIn()){
+        this.keycloakService.loadUserProfile().then(data=>resolve(data)).catch(error => console.log(error))
+      }else{
+        console.log('user not logged in')
+      }
+    })
   }
 
 }

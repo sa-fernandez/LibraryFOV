@@ -32,7 +32,8 @@ export class LoanListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.bookService.viewAuthor(this.securityService.userName()).subscribe(elem => {
+    this.securityService.userN().then(usr => 
+      this.bookService.viewAuthor(usr.username).subscribe(elem => {
       this.person = elem
       this.bookService.listLoansPerson(this.person.id).subscribe(loans => {
         this.loans = loans
@@ -43,8 +44,10 @@ export class LoanListComponent implements OnInit {
               this.booksBorrowed.push(book)
             })
           }));
-      });
-    })
+        });
+      }) 
+    );
+    
   }
 
   launchWindow(i: number){
