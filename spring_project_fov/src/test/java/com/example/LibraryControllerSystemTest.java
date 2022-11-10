@@ -16,6 +16,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -43,6 +44,7 @@ public class LibraryControllerSystemTest {
     private ChromeDriver driver;
     private WebDriverWait wait;
     private String baseUrl;
+    private Actions actions;
 
     @Autowired
     BookRepository bookRepository;
@@ -76,9 +78,7 @@ public class LibraryControllerSystemTest {
         book1.getAuthors().add(author1);
         book2.getAuthors().add(author2);
         book3.getAuthors().add(author3);
-        realBook1.setBook(book1);
-        realBook2.setBook(book2);
-        realBook3.setBook(book3);
+        book1.getCopies().add(realBook1);
         authorRepository.save(author1);
         authorRepository.save(author2);
         authorRepository.save(author3);
@@ -109,6 +109,8 @@ public class LibraryControllerSystemTest {
 
         this.baseUrl = "http://localhost:4200";
 
+        this.actions = new Actions(driver);
+
         driver.get(baseUrl);
         WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
         username.sendKeys("admin");
@@ -130,7 +132,7 @@ public class LibraryControllerSystemTest {
     @Test
     void listarLibros() {
         driver.get(baseUrl + "/book/list");
-        List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
+        List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("info-book"), 3));
         assertEquals("Guía práctica para Spring\nISBN: 8273", libros.get(0).getText());
         assertEquals("Guía práctica para Angular\nISBN: 3421", libros.get(1).getText());
         assertEquals("Guía práctica para Testing\nISBN: 9790", libros.get(2).getText());
@@ -139,7 +141,7 @@ public class LibraryControllerSystemTest {
     @Test
     void compararListas() {
         driver.get(baseUrl + "/book/list");
-        List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 3));
+        List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("info-book"), 3));
         List<Book> librosEsperados = bookRepository.findAll();
         assertEquals(librosEsperados.size(), libros.size());
         for (int i = 0; i < librosEsperados.size(); i++) {
@@ -151,7 +153,7 @@ public class LibraryControllerSystemTest {
     void visualizarLibro(){
         driver.get(baseUrl + "/book/view/4");
         Book book = bookRepository.findById(4L).orElseThrow();
-        WebElement name = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("name")));
+        WebElement name = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("title")));
         WebElement isbn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("isbn")));
         try{
             wait.until(ExpectedConditions.textToBePresentInElement(name, book.getName()));
@@ -171,25 +173,28 @@ public class LibraryControllerSystemTest {
         inputBookName.sendKeys(book.getName());
         inputBookIsbn.sendKeys(book.getIsbn());
         button.click();
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 4));
-        List<WebElement> libros = driver.findElementsByClassName("book-list");
+        List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("info-book"), 4));
         assertEquals(formatBook(book), libros.get(libros.size() - 1).getText());
     }
 
     @Test
     void editarLibro(){
         driver.get(baseUrl + "/book/view/4");
+        WebElement toggle = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("option-toogle")));
+        toggle.click();
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-edit-book")));
         button.click();
         String newName = "Guia práctica para implementar pruebas de sistema";
         String newIsbn = "9985";
         WebElement inputName = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-name")));
+        inputName.sendKeys("");
         inputName.sendKeys(newName);
         WebElement inputIsbn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-isbn")));
+        inputIsbn.sendKeys("");
         inputIsbn.sendKeys(newIsbn);
         WebElement buttonUpdate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-modificar")));
         buttonUpdate.click();
-        WebElement name = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("name")));
+        WebElement name = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("title")));
         WebElement isbn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("isbn")));
         try{
             wait.until(ExpectedConditions.textToBePresentInElement(name, newName));
@@ -203,10 +208,12 @@ public class LibraryControllerSystemTest {
     void borrarLibro(){
         driver.get(baseUrl + "/book/view/4");
         Book book = bookRepository.findById(4L).orElseThrow();
+        WebElement toggle = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("option-toogle")));
+        toggle.click();
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-delete-book")));
         button.click();
         try{
-            List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("book-list"), 2));
+            List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("info-book"), 2));
             for (WebElement libro : libros){
                 assertNotEquals(libro.getText(), formatBook(book));
             }
@@ -218,6 +225,8 @@ public class LibraryControllerSystemTest {
     @Test
     void crearCopia(){
         driver.get(baseUrl + "/book/view/4");
+        WebElement toggle = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("option-toogle")));
+        toggle.click();
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-create-copy")));
         button.click();
         Select selectStatus = new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-status"))));
@@ -226,12 +235,14 @@ public class LibraryControllerSystemTest {
         inputDate.sendKeys("14/12/2022");
         WebElement buttonCreate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-copy-create")));
         buttonCreate.click();
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("copy-list"), 2));
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.id("copy"), 2));
     }
 
     @Test
     void borrarCopia(){
         driver.get(baseUrl + "/book/view/4");
+        WebElement toggleCopies = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggle-copy")));
+        actions.moveToElement(toggleCopies).click().perform();
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-delete-copy-0")));
         button.click();
         wait.until(ExpectedConditions.numberOfElementsToBe(By.className("copy-list"), 0));
@@ -240,6 +251,8 @@ public class LibraryControllerSystemTest {
     @Test
     void solicitarCopia(){
         driver.get(baseUrl + "/book/view/4");
+        WebElement toggleCopies = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggle-copy")));
+        actions.moveToElement(toggleCopies).click().perform();
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-select-copy-0")));
         button.click();
         WebElement inputDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-date")));
@@ -247,7 +260,7 @@ public class LibraryControllerSystemTest {
         WebElement buttonCreate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-loan-create")));
         buttonCreate.click();
         driver.get(baseUrl + "/book/loan-list");
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("loan-list"), 1));
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("info-table"), 1));
     }
     
 }

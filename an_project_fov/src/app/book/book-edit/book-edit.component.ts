@@ -12,11 +12,13 @@ import { BookService } from '../../shared/book.service';
 export class BookEditComponent implements OnInit {
 
   book : Book | undefined;
-  editBook : Book = new Book(0, "", "");
+  editBook : Book = new Book(0, "", "", "", "", "");
 
   inputName : string | undefined = "";
   inputIsbn : string | undefined = "";
-  inputAuthors : string | undefined = "";
+  inputCategory : string | undefined = "";
+  inputDescription : string | undefined = "";
+  inputEditorial : string | undefined = "";
 
   constructor(
     private bookService : BookService, 
@@ -31,6 +33,9 @@ export class BookEditComponent implements OnInit {
       this.book = book
       this.inputName = book.name
       this.inputIsbn = book.isbn
+      this.inputCategory = book.category
+      this.inputDescription = book.description
+      this.inputEditorial = book.editorial
     });
   }
   

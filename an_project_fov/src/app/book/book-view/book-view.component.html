@@ -47,27 +47,21 @@
 
                 <div id="info-layout">
                     <span class="material-symbols-outlined">category</span>
-                    <p id="category">Comedia</p>
+                    <p id="category">{{book.category}}</p>
                     <p id="isbn">ISBN: {{book.isbn}}</p>
                 </div>
 
                 <div id="title-layout">
-                    <h1 id="title">Cien años de soledad</h1>
+                    <h1 id="title">{{book.name}}</h1>
                 </div>
 
                 <div id="description">
                     <h5>Descripción</h5>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
-                        popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                        and more recently with desktop publishing software like Aldus PageMaker including versions of
-                        Lorem Ipsum.</p>
+                    <p>{{book.description}}</p>
                 </div>
 
                 <div id="copies-toggle-layout">
-                    <p (click)="toggleCopiesActivated()">Ver disponibilidad <span id="toogle-copies" class="material-symbols-outlined">expand_more</span></p>
+                    <p (click)="toggleCopiesActivated()" id="toggle-copy">Ver disponibilidad <span id="toggle-copies" class="material-symbols-outlined">expand_more</span></p>
                 </div>
 
                 <div id="copies-layout">
@@ -93,11 +87,11 @@
                             </div>
 
                             <div id="copy-info-request">
-                                <p (click)="launchWindow(1, i)">Solicitar Prestamo<span class="material-symbols-outlined">expand_content</span></p>
+                                <p (click)="launchWindow(1, i)" id="button-select-copy-{{i}}">Solicitar Prestamo<span class="material-symbols-outlined">expand_content</span></p>
                             </div>
 
                             <div id="copy-info-delete">
-                                <span (click)="deleteCopy(i)" class="material-symbols-outlined">delete</span>   
+                                <span (click)="deleteCopy(i)" class="material-symbols-outlined" id="button-delete-copy-{{i}}">delete</span>   
                             </div>
                         </li>                
                     </ul>                
@@ -106,7 +100,7 @@
                 <div id="secundary-info">
                     <div id="editorial-layout">
                         <h5>Editorial</h5>
-                        <p>Panamericana</p>
+                        <p>{{book.editorial}}</p>
                     </div>
 
                     <div id="autores-layout">

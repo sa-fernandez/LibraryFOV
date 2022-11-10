@@ -35,35 +35,39 @@ public class Database implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        String[] status = {"BUENO", "REGULAR", "MALO"};
+
+        String[] status = {"Bueno", "Regular", "Malo"};
+        String[] categories = {"Drama", "Comedia", "Acción", "Comedia", "Ficción"};
 
         Random random = new Random(1234);
+        RandomStringGenerator randomGenerator = new RandomStringGenerator.Builder().withinRange('a', 'z').usingRandom(random::nextInt).build();
 
-        RandomStringGenerator randomGen = new RandomStringGenerator.Builder().withinRange('a', 'z')
-                .usingRandom(random::nextInt).build();
-
-        for (int i = 0; i < NUM_BOOKS; i++) {
-            String name = randomGen.generate(5, 10);
+        for(int i=0; i<NUM_BOOKS; i++){
+            String name = randomGenerator.generate(5, 15);
             int isbn = random.nextInt(9999);
-            int cantAuthors = random.nextInt(NUM_AUTHORS - 1) + 1;
+            String category = categories[random.nextInt(5)];
+            String description = randomGenerator.generate(30, 60);
+            String editorial = randomGenerator.generate(10, 15);
+
+            int numAuthors = random.nextInt(NUM_AUTHORS -1) +1;
             ArrayList<Author> authors = new ArrayList<>();
-            for (int j = 0; j < cantAuthors; j++) {
-                Author author = new Author(randomGen.generate(5, 10));
+            for(int j = 0; j<numAuthors; j++){
+                Author author = new Author(randomGenerator.generate(10, 15));
                 authorRepository.save(author);
                 authors.add(author);
             }
-            Book book = new Book(String.valueOf(isbn), name, authors);
-            int cantCopies = random.nextInt(NUM_REAL - 1) + 1;
+
+            Book book = new Book(name, String.valueOf(isbn), category, description, editorial, authors); 
+            int numCopies = random.nextInt(NUM_REAL -1) + 1;
             ArrayList<RealBook> copies = new ArrayList<>();
-            for (int k = 0; k < cantCopies; k++) {
-                RealBook copy = new RealBook(status[random.nextInt(3)], randomGen.generate(5), book);
+            for(int q = 0; q<numCopies; q++){
+                RealBook copy = new RealBook(status[random.nextInt(3)], randomGenerator.generate(4, 8), book);
                 realBookRepository.save(copy);
                 copies.add(copy);
             }
+
             book.setCopies(copies);
             bookRepository.save(book);
         }
-
     }
-
 }

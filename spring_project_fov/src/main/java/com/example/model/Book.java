@@ -21,6 +21,9 @@ public class Book {
 
     private String isbn;
     private String name;
+    private String category;
+    private String description;
+    private String editorial;
 
     @ManyToMany
     @JsonIgnore
@@ -39,9 +42,26 @@ public class Book {
         this.name = name;
     }
 
+    public Book(String isbn, String name, String category, String description, String editorial) {
+        this.isbn = isbn;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.editorial = editorial;
+    }
+
     public Book(String isbn, String name, ArrayList<Author> authors){
         this.isbn = isbn;
         this.name = name;
+        this.authors = authors;
+    }
+
+    public Book(String isbn, String name, String category, String description, String editorial, List<Author> authors) {
+        this.isbn = isbn;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.editorial = editorial;
         this.authors = authors;
     }
 
@@ -52,35 +72,70 @@ public class Book {
         this.copies = copies;
     }
 
-    public Long getId(){
-        return this.id;
+    public Book(String isbn, String name, String category, String description, String editorial, List<Author> authors,
+            List<RealBook> copies) {
+        this.isbn = isbn;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.editorial = editorial;
+        this.authors = authors;
+        this.copies = copies;
     }
 
-    public void setId(Long id){
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getIsbn(){
-        return this.isbn;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setIsbn(String isbn){
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-    public String getName(){
-        return this.name;
+    public String getName() {
+        return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List<Author> getAuthors(){
-        return this.authors;
+    public String getCategory() {
+        return category;
     }
 
-    public void setAuthors(List<Author> authors){
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(String editorial) {
+        this.editorial = editorial;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 

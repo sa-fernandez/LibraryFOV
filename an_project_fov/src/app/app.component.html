@@ -15,8 +15,8 @@
           <ul>
             <li routerLinkActive="menuSelected"><a [routerLink]="['/home']">Inicio</a></li>
             <li routerLinkActive="menuSelected"><a [routerLink]="['/book/list']">Libros</a></li>
-            <li routerLinkActive="menuSelected" [style.visibility]="librarian ? 'display' : 'none'"><a [routerLink]="['/book/create']" >Crear Libro</a></li>
-            <li routerLinkActive="menuSelected" [style.visibility]="user ? 'display' : 'none'"><a [routerLink]="['/book/loan-list']" >Devolver Libro</a></li>
+            <li routerLinkActive="menuSelected" [style.display]="librarian ? 'display' : 'none'"><a [routerLink]="['/book/create']" >Crear Libro</a></li>
+            <li routerLinkActive="menuSelected" [style.display]="user ? 'display' : 'none'"><a [routerLink]="['/book/loan-list']" >Devolver Libro</a></li>
           </ul>
         </nav>
       </div>

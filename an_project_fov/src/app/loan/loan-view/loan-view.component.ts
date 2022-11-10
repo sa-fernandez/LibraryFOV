@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Author } from 'src/app/model/author';
 import { Book } from 'src/app/model/book';
-import { switchMap } from 'rxjs';
 import { Realbook } from 'src/app/model/realbook';
 import { BookService } from 'src/app/shared/book.service';
 import { Loan } from 'src/app/model/loan';
@@ -73,9 +72,7 @@ export class LoanViewComponent implements OnInit {
     }else{
       //ALERTA
     }
-    this.bookService.editLoan(this.loan).subscribe(() => {
-      this.router.navigate(['book/view-loan', this.loan?.id])
-    });
+    this.bookService.editLoan(this.loan).subscribe();
   }
 
 }
