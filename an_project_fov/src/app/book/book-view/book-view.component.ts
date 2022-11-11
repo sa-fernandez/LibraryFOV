@@ -67,9 +67,9 @@ export class BookViewComponent implements OnInit {
 
   toggleCopiesActivated(){
 
-    let toggle = document.getElementById('toogle-copies') as HTMLElement;
+    let toggle = document.getElementById('toggle-copies') as HTMLElement;
     let layout = document.getElementById('copies-layout') as HTMLElement;
-
+    
     if(this.activated){
       layout.style.maxHeight = "0px";
       toggle.style.rotate = "0deg";
@@ -81,6 +81,8 @@ export class BookViewComponent implements OnInit {
       toggle.style.rotate = "-180deg";
       this.activated = 1;
     }
+
+    
   }
 
   launchWindow(option: number, i?: number){

@@ -110,7 +110,7 @@ public class LibraryController {
     @Secured({"ROLE_ADMIN", "ROLE_LIBRARIAN"})
     @PutMapping("/edit-book")
     public void editarLibro(@RequestBody Book book){
-        bookRepository.updateBook(book.getIsbn(), book.getName(), book.getId());
+        bookRepository.updateBook(book.getIsbn(), book.getName(), book.getId(), book.getCategory(), book.getEditorial(), book.getDescription());
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_LIBRARIAN"})

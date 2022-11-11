@@ -38,9 +38,11 @@ export class CreateCopyComponent implements OnInit {
   }
 
   onSubmit(){
+
     if(!this.event){
       this.event = this.now.toLocaleDateString();
     }
+
     if(this.inputStatus){
       this.realbook.status = this.inputStatus;
       this.realbook.timestamp = this.event;
@@ -56,6 +58,7 @@ export class CreateCopyComponent implements OnInit {
 
   addEvent(event: MatDatepickerInputEvent<Date>) {
     this.event = event.value?.toLocaleDateString();
+    console.log(this.event);
   }
 
 }

@@ -21,7 +21,9 @@ export class BookCreateComponent implements OnInit {
   }
 
   onSubmit(){
-    if(this.book.isbn && this.book.name){
+
+    if(this.book.name && this.book.isbn && this.book.category && this.book.editorial && this.book.description){
+      console.log(this.book);
       this.bookService.createBook(this.book).subscribe(() => {
         this.router.navigate(['book/list']);
       });

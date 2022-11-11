@@ -3,15 +3,39 @@
         <div id="form-layout">
             <h1>Creando nuevo libro</h1>
             <p>Antes de poder crear el libro debes llenar los siguientes campos con la información solicitada.</p>
-            <form (ngSubmit)="onSubmit()">
-                <label>Ingresa el nombre del libro</label>
-                <input type="text" name="name" id="name" [(ngModel)]="book.name">
-                <label>Ingresa el ISBN del libro</label>
-                <input type="text" name="isbn" id="isbn" [(ngModel)]="book.isbn">
-                <div id="button-layout">
-                    <button type="submit" id="button-create-book">Crear Libro</button>
+
+            <form id="form" (ngSubmit)="onSubmit()">
+
+                <div class="input-layout" id="book-name">
+                    <label>Nombre</label>
+                    <input type="text" name="name" id="name" [(ngModel)]="book.name"> 
                 </div>
+
+                <div class="input-layout"  id="book-isbn">
+                    <label>ISBN</label>
+                    <input type="text" name="isbn" id="name" [(ngModel)]="book.isbn">
+                </div>
+
+                <div class="input-layout"  id="book-category">
+                    <label>Categoria</label>
+                    <input type="text" name="category" [(ngModel)]="book.category">
+                </div>
+
+                <div class="input-layout"  id="book-editorial">
+                    <label>Editorial</label>
+                    <input type="text" name="editorial" [(ngModel)]="book.editorial">
+
+                </div>
+
+                <div class="input-layout"  id="book-description">
+                    <label>Descripción</label>
+                    <textarea maxlength="250" type="text" name="description" [(ngModel)]="book.description"> </textarea>
+                </div>
+
+
+                <button type="submit" id="button-create-book">Crear Libro</button>
             </form>
+
         </div>
     </div>
 </section>

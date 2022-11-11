@@ -12,7 +12,7 @@ import { BookService } from '../../shared/book.service';
 export class BookEditComponent implements OnInit {
 
   book : Book | undefined;
-  editBook : Book = new Book(0, "", "", "", "", "");
+  editBook : Book | undefined;
 
   inputName : string | undefined = "";
   inputIsbn : string | undefined = "";
@@ -40,11 +40,12 @@ export class BookEditComponent implements OnInit {
   }
   
   onSubmit(){
-    if(this.book && this.inputName && this.inputIsbn){
-      this.editBook.id = this.book.id;
-      this.editBook.name = this.inputName;
-      this.editBook.isbn = this.inputIsbn;
+    if(this.book && this.inputName && this.inputIsbn && this.inputCategory && this.inputCategory && this.inputEditorial && this.inputDescription){
+
+      this.editBook = new Book(this.book.id, this.inputName, this.inputIsbn, this.inputCategory, this.inputDescription, this.inputEditorial);
+      
       this.bookService.editBook(this.editBook).subscribe(() => {
+        console.log(this.editBook);
         this.router.navigate(['book/view', this.book?.id]);
       });
     }
