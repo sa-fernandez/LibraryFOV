@@ -1,14 +1,14 @@
 <section id="loan-create">    
     <div id="form-layout">
-        <h1>¡Ya casí terminas!</h1>
-        <p>Estan a punto de obtener prestado el libro que elegíste, por favor indicanos la fecha en la que vas a devolverlo.</p>
+        <h1>¡Ya casi terminas!</h1>
+        <p>Está a punto de obtener prestado el libro que elegiste. Por favor indícanos la fecha en la que vas a devolverlo.</p>
         <form (ngSubmit)="onSubmit()">
             <label>Ingresa la fecha</label>
             
             <mat-form-field>
                 <mat-label>Fecha de devolución</mat-label>
-                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)" id="input-date">
-                <mat-hint>MM/DD/YYYY</mat-hint>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" (dateInput)="addEvent($event)" (dateChange)="addEvent($event)" [(ngModel)]="event" id="input-date">
+                <mat-hint>DD/MM/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

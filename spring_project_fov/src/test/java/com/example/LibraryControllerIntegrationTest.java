@@ -66,13 +66,12 @@ public class LibraryControllerIntegrationTest {
         Author author1 = new Author("Migue");
         Author author2 = new Author("Kike");
         Author author3 = new Author("Asder");
-        Book book1 = new Book("8273", "Guía práctica para Spring");
-        Book book2 = new Book("3421", "Guía práctica para Angular");
-        Book book3 = new Book("9790", "Guía práctica para Testing");
+        Book book1 = new Book("8273", "Guía práctica para Spring", "Ficción", "Spring", "Pabli");
+        Book book2 = new Book("3421", "Guía práctica para Angular", "Terror", "Angular", "Pipe");
+        Book book3 = new Book("9790", "Guía práctica para Testing", "Romance", "Test", "Asderina");
         RealBook realBook1 = new RealBook("BUENO", "10/10/2022");
         RealBook realBook2 = new RealBook("REGULAR", "11/10/2022");
         RealBook realBook3 = new RealBook("MALO", "12/10/2022");
-        RealBook realBook4 = new RealBook("MALO", "1/10/2022");
         Loan loan1 = new Loan(formatter.format(ldt), "6/12/2022", realBook1, author3);
         Loan loan2 = new Loan(formatter.format(ldt), "16/12/2022", realBook2, author1);
         Loan loan3 = new Loan(formatter.format(ldt), "14/12/2022", realBook3, author2);
@@ -80,15 +79,18 @@ public class LibraryControllerIntegrationTest {
         book2.getAuthors().add(author2);
         book3.getAuthors().add(author3);
         book1.getCopies().add(realBook1);
-        book2.getCopies().add(realBook2);
-        book3.getCopies().add(realBook3);
-        book3.getCopies().add(realBook4);
+        realBook1.setBook(book1);
+        realBook2.setBook(book2);
+        realBook3.setBook(book3);
         authorRepository.save(author1);
         authorRepository.save(author2);
         authorRepository.save(author3);
         bookRepository.save(book1);
         bookRepository.save(book2);
         bookRepository.save(book3);
+        realBookRepository.save(realBook1);
+        realBookRepository.save(realBook2);
+        realBookRepository.save(realBook3);
         loanRepository.save(loan1);
         loanRepository.save(loan2);
         loanRepository.save(loan3);
@@ -170,12 +172,6 @@ public class LibraryControllerIntegrationTest {
         ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/edit-author", HttpMethod.PUT, httpEntity, Void.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
-
-    // @Test
-    // void testBorrarAutor() throws Exception {
-    //     ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-author/1", HttpMethod.DELETE, null, Void.class);
-    //     assertEquals(HttpStatus.OK, response.getStatusCode());
-    // }
 
     @Test
     void testLinkAuthorBook() throws Exception {
@@ -261,13 +257,13 @@ public class LibraryControllerIntegrationTest {
 
     @Test
     void testBorrarCopia() throws Exception {
-        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-copy/10", HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> response = rest.exchange("http://localhost:" + port + "/book/delete-copy/8", HttpMethod.DELETE, null, Void.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testLinkCopyBook() throws Exception {
-        RealBook realBook = realBookRepository.findById(7L).orElseThrow();
+        RealBook realBook = realBookRepository.findById(8L).orElseThrow();
         Book book = bookRepository.findById(4L).orElseThrow();
         DTOCopy dtoCopy = new DTOCopy(book.getId(), realBook.getId());
         HttpEntity<DTOCopy> httpEntity = new HttpEntity<DTOCopy>(dtoCopy);

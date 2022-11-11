@@ -49,7 +49,7 @@ public class Database implements CommandLineRunner {
             String description = randomGenerator.generate(30, 60);
             String editorial = randomGenerator.generate(10, 15);
 
-            int numAuthors = random.nextInt(NUM_AUTHORS -1) +1;
+            int numAuthors = random.nextInt(NUM_AUTHORS - 1) + 1;
             ArrayList<Author> authors = new ArrayList<>();
             for(int j = 0; j<numAuthors; j++){
                 Author author = new Author(randomGenerator.generate(10, 15));
@@ -57,10 +57,10 @@ public class Database implements CommandLineRunner {
                 authors.add(author);
             }
 
-            Book book = new Book(name, String.valueOf(isbn), category, description, editorial, authors); 
-            int numCopies = random.nextInt(NUM_REAL -1) + 1;
+            Book book = new Book(String.valueOf(isbn), name, category, description, editorial, authors); 
+            int numCopies = random.nextInt(NUM_REAL - 1) + 1;
             ArrayList<RealBook> copies = new ArrayList<>();
-            for(int q = 0; q<numCopies; q++){
+            for(int k = 0; k<numCopies; k++){
                 RealBook copy = new RealBook(status[random.nextInt(3)], randomGenerator.generate(4, 8), book);
                 realBookRepository.save(copy);
                 copies.add(copy);

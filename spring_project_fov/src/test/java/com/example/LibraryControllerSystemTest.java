@@ -16,7 +16,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -33,7 +32,6 @@ import com.example.model.Book;
 import com.example.model.RealBook;
 import com.example.repository.AuthorRepository;
 import com.example.repository.BookRepository;
-import com.example.repository.LoanRepository;
 import com.example.repository.RealBookRepository;
 
 @ActiveProfiles("systemtest")
@@ -44,16 +42,12 @@ public class LibraryControllerSystemTest {
     private ChromeDriver driver;
     private WebDriverWait wait;
     private String baseUrl;
-    private Actions actions;
 
     @Autowired
     BookRepository bookRepository;
 
     @Autowired
     AuthorRepository authorRepository;
-
-    @Autowired
-    LoanRepository loanRepository;
 
     @Autowired
     RealBookRepository realBookRepository;
@@ -66,19 +60,19 @@ public class LibraryControllerSystemTest {
         Author author1 = new Author("Migue");
         Author author2 = new Author("Kike");
         Author author3 = new Author("Asder");
-        Book book1 = new Book("8273", "Guía práctica para Spring");
-        Book book2 = new Book("3421", "Guía práctica para Angular");
-        Book book3 = new Book("9790", "Guía práctica para Testing");
+        Book book1 = new Book("8273", "Guía práctica para Spring", "Ficción", "Spring", "Pabli");
+        Book book2 = new Book("3421", "Guía práctica para Angular", "Terror", "Angular", "Pipe");
+        Book book3 = new Book("9790", "Guía práctica para Testing", "Romance", "Test", "Asderina");
         RealBook realBook1 = new RealBook("BUENO", "10/10/2022");
         RealBook realBook2 = new RealBook("REGULAR", "11/10/2022");
         RealBook realBook3 = new RealBook("MALO", "12/10/2022");
-        // Loan loan1 = new Loan(formatter.format(ldt), "6/12/2022", realBook1, author3);
-        // Loan loan2 = new Loan(formatter.format(ldt), "16/12/2022", realBook2, author1);
-        // Loan loan3 = new Loan(formatter.format(ldt), "14/12/2022", realBook3, author2);
         book1.getAuthors().add(author1);
         book2.getAuthors().add(author2);
         book3.getAuthors().add(author3);
         book1.getCopies().add(realBook1);
+        realBook1.setBook(book1);
+        realBook2.setBook(book2);
+        realBook3.setBook(book3);
         authorRepository.save(author1);
         authorRepository.save(author2);
         authorRepository.save(author3);
@@ -88,9 +82,6 @@ public class LibraryControllerSystemTest {
         realBookRepository.save(realBook1);
         realBookRepository.save(realBook2);
         realBookRepository.save(realBook3);
-        // loanRepository.save(loan1);
-        // loanRepository.save(loan2);
-        // loanRepository.save(loan3);
         
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox"); // Bypass OS security model, MUST BE THE VERY FIRST OPTION
@@ -108,8 +99,6 @@ public class LibraryControllerSystemTest {
         this.wait = new WebDriverWait(driver, 30);
 
         this.baseUrl = "http://localhost:4200";
-
-        this.actions = new Actions(driver);
 
         driver.get(baseUrl);
         WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
@@ -241,26 +230,52 @@ public class LibraryControllerSystemTest {
     @Test
     void borrarCopia(){
         driver.get(baseUrl + "/book/view/4");
-        WebElement toggleCopies = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggle-copy")));
-        actions.moveToElement(toggleCopies).click().perform();
+        WebElement toggle = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggle-copy")));
+        toggle.click();
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-delete-copy-0")));
         button.click();
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("copy-list"), 0));
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.id("copy"), 0));
     }
 
     @Test
     void solicitarCopia(){
         driver.get(baseUrl + "/book/view/4");
-        WebElement toggleCopies = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggle-copy")));
-        actions.moveToElement(toggleCopies).click().perform();
+        WebElement toggle = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggle-copy")));
+        toggle.click();
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-select-copy-0")));
         button.click();
         WebElement inputDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-date")));
         inputDate.sendKeys("14/12/2022");
         WebElement buttonCreate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-loan-create")));
         buttonCreate.click();
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.id("copy"), 0));
+    }
+
+    @Test
+    void aplazarPrestamo(){
+        this.solicitarCopia();
         driver.get(baseUrl + "/book/loan-list");
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("info-table"), 1));
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-action-0")));
+        button.click();
+        String newDate = "10/12/2022";
+        WebElement inputDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-date")));
+        inputDate.sendKeys(newDate);
+        WebElement buttonUpdate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-update-date")));
+        buttonUpdate.click();
+        WebElement finalDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("finaldate")));
+        assertEquals("Fecha de entrega\n" + newDate, finalDate.getText());
+    }
+
+    @Test
+    void devolverPrestamo(){
+        this.solicitarCopia();
+        driver.get(baseUrl + "/book/loan-list");
+        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-action-0")));
+        button.click();
+        WebElement buttonReturn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-return-book")));
+        buttonReturn.click();
+        driver.get(baseUrl + "/book/loan-list");
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.id("info-table"), 0));
     }
     
 }

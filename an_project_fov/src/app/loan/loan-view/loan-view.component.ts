@@ -21,6 +21,7 @@ export class LoanViewComponent implements OnInit {
 
   minDate : Date = new Date();
   maxDate : Date = new Date();
+  now : Date = new Date();
 
   isDisabled : boolean = false;
 
@@ -67,11 +68,10 @@ export class LoanViewComponent implements OnInit {
   }
 
   editDate(){
-    if(this.event){
-      this.loan.finalDate = this.event;
-    }else{
-      //ALERTA
+    if(!this.event){
+      this.event = this.now.toLocaleDateString();
     }
+    this.loan.finalDate = this.event;
     this.bookService.editLoan(this.loan).subscribe();
   }
 

@@ -46,7 +46,9 @@ export class CreateCopyComponent implements OnInit {
       this.realbook.timestamp = this.event;
       this.bookService.createRealBook(this.realbook).subscribe(realbook => {
         this.bookService.linkCopy(this.book!.id, realbook.id).subscribe(() => {
-          this.router.navigate(['book/view', this.book?.id])
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['book/view', this.book!.id])
+          });
         })
       });
     }

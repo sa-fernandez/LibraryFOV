@@ -12,7 +12,7 @@
     </ng-container>
 </div>
 
-<section id="loan-return">
+<section id="loan-return" *ngIf="booksBorrowed">
     <div class="wrap">
         <div class="container">
             <div id="image-decoration"></div>
@@ -46,7 +46,7 @@
                                     <p>{{book.isbn}}</p>
                                 </div>
                                 <div class="info"  id="book-accion">
-                                    <button (click)="launchWindow(loans![i].id)">Acciones</button>
+                                    <button (click)="launchWindow(loans![i].id)" id="button-action-{{i}}">Acciones</button>
                                 </div>
                             </div>             
                         </ng-container>         
