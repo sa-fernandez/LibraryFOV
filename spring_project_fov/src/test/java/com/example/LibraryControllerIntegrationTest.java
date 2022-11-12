@@ -286,7 +286,7 @@ public class LibraryControllerIntegrationTest {
 
     @Test
     void testListarPrestamosPersona() throws Exception {
-        List<Loan> loansProof = loanRepository.findAllBorrowedPerson(1L);
+        List<Loan> loansProof = loanRepository.findLoansPerson(1L);
         ResponseEntity<List<Loan>> response = rest.exchange("/book/list-person-loans/1",
             HttpMethod.GET,
             null,

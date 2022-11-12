@@ -15,118 +15,122 @@ import { Dtocopy } from '../model/dtocopy';
 export class BookService {
 
   private httpOptions = {
-    headers : new HttpHeaders({
-      "Content-Type" : "application/json"
+    headers: new HttpHeaders({
+      "Content-Type": "application/json"
     })
   }
-  
-  constructor(private http : HttpClient) { }
 
-  list() : Observable<Book[]>{
+  constructor(private http: HttpClient) { }
+
+  list(): Observable<Book[]> {
     return this.http.get<Book[]>(`http://localhost:8080/book/list`);
   }
 
-  viewBook(id : number): Observable<Book>{
+  viewBook(id: number): Observable<Book> {
     return this.http.get<Book>(`http://localhost:8080/book/view/${id}`);
   }
 
-  bookAuthors(id : number) : Observable<Author[]>{
+  bookAuthors(id: number): Observable<Author[]> {
     return this.http.get<Author[]>(`http://localhost:8080/book/authors/${id}`);
   }
 
-  deleteBook(id : number){
+  deleteBook(id: number) {
     return this.http.delete(`http://localhost:8080/book/delete/${id}`);
   }
 
-  createBook(book : Book) : Observable<Book>{
+  createBook(book: Book): Observable<Book> {
     return this.http.post<Book>(`http://localhost:8080/book/create-book`, book, this.httpOptions);
   }
 
-  createAuthor(author : Author) : Observable<Author>{
+  createAuthor(author: Author): Observable<Author> {
     return this.http.post<Author>(`http://localhost:8080/book/create-author`, author, this.httpOptions);
   }
 
-  linkAuthorBook(idAuthor : number, idBook : number){
+  linkAuthorBook(idAuthor: number, idBook: number) {
     return this.http.put(`http://localhost:8080/book/link`, new Dtolink(idAuthor, idBook), this.httpOptions);
   }
 
-  listAuthors() : Observable<Author[]>{
+  listAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(`http://localhost:8080/book/list-authors`);
   }
 
-  editBook(book : Book){
+  editBook(book: Book) {
     return this.http.put(`http://localhost:8080/book/edit-book`, book, this.httpOptions);
   }
 
-  viewAuthor(name : string): Observable<Author>{
+  viewAuthor(name: string): Observable<Author> {
     return this.http.get<Author>(`http://localhost:8080/book/view-author/${name}`);
   }
 
-  editAuthor(author : Author){
+  editAuthor(author: Author) {
     return this.http.put(`http://localhost:8080/book/edit-author`, author, this.httpOptions);
   }
 
-  deleteAuthor(id : number){
+  deleteAuthor(id: number) {
     return this.http.delete(`http://localhost:8080/book/delete-author/${id}`);
   }
 
-  unlinkAuthorBook(idAuthor : number, idBook : number){
+  unlinkAuthorBook(idAuthor: number, idBook: number) {
     return this.http.put(`http://localhost:8080/book/unlink`, new Dtolink(idAuthor, idBook), this.httpOptions);
   }
 
-  createLoan(idCopy : number, idPerson : number, finalDate : string){
+  createLoan(idCopy: number, idPerson: number, finalDate: string) {
     return this.http.post<Loan>(`http://localhost:8080/book/loan`, new Dtoloan(idCopy, idPerson, finalDate), this.httpOptions);
   }
 
-  listCopies(id : number) : Observable<Realbook[]>{
+  listCopies(id: number): Observable<Realbook[]> {
     return this.http.get<Realbook[]>(`http://localhost:8080/book/list-copies/${id}`);
   }
 
-  viewCopy(id : number) : Observable<Realbook>{
+  viewCopy(id: number): Observable<Realbook> {
     return this.http.get<Realbook>(`http://localhost:8080/book/view-copy/${id}`);
   }
 
-  copyBook(id : number) : Observable<Book>{
+  copyBook(id: number): Observable<Book> {
     return this.http.get<Book>(`http://localhost:8080/book/book-copy/${id}`);
   }
 
-  listLoans() : Observable<Loan[]>{
+  listLoans(): Observable<Loan[]> {
     return this.http.get<Loan[]>(`http://localhost:8080/book/list-loans`);
   }
 
-  listNotBorrowed(id : number) : Observable<Realbook[]>{
+  listNotBorrowed(id: number): Observable<Realbook[]> {
     return this.http.get<Realbook[]>(`http://localhost:8080/book/not-borrowed/${id}`);
   }
 
-  listLoansPerson(id : number) : Observable<Loan[]>{
+  listLoansPerson(id: number): Observable<Loan[]> {
     return this.http.get<Loan[]>(`http://localhost:8080/book/list-person-loans/${id}`);
   }
 
-  viewRealBook(id : number) : Observable<Realbook>{
+  listBooksBorrowed(id: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`http://localhost:8080/book/list-borrowed-books/${id}`);
+  }
+
+  viewRealBook(id: number): Observable<Realbook> {
     return this.http.get<Realbook>(`http://localhost:8080/book/view-realbook/${id}`);
   }
 
-  viewLoan(id : number) : Observable<Loan>{
+  viewLoan(id: number): Observable<Loan> {
     return this.http.get<Loan>(`http://localhost:8080/book/view-loan/${id}`);
   }
 
-  deleteLoan(id : number){
+  deleteLoan(id: number) {
     return this.http.delete(`http://localhost:8080/book/delete-loan/${id}`);
   }
 
-  editLoan(loan : Loan){
+  editLoan(loan: Loan) {
     return this.http.patch(`http://localhost:8080/book/edit-loan`, loan, this.httpOptions);
   }
 
-  createRealBook(realbook : Realbook) : Observable<Realbook>{
+  createRealBook(realbook: Realbook): Observable<Realbook> {
     return this.http.post<Realbook>(`http://localhost:8080/book/create-copy`, realbook, this.httpOptions);
   }
 
-  linkCopy(idBook : number, idCopy : number){
+  linkCopy(idBook: number, idCopy: number) {
     return this.http.put(`http://localhost:8080/book/link-copy`, new Dtocopy(idBook, idCopy), this.httpOptions);
   }
 
-  deleteCopy(id : number){
+  deleteCopy(id: number) {
     return this.http.delete(`http://localhost:8080/book/delete-copy/${id}`);
   }
 

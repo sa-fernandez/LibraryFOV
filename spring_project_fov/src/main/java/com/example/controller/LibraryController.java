@@ -179,7 +179,13 @@ public class LibraryController {
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/list-person-loans/{id}")
     public List<Loan> listarPrestamosPersona(@PathVariable("id") Long id){
-        return loanRepository.findAllBorrowedPerson(id);
+        return loanRepository.findLoansPerson(id);
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @GetMapping("/list-borrowed-books/{id}")
+    public List<Book> listarLibrosPrestados(@PathVariable("id") Long id){
+        return bookRepository.findBooksBorrowed(id);
     }
     
     @Secured({"ROLE_ADMIN", "ROLE_USER", "ROLE_LIBRARIAN"})

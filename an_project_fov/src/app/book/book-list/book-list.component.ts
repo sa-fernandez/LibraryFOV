@@ -9,9 +9,9 @@ import { BookService } from '../../shared/book.service';
 })
 export class BookListComponent implements OnInit {
 
-  selection : boolean[] = [];
-  books : Book[] | undefined;
-  
+  selection: boolean[] = [];
+  books: Book[] | undefined;
+
   constructor(private bookService: BookService) { }
 
   ngOnInit(): void {

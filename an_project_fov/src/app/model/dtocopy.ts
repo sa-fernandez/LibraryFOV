@@ -1,7 +1,7 @@
 export class Dtocopy {
 
     constructor(
-        public idBook : number, public idCopy : number
-    ){}
-    
+        public idBook: number, public idCopy: number
+    ) { }
+
 }

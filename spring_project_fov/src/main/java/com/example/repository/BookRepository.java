@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.model.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
+
+    @Transactional
+    @Query(
+        value = "select * from book where id in ( select book_id from real_book where id in ( select book_id from loan where person_id = :id ) )",
+        nativeQuery = true
+    )
+    List<Book> findBooksBorrowed(@Param("id") Long id);
 
     @Transactional
     @Modifying

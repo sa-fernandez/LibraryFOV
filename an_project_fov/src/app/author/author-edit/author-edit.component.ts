@@ -12,19 +12,19 @@ import { BookService } from 'src/app/shared/book.service';
 })
 export class AuthorEditComponent implements OnInit {
 
-  book : Book | undefined;
-  authors : Author[] | undefined;
-  selectedAuthor : Author | undefined;
-  inputName : string = "";
-  isDisabled : boolean = false;
+  book: Book | undefined;
+  authors: Author[] | undefined;
+  selectedAuthor: Author | undefined;
+  inputName: string = "";
+  isDisabled: boolean = false;
 
-  author : Author = new Author(0, "");
-  allAuthors : Author[] | undefined;
+  author: Author = new Author(0, "");
+  allAuthors: Author[] | undefined;
 
   constructor(
-    private bookService : BookService, 
-    private route : ActivatedRoute, 
-    private router : Router
+    private bookService: BookService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -34,63 +34,65 @@ export class AuthorEditComponent implements OnInit {
       this.book = book
       this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors);
     });
-    
+
     this.bookService.listAuthors().subscribe(authors => this.allAuthors = authors);
   }
 
-  updateAuthor(index : number){
+  updateAuthor(index: number) {
     this.bookService.editAuthor(this.authors![index]).subscribe(() => {
       this.router.navigate(['book/edit', this.book!.id])
     });
   }
 
-  unlinkAuthor(index : number){
+  unlinkAuthor(index: number) {
     this.bookService.unlinkAuthorBook(this.authors![index].id, this.book!.id).subscribe(() => {
-      this.router.navigate(['book/edit', this.book!.id])
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['book/edit', this.book!.id])
+      });
     });
   }
 
-  dropboxClick(){
-    if(this.selectedAuthor){
+  dropboxClick() {
+    if (this.selectedAuthor) {
       this.isDisabled = true;
       this.inputName = '';
-    }else{
+    } else {
       this.isDisabled = false;
     }
   }
 
-  onSubmit(){
-    if(this.inputName){
+  onSubmit() {
+    if (this.inputName) {
       this.author.name = this.inputName;
       this.saveAuthor();
-    }else if(this.selectedAuthor){
+    } else if (this.selectedAuthor) {
       this.author = this.selectedAuthor;
-      if(!this.verifyAuthor()){
+      if (!this.verifyAuthor()) {
         this.linkAuthor();
       }
-    }else{
+    } else {
       //ALERTA
     }
   }
 
-  saveAuthor(){
+  saveAuthor() {
     this.bookService.createAuthor(this.author).subscribe(author => {
       this.author = author
       this.linkAuthor()
     });
   }
 
-  verifyAuthor(){
+  verifyAuthor() {
     let flag = false;
     this.authors?.forEach(element => {
-      if(element.id === this.author.id){
+      if (element.id === this.author.id) {
         flag = true;
       }
     });
     return flag;
   }
 
-  linkAuthor(){
+  linkAuthor() {
     this.bookService.linkAuthorBook(this.author.id, this.book!.id).subscribe(() => {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['book/edit', this.book!.id])
@@ -98,16 +100,16 @@ export class AuthorEditComponent implements OnInit {
     })
   }
 
-  changeVisibility(){
+  changeVisibility() {
     let addContainer = document.getElementById("add-author-icon") as HTMLElement;
     let formContainer = document.getElementById("add-author-form") as HTMLElement;
 
 
-    if(addContainer.classList.contains('author-visibility')){
+    if (addContainer.classList.contains('author-visibility')) {
       addContainer.classList.toggle('author-visibility')
     }
 
-    if(formContainer.classList.contains('form-visibility')){
+    if (formContainer.classList.contains('form-visibility')) {
       formContainer.classList.toggle('form-visibility')
     }
   }

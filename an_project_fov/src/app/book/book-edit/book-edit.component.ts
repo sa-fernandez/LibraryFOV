@@ -41,11 +41,8 @@ export class BookEditComponent implements OnInit {
   
   onSubmit(){
     if(this.book && this.inputName && this.inputIsbn && this.inputCategory && this.inputCategory && this.inputEditorial && this.inputDescription){
-
       this.editBook = new Book(this.book.id, this.inputName, this.inputIsbn, this.inputCategory, this.inputDescription, this.inputEditorial);
-      
       this.bookService.editBook(this.editBook).subscribe(() => {
-        console.log(this.editBook);
         this.router.navigate(['book/view', this.book?.id]);
       });
     }

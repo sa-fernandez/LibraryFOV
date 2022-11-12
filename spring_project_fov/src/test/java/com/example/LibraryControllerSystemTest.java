@@ -157,10 +157,16 @@ public class LibraryControllerSystemTest {
         driver.get(baseUrl + "/book/create");
         WebElement inputBookName = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("name")));
         WebElement inputBookIsbn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("isbn")));
+        WebElement inputBookCategory = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("category")));
+        WebElement inputBookEditorial = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("editorial")));
+        WebElement inputBookDescription = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("description")));
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-create-book")));
-        Book book = new Book("4895", "Guia practica para testing con Selenium");
+        Book book = new Book("4895", "Guia practica para testing con Selenium", "Suspenso", "Selenium", "JuanM");
         inputBookName.sendKeys(book.getName());
         inputBookIsbn.sendKeys(book.getIsbn());
+        inputBookCategory.sendKeys(book.getCategory());
+        inputBookEditorial.sendKeys(book.getEditorial());
+        inputBookDescription.sendKeys(book.getDescription());
         button.click();
         List<WebElement> libros = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("info-book"), 4));
         assertEquals(formatBook(book), libros.get(libros.size() - 1).getText());
@@ -257,13 +263,14 @@ public class LibraryControllerSystemTest {
         driver.get(baseUrl + "/book/loan-list");
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-action-0")));
         button.click();
-        String newDate = "10/12/2022";
+        String newDate = "12/10/2022";
+	String expectedDate = "10/12/2022";
         WebElement inputDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("input-date")));
         inputDate.sendKeys(newDate);
         WebElement buttonUpdate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-update-date")));
         buttonUpdate.click();
         WebElement finalDate = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("finaldate")));
-        assertEquals("Fecha de entrega\n" + newDate, finalDate.getText());
+        assertEquals("Fecha de entrega\n" + expectedDate, finalDate.getText());
     }
 
     @Test

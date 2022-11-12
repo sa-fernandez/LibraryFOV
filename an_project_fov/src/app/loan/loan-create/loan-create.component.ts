@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Author } from 'src/app/model/author';
@@ -15,60 +15,59 @@ import { SecurityService } from 'src/app/shared/security.service';
 })
 export class LoanCreateComponent implements OnInit {
 
-  minDate : Date = new Date();
-  maxDate : Date = new Date();
-  now : Date = new Date();
+  minDate: Date = new Date();
+  maxDate: Date = new Date();
+  now: Date = new Date();
 
-  isDisabled : boolean = false;
+  isDisabled: boolean = false;
 
-  selectedPerson : Author | undefined;
-  inputName : string = "";
-  event : string | undefined = "";
+  selectedPerson: Author | undefined;
+  inputName: string = "";
+  event: string | undefined = "";
 
-  book : Book | undefined;
-  realBook : Realbook | undefined;
-  person : Author | undefined;
+  book: Book | undefined;
+  realBook: Realbook | undefined;
+  person: Author | undefined;
 
-  authors : Author[] | undefined;
-  allPeople : Author[] | undefined;
+  authors: Author[] | undefined;
+  allPeople: Author[] | undefined;
 
   @Input()
   copyId: number | undefined;
 
   constructor(
-    private bookService : BookService, 
-    private securityService : SecurityService,
-    private route : ActivatedRoute, 
-    private router : Router
+    private bookService: BookService,
+    private securityService: SecurityService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.maxDate.setMonth(this.maxDate.getMonth() + 1);
-
     this.bookService.viewCopy(this.copyId!).subscribe((realBook => {
       this.realBook = realBook;
-        this.bookService.copyBook(realBook.id).subscribe(book => {
-          this.book = book;
-          this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors);
-        });
-      })
+      this.bookService.copyBook(realBook.id).subscribe(book => {
+        this.book = book;
+        this.bookService.bookAuthors(book.id).subscribe(authors => this.authors = authors);
+      });
+    })
     );
-    
+
     this.bookService.listAuthors().subscribe(people => this.allPeople = people)
     this.bookService.viewAuthor(this.securityService.userName()).subscribe(elem => {
       this.person = elem
     })
   }
 
-  savePerson(){
+  savePerson() {
     this.bookService.createAuthor(this.person!).subscribe(author => {
       this.person = author
       this.linkPerson()
     });
   }
 
-  linkPerson(){
-    if(!this.event){
+  linkPerson() {
+    if (!this.event) {
       this.event = this.now.toLocaleDateString();
     }
     this.bookService.createLoan(this.realBook!.id, this.person!.id, this.event).subscribe(() => {
@@ -78,29 +77,36 @@ export class LoanCreateComponent implements OnInit {
     })
   }
 
-  verifyAuthor(){
+  verifyAuthor() {
     let flag = false;
     this.authors?.forEach(element => {
-      if(element.id === this.person!.id){
+      if (element.id === this.person!.id) {
         flag = true;
       }
     });
     return flag;
   }
 
-  onSubmit(){
-    if(!this.person){
+  onSubmit() {
+    if (!this.person) {
       this.person = new Author(0, this.securityService.userName());
       this.savePerson();
-    }else{
-      if(!this.verifyAuthor()){
+    } else {
+      if (!this.verifyAuthor()) {
         this.linkPerson();
       }
     }
   }
 
+  formatDate(date: string) {
+    let split = date.split("/");
+    return split[1] + "/" + split[0] + "/" + split[2];
+  }
+
   addEvent(event: MatDatepickerInputEvent<Date>) {
-    this.event = event.value?.toLocaleDateString()
+    if (event.value) {
+      this.event = this.formatDate(event.value.toLocaleDateString());
+    }
   }
 
 }

@@ -10,20 +10,18 @@ import { BookService } from '../../shared/book.service';
 })
 export class BookCreateComponent implements OnInit {
 
-  book : Book = new Book(0, "", "", "", "", "");
+  book: Book = new Book(0, "", "", "", "", "");
 
   constructor(
-    private bookService : BookService,
-    private router : Router
+    private bookService: BookService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(){
-
-    if(this.book.name && this.book.isbn && this.book.category && this.book.editorial && this.book.description){
-      console.log(this.book);
+  onSubmit() {
+    if (this.book.name && this.book.isbn && this.book.category && this.book.editorial && this.book.description) {
       this.bookService.createBook(this.book).subscribe(() => {
         this.router.navigate(['book/list']);
       });

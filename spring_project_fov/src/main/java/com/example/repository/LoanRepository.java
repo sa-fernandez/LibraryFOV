@@ -18,7 +18,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
         value = "select * from loan where person_id = :id",
         nativeQuery = true
     )
-    List<Loan> findAllBorrowedPerson(@Param("id") Long id);
+    List<Loan> findLoansPerson(@Param("id") Long id);
 
     @Transactional
     @Modifying

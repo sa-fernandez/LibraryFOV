@@ -10,7 +10,7 @@ import { BookEditComponent } from './book/book-edit/book-edit.component';
 import { HomeComponent } from './home/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { AuthorEditComponent } from './author/author-edit/author-edit.component';
 import { LoanCreateComponent } from './loan/loan-create/loan-create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -70,7 +70,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService]
-    }
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })

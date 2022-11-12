@@ -14,17 +14,17 @@ import { SecurityService } from 'src/app/shared/security.service';
 })
 export class BookViewComponent implements OnInit {
 
-  librarian : boolean = false;
+  librarian: boolean = false;
 
-  selectedAuthor : Author | undefined;
-  inputName : string = "";
+  selectedAuthor: Author | undefined;
+  inputName: string = "";
 
-  book : Book | undefined;
-  author : Author = new Author(0, "");
+  book: Book | undefined;
+  author: Author = new Author(0, "");
 
-  authors : Author[] | undefined;
-  allAuthors : Author[] | undefined;
-  copies : Realbook[] | undefined;
+  authors: Author[] | undefined;
+  allAuthors: Author[] | undefined;
+  copies: Realbook[] | undefined;
 
   activated: number = 0;
   requestLaunch = 0;
@@ -32,10 +32,10 @@ export class BookViewComponent implements OnInit {
   copyId: number = -1;
 
   constructor(
-    private bookService : BookService, 
-    private securityService : SecurityService,
-    private route : ActivatedRoute, 
-    private router : Router
+    private bookService: BookService,
+    private securityService: SecurityService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -51,13 +51,13 @@ export class BookViewComponent implements OnInit {
     this.bookService.listAuthors().subscribe(authors => this.allAuthors = authors);
   }
 
-  deleteBook(){
+  deleteBook() {
     this.bookService.deleteBook(this.book!.id).subscribe(() => {
       this.router.navigate(['book/list'])
     });
   }
 
-  deleteCopy(index : number){
+  deleteCopy(index: number) {
     this.bookService.deleteCopy(this.copies![index].id).subscribe(() => {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['book/view', this.book!.id])
@@ -65,61 +65,61 @@ export class BookViewComponent implements OnInit {
     });
   }
 
-  toggleCopiesActivated(){
+  toggleCopiesActivated() {
 
     let toggle = document.getElementById('toggle-copies') as HTMLElement;
     let layout = document.getElementById('copies-layout') as HTMLElement;
-    
-    if(this.activated){
+
+    if (this.activated) {
       layout.style.maxHeight = "0px";
       toggle.style.rotate = "0deg";
       this.activated = 0;
     }
 
-    else{
+    else {
       layout.style.maxHeight = "250px";
       toggle.style.rotate = "-180deg";
       this.activated = 1;
     }
 
-    
+
   }
 
-  launchWindow(option: number, i?: number){
+  launchWindow(option: number, i?: number) {
     let mainSection = document.getElementById('book-view') as HTMLElement;
     mainSection.classList.toggle('emergent-activated')
     this.requestLaunch = 1;
 
-    if(option === 1){
+    if (option === 1) {
       this.requestType = 1;
 
-      if(typeof i !== 'undefined'){
+      if (typeof i !== 'undefined') {
         this.copyId = this.copies![i].id;
       }
     }
 
-    else if(option === 2){
+    else if (option === 2) {
       this.requestType = 2;
 
     }
 
-    else if(option === 3){
+    else if (option === 3) {
       this.requestType = 3;
-      
+
     }
 
   }
 
-  closeWindow(){
+  closeWindow() {
     let mainSection = document.getElementById('book-view') as HTMLElement;
     mainSection.classList.toggle('emergent-activated')
     this.requestLaunch = 0;
     this.requestType = -1;
   }
 
-  
 
-  toogleOptionActivated(){
+
+  toogleOptionActivated() {
     let buttonsLayout = document.getElementById('buttons-layout') as HTMLElement;
     buttonsLayout.classList.toggle('layout-activated');
   }

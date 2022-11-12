@@ -15,8 +15,7 @@ import { Author } from 'src/app/model/author';
 export class LoanListComponent implements OnInit {
 
   loans: Loan[] | undefined;
-
-  public booksBorrowed: Book[] = [];
+  booksBorrowed: Book[] = [];
 
   realBook: Realbook | undefined;
   person: Author | undefined;
@@ -32,25 +31,20 @@ export class LoanListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.securityService.userN().then(usr => 
+    this.securityService.userN().then(usr =>
       this.bookService.viewAuthor(usr.username).subscribe(elem => {
-      this.person = elem
-      this.bookService.listLoansPerson(this.person.id).subscribe(loans => {
-        this.loans = loans
-        this.loans?.forEach(elem =>
-          this.bookService.viewRealBook(elem.id).subscribe(real => {
-            this.realBook = real
-            this.bookService.copyBook(this.realBook.id).subscribe(book => {
-              this.booksBorrowed.push(book)
-            })
-          }));
-        });
-      }) 
+        this.person = elem
+        this.bookService.listLoansPerson(this.person.id).subscribe(loans => {
+          this.loans = loans
+          this.bookService.listBooksBorrowed(this.person!.id).subscribe(books => {
+            this.booksBorrowed = books
+          });
+        })
+      })
     );
-    
   }
 
-  launchWindow(i: number){
+  launchWindow(i: number) {
     let mainSection = document.getElementById('loan-return') as HTMLElement;
     mainSection.classList.toggle('emergent-activated')
     this.requestLaunch = 1;
@@ -58,10 +52,11 @@ export class LoanListComponent implements OnInit {
     console.log(this.loanID)
   }
 
-  closeWindow(){
+  closeWindow() {
     let mainSection = document.getElementById('loan-return') as HTMLElement;
     mainSection.classList.toggle('emergent-activated')
     this.requestLaunch = 0;
     this.loanID = -1;
   }
+
 }

@@ -16,17 +16,17 @@ export class CreateCopyComponent implements OnInit {
   @Input()
   bookID: number | undefined;
 
-  inputStatus : string = "";
-  event : string | undefined = "";
-  book : Book | undefined;
+  inputStatus: string = "";
+  event: string | undefined = "";
+  book: Book | undefined;
 
-  realbook : Realbook = new Realbook(0, "","");
-  now : Date = new Date();
+  realbook: Realbook = new Realbook(0, "", "");
+  now: Date = new Date();
 
   constructor(
-    private bookService : BookService, 
-    private route : ActivatedRoute, 
-    private router : Router
+    private bookService: BookService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -37,13 +37,11 @@ export class CreateCopyComponent implements OnInit {
     });
   }
 
-  onSubmit(){
-
-    if(!this.event){
+  onSubmit() {
+    if (!this.event) {
       this.event = this.now.toLocaleDateString();
     }
-
-    if(this.inputStatus){
+    if (this.inputStatus) {
       this.realbook.status = this.inputStatus;
       this.realbook.timestamp = this.event;
       this.bookService.createRealBook(this.realbook).subscribe(realbook => {
@@ -56,9 +54,15 @@ export class CreateCopyComponent implements OnInit {
     }
   }
 
+  formatDate(date: string) {
+    let split = date.split("/");
+    return split[1] + "/" + split[0] + "/" + split[2];
+  }
+
   addEvent(event: MatDatepickerInputEvent<Date>) {
-    this.event = event.value?.toLocaleDateString();
-    console.log(this.event);
+    if (event.value) {
+      this.event = this.formatDate(event.value.toLocaleDateString());
+    }
   }
 
 }
