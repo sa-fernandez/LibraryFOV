@@ -298,6 +298,19 @@ public class LibraryControllerIntegrationTest {
     }
 
     @Test
+    void testListarLibrosPrestados() throws Exception {
+        List<Book> booksProof = bookRepository.findBooksBorrowed(1L);
+        ResponseEntity<List<Book>> response = rest.exchange("/book/list-borrowed-books/1",
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<Book>>() {
+            });
+        List<Book> books = response.getBody();
+        assertNotNull(books);
+        assertEquals(booksProof.size(), books.size());
+    }
+
+    @Test
     void testBuscarCopiaPrestamo() throws Exception {
         Loan loan = loanRepository.findById(12L).orElseThrow();
         RealBook realBook = rest.getForObject("http://localhost:" + port + "/book/view-realbook/12", RealBook.class);
